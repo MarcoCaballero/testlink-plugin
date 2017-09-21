@@ -1,0 +1,13 @@
+/* :host /deep/ lets shadowdom style child elements */
+:host /deep/ {
+    /**
+    * CSS Overrides for bug fixes
+    */
+    .mat-icon.md-icon-logo {
+        height: 47px;
+        width: 90px;
+    }
+    /**
+    * END CSS Overrides for bug fixes
+    */
+}
