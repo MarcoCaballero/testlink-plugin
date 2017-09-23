@@ -1,6 +1,6 @@
 import { WebAppPage } from './app.po';
 
-describe('web-app App', () => {
+describe('testlink-plugin App', () => {
   let page: WebAppPage;
 
   beforeEach(() => {

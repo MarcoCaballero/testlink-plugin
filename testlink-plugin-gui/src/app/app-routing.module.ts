@@ -1,9 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
+import { ElastestHomeComponent } from './elastest-home/elastest-home.component';
+
 const routes: Routes = [
     {
         path: '',
+        component: ElastestHomeComponent,
         children: [
             {
                 path: '',
@@ -15,7 +18,7 @@ const routes: Routes = [
 
 @NgModule({
     imports: [
-        RouterModule.forRoot(routes, { useHash: true }),
+        RouterModule.forRoot(routes),
     ],
     exports: [
         RouterModule,
@@ -23,4 +26,5 @@ const routes: Routes = [
 })
 export class AppRoutingModule { }
 export const routedComponents: any[] = [
+    ElastestHomeComponent
 ];

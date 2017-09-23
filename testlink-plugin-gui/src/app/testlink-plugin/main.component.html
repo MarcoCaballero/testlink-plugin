@@ -1,11 +1,11 @@
 <td-layout-manage-list #manageList [opened]="media.registerQuery('gt-sm') | async" [mode]="(media.registerQuery('gt-sm') | async) ? 'side' :  'over'"
   [sidenavWidth]="(media.registerQuery('gt-xs') | async) ? '257px' : '100%'">
   <md-toolbar td-sidenav-content>
-    <span>Optional Title</span>
+    <span>TestLink Actions</span>
   </md-toolbar>
   <md-nav-list td-sidenav-content [tdLayoutManageListClose]="!media.query('gt-sm')">
     <ng-template let-item let-last="last" ngFor [ngForOf]="navmenu">
-      <a md-list-item>
+      <a md-list-item [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" [routerLink]="['/testlink-plugin']">
         <md-icon mdListIcon>{{item.icon}}</md-icon> {{item.title}}
       </a>
     </ng-template>
@@ -15,68 +15,39 @@
       <button md-icon-button tdLayoutManageListOpen [hideWhenOpened]="true">
             <md-icon>arrow_back</md-icon>
           </button>
-      <span>Content Title</span>
+      <span>TestLink New Instance</span>
       <span flex></span>
-      <button md-icon-button><md-icon>settings</md-icon></button>
+      <button mdTooltip="Settings" md-icon-button><md-icon>settings</md-icon></button>
     </div>
   </md-toolbar>
   <div layout-gt-sm="row" tdMediaToggle="gt-xs" [mediaClasses]="['push-sm']">
-    <div flex-gt-sm="60">
+    <div flex-gt-sm="100">
       <md-card>
-        <md-card-title>Products Sales</md-card-title>
-        <md-card-subtitle>usage stats for our products</md-card-subtitle>
+        <md-card-title>New Instance</md-card-title>
+        <md-card-subtitle>connects to TestLink instance</md-card-subtitle>
         <md-divider></md-divider>
         <md-card-content>
-          card content
+          <!-- card content -->
+          <td-dynamic-forms #customValidateForm [elements]="multipleValidatorTypes">
+            <ng-template let-control="control" [tdDynamicFormsError]="'serverElement'">
+              <span *ngIf="control.touched || !control.pristine">
+              <span *ngIf="control.hasError('required')">Required.</span>
+              <span *ngIf="control.hasError('correctExt') && !control.hasError('required')">Need a xmlrpc.php document.</span>
+              </span>
+            </ng-template>
+            <ng-template let-control="control" [tdDynamicFormsError]="'apiKeyElement'">
+              <span *ngIf="control.touched || !control.pristine">
+              <span *ngIf="control.hasError('required')">Required.</span>
+              <span *ngIf="control.hasError('correctExt') && !control.hasError('required')">Invalid character.</span>
+              </span>
+            </ng-template>
+          </td-dynamic-forms>
+          <!-- ./card content -->
         </md-card-content>
         <md-divider></md-divider>
         <md-card-actions>
-          <a md-button color="accent" class="text-upper" [routerLink]="['/']">
-                <span>View More</span>
-              </a>
-        </md-card-actions>
-      </md-card>
-      <md-card>
-        <md-card-title>Customer Activity</md-card-title>
-        <md-card-subtitle>Recent activity from select members</md-card-subtitle>
-        <md-divider></md-divider>
-        <md-card-content>
-          card content
-        </md-card-content>
-        <md-divider></md-divider>
-        <md-card-actions>
-          <a md-button color="accent" class="text-upper" [routerLink]="['/']">
-                <span>View More</span>
-              </a>
-        </md-card-actions>
-      </md-card>
-    </div>
-    <div flex-gt-sm="40">
-      <md-card>
-        <md-card-title>Alerts</md-card-title>
-        <md-card-subtitle>Items requiring attention</md-card-subtitle>
-        <md-divider></md-divider>
-        <md-card-content>
-          card content
-        </md-card-content>
-        <md-divider></md-divider>
-        <md-card-actions>
-          <a md-button color="accent" class="text-upper" [routerLink]="['/']">
-                <span>View More</span>
-              </a>
-        </md-card-actions>
-      </md-card>
-      <md-card>
-        <md-card-title>Favorites</md-card-title>
-        <md-card-subtitle>Your favorite products</md-card-subtitle>
-        <md-divider></md-divider>
-        <md-card-content>
-          card content
-        </md-card-content>
-        <md-divider></md-divider>
-        <md-card-actions>
-          <a md-button color="accent" class="text-upper" [routerLink]="['/']">
-                <span>View More</span>
+          <a md-raised-button color="primary" class="text-upper" [routerLink]="['/']" [disabled]="!customValidateForm.valid">
+                <span>Create Instance</span>
               </a>
         </md-card-actions>
       </md-card>

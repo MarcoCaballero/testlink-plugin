@@ -4,7 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { MainComponent } from './main.component';
 
 const routes: Routes = [{
-  path: '',
+  path: 'testlink-plugin',
   component: MainComponent,
 }];
 

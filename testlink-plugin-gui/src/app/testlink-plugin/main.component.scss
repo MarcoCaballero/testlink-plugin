@@ -1,0 +1,47 @@
+@import '../../theme';
+
+/* Variables */
+$primary:       map-get($theme, primary);
+$accent:        map-get($theme, accent);
+$warn:          map-get($theme, warn);
+
+
+md-nav-list {
+    .mat-list-item.active {
+        md-icon {
+             color: mat-color($accent);
+        }
+    }
+}
+
+/* :host /deep/ lets shadowdom style child elements */
+:host /deep/ {
+    md-form-field {
+        .mat-form-field-underline {
+            background-color: mat-color($primary) !important;
+        }
+        .mat-form-field-ripple { // Acts like &:focus
+            background-color: mat-color($accent);
+        }
+        &.ng-invalid.ng-touched {
+           .mat-form-field-underline .mat-form-field-ripple {
+                background-color: mat-color($warn);
+            }
+            .mat-form-field-placeholder {
+                color: mat-color($warn) ;
+            }
+        }
+        &.mat-focused {
+            .mat-form-field-placeholder {
+                color: mat-color($accent) ;
+            }
+        }
+        .mat-form-field-placeholder {
+            color: mat-color($primary) ;
+        }
+    }
+}
+
+
+
+

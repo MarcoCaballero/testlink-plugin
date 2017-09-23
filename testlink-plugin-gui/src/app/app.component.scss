@@ -1,3 +1,11 @@
+@import '../theme';
+@import '../palette.scss';
+
+/* Variables */
+$primary:       map-get($theme, primary);
+$accent:        map-get($theme, accent);
+$warn:          map-get($theme, warn);
+$accent-dark:  mat-palette($md-elastestorange, 900, 800, 300);
 /* :host /deep/ lets shadowdom style child elements */
 :host /deep/ {
     /**
@@ -7,6 +15,14 @@
         height: 47px;
         width: 90px;
     }
+
+
+
+
+
+
+
+
     /**
     * END CSS Overrides for bug fixes
     */

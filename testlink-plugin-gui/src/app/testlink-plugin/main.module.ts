@@ -17,6 +17,7 @@ import {
     CovalentCommonModule, CovalentDialogsModule,
 } from '@covalent/core';
 import { CovalentHttpModule } from '@covalent/http';
+import { CovalentDynamicFormsModule } from '@covalent/dynamic-forms';
 
 import { mainRoutes } from './main.routes';
 import { MainComponent } from './main.component';
@@ -34,10 +35,10 @@ const ANGULAR_MODULES: any[] = [
 ];
 
 const COVALENT_MODULES: any[] = [
-  CovalentDataTableModule, CovalentMediaModule, CovalentLoadingModule,
-  CovalentNotificationsModule, CovalentLayoutModule, CovalentMenuModule,
-  CovalentPagingModule, CovalentSearchModule, CovalentStepsModule,
-  CovalentCommonModule, CovalentDialogsModule, CovalentHttpModule,
+    CovalentDataTableModule, CovalentMediaModule, CovalentLoadingModule,
+    CovalentNotificationsModule, CovalentLayoutModule, CovalentMenuModule,
+    CovalentPagingModule, CovalentSearchModule, CovalentStepsModule,
+    CovalentCommonModule, CovalentDialogsModule, CovalentHttpModule, CovalentDynamicFormsModule,
 ];
 
 @NgModule({
