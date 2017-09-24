@@ -21,6 +21,8 @@ import { CovalentDynamicFormsModule } from '@covalent/dynamic-forms';
 
 import { mainRoutes } from './main.routes';
 import { MainComponent } from './main.component';
+import { NewInstanceComponent } from './new-instance/new-instance.component';
+import { LoginComponent } from './login/login.component';
 
 const MATERIAL_MODULES: any[] = [
     MdButtonModule, MdCardModule, MdIconModule,
@@ -49,7 +51,11 @@ const COVALENT_MODULES: any[] = [
         mainRoutes,
     ],
     exports: [],
-    declarations: [MainComponent],
+    declarations: [
+        MainComponent,
+        NewInstanceComponent,
+        LoginComponent
+    ],
     providers: [],
 })
 export class MainModule { }

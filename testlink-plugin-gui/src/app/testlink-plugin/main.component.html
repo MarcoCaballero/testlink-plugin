@@ -4,11 +4,14 @@
     <span>TestLink Actions</span>
   </md-toolbar>
   <md-nav-list td-sidenav-content [tdLayoutManageListClose]="!media.query('gt-sm')">
-    <ng-template let-item let-last="last" ngFor [ngForOf]="navmenu">
+    <ng-template let-item let-last="last" ngFor [ngForOf]="instances">
       <a md-list-item [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" [routerLink]="['/testlink-plugin']">
         <md-icon mdListIcon>{{item.icon}}</md-icon> {{item.title}}
       </a>
     </ng-template>
+    <a *ngIf="instances.length == 0" md-list-item [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" [routerLink]="['new-instance']">
+        Add TestLink instance ... <md-icon mdListIcon>add_box</md-icon>
+    </a>
   </md-nav-list>
   <md-toolbar>
     <div layout="row" layout-align="start center" flex>
@@ -20,39 +23,7 @@
       <button mdTooltip="Settings" md-icon-button><md-icon>settings</md-icon></button>
     </div>
   </md-toolbar>
-  <div layout-gt-sm="row" tdMediaToggle="gt-xs" [mediaClasses]="['push-sm']">
-    <div flex-gt-sm="100">
-      <md-card>
-        <md-card-title>New Instance</md-card-title>
-        <md-card-subtitle>connects to TestLink instance</md-card-subtitle>
-        <md-divider></md-divider>
-        <md-card-content>
-          <!-- card content -->
-          <td-dynamic-forms #customValidateForm [elements]="multipleValidatorTypes">
-            <ng-template let-control="control" [tdDynamicFormsError]="'serverElement'">
-              <span *ngIf="control.touched || !control.pristine">
-              <span *ngIf="control.hasError('required')">Required.</span>
-              <span *ngIf="control.hasError('correctExt') && !control.hasError('required')">Need a xmlrpc.php document.</span>
-              </span>
-            </ng-template>
-            <ng-template let-control="control" [tdDynamicFormsError]="'apiKeyElement'">
-              <span *ngIf="control.touched || !control.pristine">
-              <span *ngIf="control.hasError('required')">Required.</span>
-              <span *ngIf="control.hasError('correctExt') && !control.hasError('required')">Invalid character.</span>
-              </span>
-            </ng-template>
-          </td-dynamic-forms>
-          <!-- ./card content -->
-        </md-card-content>
-        <md-divider></md-divider>
-        <md-card-actions>
-          <a md-raised-button color="primary" class="text-upper" [routerLink]="['/']" [disabled]="!customValidateForm.valid">
-                <span>Create Instance</span>
-              </a>
-        </md-card-actions>
-      </md-card>
-    </div>
-  </div>
+  <router-outlet></router-outlet>
   <td-layout-footer-inner>
     Optional inner footer
   </td-layout-footer-inner>
