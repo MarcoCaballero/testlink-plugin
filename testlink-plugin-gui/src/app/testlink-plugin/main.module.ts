@@ -21,8 +21,9 @@ import { CovalentDynamicFormsModule } from '@covalent/dynamic-forms';
 
 import { mainRoutes } from './main.routes';
 import { MainComponent } from './main.component';
-import { NewInstanceComponent } from './new-instance/new-instance.component';
+import { NewInstanceComponent } from './instances/new/new-instance.component';
 import { LoginComponent } from './login/login.component';
+import { DashboardInstanceComponent } from './instances/dashboard/dashboard-instance.component';
 
 const MATERIAL_MODULES: any[] = [
     MdButtonModule, MdCardModule, MdIconModule,
@@ -43,6 +44,10 @@ const COVALENT_MODULES: any[] = [
     CovalentCommonModule, CovalentDialogsModule, CovalentHttpModule, CovalentDynamicFormsModule,
 ];
 
+const TESTLINK_PLUGIN_MODULES: any[] = [
+    MainComponent, NewInstanceComponent, DashboardInstanceComponent, LoginComponent,
+];
+
 @NgModule({
     imports: [
         ANGULAR_MODULES,
@@ -52,9 +57,7 @@ const COVALENT_MODULES: any[] = [
     ],
     exports: [],
     declarations: [
-        MainComponent,
-        NewInstanceComponent,
-        LoginComponent
+        TESTLINK_PLUGIN_MODULES,
     ],
     providers: [],
 })

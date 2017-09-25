@@ -17,5 +17,7 @@ export class AppComponent {
       this._domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/linkedin.svg'));
     this._iconRegistry.addSvgIconInNamespace('assets', 'elastest',
       this._domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/elastest.svg'));
+    this._iconRegistry.addSvgIconInNamespace('assets', 'testlink',
+      this._domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/testlink.svg'));
   }
 }

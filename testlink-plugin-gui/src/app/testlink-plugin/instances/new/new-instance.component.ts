@@ -3,6 +3,8 @@ import { TdMediaService } from '@covalent/core';
 import { ITdDynamicElementConfig, TdDynamicElement, TdDynamicType } from '@covalent/dynamic-forms';
 import { AbstractControl } from '@angular/forms';
 
+import { InstancesService } from 'services/instances.service';
+
 @Component({
     changeDetection: ChangeDetectionStrategy.OnPush,
     selector: 'testlink-plugin-new-instance',
@@ -28,11 +30,11 @@ export class NewInstanceComponent implements AfterViewInit {
                     return !isValid ? { length: true } : undefined;
                 },
             }],
-        }
+        },
     ];
 
     constructor(private _changeDetectorRef: ChangeDetectorRef,
-        public media: TdMediaService) { }
+        public media: TdMediaService, private instanceService: InstancesService) { }
 
     ngAfterViewInit(): void {
         // broadcast to all listener observables when loading the page
@@ -43,6 +45,7 @@ export class NewInstanceComponent implements AfterViewInit {
     }
 
     createInstance(): void {
+        this.instanceService.instanceAdd('Added');
         console.log('Child: Instance added on child');
     }
 }

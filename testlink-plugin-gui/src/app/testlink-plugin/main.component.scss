@@ -40,6 +40,23 @@ md-nav-list {
             color: mat-color($primary) ;
         }
     }
+
+    md-card-header.textIcon {
+        .mat-icon {
+            background-repeat: no-repeat;
+            display: inline-block;
+            fill: currentColor;
+            height: 49px;
+            width: 96px;
+            /* top: 12px; */
+            padding-right: -5px;
+            margin-top: 10px;
+        }
+
+        .mat-card-header-text {
+            margin: 0px 28px;
+        }
+    }
 }
 
 

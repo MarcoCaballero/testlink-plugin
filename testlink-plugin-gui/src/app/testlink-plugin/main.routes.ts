@@ -2,8 +2,9 @@ import { ModuleWithProviders } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { MainComponent } from './main.component';
-import { NewInstanceComponent } from './new-instance/new-instance.component';
+import { NewInstanceComponent } from './instances/new/new-instance.component';
 import { LoginComponent } from './login/login.component';
+import { DashboardInstanceComponent } from './instances/dashboard/dashboard-instance.component';
 
 const routes: Routes = [{
   path: 'testlink-plugin',
@@ -13,9 +14,13 @@ const routes: Routes = [{
     component: NewInstanceComponent,
   },
   {
+    path: 'instance-dashboard',
+    component: DashboardInstanceComponent,
+  },
+  {
     path: 'login',
     component: LoginComponent,
-  }]
+  }],
 }];
 
 export const mainRoutes: ModuleWithProviders = RouterModule.forChild(routes);

@@ -1,7 +1,10 @@
-import { Component, HostBinding, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, HostBinding, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { TdMediaService } from '@covalent/core';
 
-import { fadeAnimation } from '../app.animations';
+import { Subscription } from 'rxjs/Subscription';
+
+import { InstancesService } from 'services/instances.service';
+import { fadeAnimation } from 'app/app.animations';
 
 @Component({
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -9,13 +12,15 @@ import { fadeAnimation } from '../app.animations';
     templateUrl: 'main.component.html',
     styleUrls: ['main.component.scss'],
     animations: [fadeAnimation],
+    providers: [InstancesService],
 })
 
-export class MainComponent implements AfterViewInit {
+export class MainComponent implements AfterViewInit, OnDestroy {
 
     @HostBinding('@routeAnimation') routeAnimation: boolean = true;
     @HostBinding('class.td-route-animation') classAnimation: boolean = true;
 
+    subscription: Subscription;
 
     instances: Object[] = [
         // {
@@ -37,7 +42,23 @@ export class MainComponent implements AfterViewInit {
     ];
 
     constructor(private _changeDetectorRef: ChangeDetectorRef,
-        public media: TdMediaService) { }
+        public media: TdMediaService, private instanceService: InstancesService) {
+
+        this.subscription = instanceService.onInstanceAdded$.subscribe((msg: String): void => {
+            this.instances.push(
+                {
+                    icon: 'looks_one',
+                    route: '.',
+                    title: 'Instance 1',
+                    description: 'http://aaa/testlink/lib/xmlrpc.php',
+                },
+            );
+        });
+
+        instanceService.onInstanceRemoved$.subscribe((msg: String): void => {
+            let obj: Object = this.instances.pop();
+        });
+    }
 
     ngAfterViewInit(): void {
         // broadcast to all listener observables when loading the page
@@ -47,16 +68,7 @@ export class MainComponent implements AfterViewInit {
         });
     }
 
-    addInstance(event: any): void {
-        this.instances.push(
-            {
-                icon: 'looks_one',
-                route: '.',
-                title: 'Instance 1',
-                description: 'http://aaa/testlink/lib/xmlrpc.php',
-            }
-        );
-        console.log('Parent: Recevied and added too')
+    ngOnDestroy(): void {
+        this.subscription.unsubscribe();
     }
-
 }

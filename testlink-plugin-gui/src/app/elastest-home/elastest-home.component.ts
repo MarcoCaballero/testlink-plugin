@@ -1,12 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
     selector: 'testlink-plugin-elastest-home',
-    templateUrl: 'elastest-home.component.html'
+    templateUrl: 'elastest-home.component.html',
 })
 
-export class ElastestHomeComponent implements OnInit {
+export class ElastestHomeComponent {
     constructor() { }
-
-    ngOnInit() { }
 }
