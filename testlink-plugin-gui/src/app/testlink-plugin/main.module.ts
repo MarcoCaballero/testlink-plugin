@@ -7,14 +7,15 @@ import {
     MdListModule, MdMenuModule, MdTooltipModule,
     MdSlideToggleModule, MdInputModule, MdCheckboxModule,
     MdToolbarModule, MdSnackBarModule, MdSidenavModule,
-    MdTabsModule, MdSelectModule,
+    MdTabsModule, MdSelectModule, MdGridListModule,
 } from '@angular/material';
 
 import {
     CovalentDataTableModule, CovalentMediaModule, CovalentLoadingModule,
     CovalentNotificationsModule, CovalentLayoutModule, CovalentMenuModule,
     CovalentPagingModule, CovalentSearchModule, CovalentStepsModule,
-    CovalentCommonModule, CovalentDialogsModule,
+    CovalentCommonModule, CovalentDialogsModule, CovalentExpansionPanelModule,
+    CovalentChipsModule,
 } from '@covalent/core';
 import { CovalentHttpModule } from '@covalent/http';
 import { CovalentDynamicFormsModule } from '@covalent/dynamic-forms';
@@ -24,13 +25,14 @@ import { MainComponent } from './main.component';
 import { NewInstanceComponent } from './instances/new/new-instance.component';
 import { LoginComponent } from './login/login.component';
 import { DashboardInstanceComponent } from './instances/dashboard/dashboard-instance.component';
+import { InstancesService } from 'services/instances.service';
 
 const MATERIAL_MODULES: any[] = [
     MdButtonModule, MdCardModule, MdIconModule,
     MdListModule, MdMenuModule, MdTooltipModule,
     MdSlideToggleModule, MdInputModule, MdCheckboxModule,
     MdToolbarModule, MdSnackBarModule, MdSidenavModule,
-    MdTabsModule, MdSelectModule,
+    MdTabsModule, MdSelectModule, MdGridListModule,
 ];
 
 const ANGULAR_MODULES: any[] = [
@@ -47,6 +49,9 @@ const COVALENT_MODULES: any[] = [
 const TESTLINK_PLUGIN_MODULES: any[] = [
     MainComponent, NewInstanceComponent, DashboardInstanceComponent, LoginComponent,
 ];
+const TESTLINK_PLUGIN_SERVICES: any[] = [
+    InstancesService,
+];
 
 @NgModule({
     imports: [
@@ -59,6 +64,6 @@ const TESTLINK_PLUGIN_MODULES: any[] = [
     declarations: [
         TESTLINK_PLUGIN_MODULES,
     ],
-    providers: [],
+    providers: [InstancesService],
 })
 export class MainModule { }

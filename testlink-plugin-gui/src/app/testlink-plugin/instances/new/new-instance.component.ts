@@ -3,15 +3,19 @@ import { TdMediaService } from '@covalent/core';
 import { ITdDynamicElementConfig, TdDynamicElement, TdDynamicType } from '@covalent/dynamic-forms';
 import { AbstractControl } from '@angular/forms';
 
+import { Subscription } from 'rxjs/Subscription';
+
 import { InstancesService } from 'services/instances.service';
 
 @Component({
-    changeDetection: ChangeDetectionStrategy.OnPush,
     selector: 'testlink-plugin-new-instance',
     templateUrl: 'new-instance.component.html',
 })
 
-export class NewInstanceComponent implements AfterViewInit {
+export class NewInstanceComponent {
+
+
+    subscription: Subscription;
 
     multipleValidatorTypes: ITdDynamicElementConfig[] = [
         {
@@ -34,18 +38,14 @@ export class NewInstanceComponent implements AfterViewInit {
     ];
 
     constructor(private _changeDetectorRef: ChangeDetectorRef,
-        public media: TdMediaService, private instanceService: InstancesService) { }
-
-    ngAfterViewInit(): void {
-        // broadcast to all listener observables when loading the page
-        setTimeout(() => { // workaround since MdSidenav has issues redrawing at the beggining
-            this.media.broadcast();
-            this._changeDetectorRef.detectChanges();
+        public media: TdMediaService, private instanceService: InstancesService) {
+        this.subscription = instanceService.onInstanceAdded$.subscribe((msg: String): void => {
+            console.log('New instance : Instance recived');
         });
     }
 
     createInstance(): void {
         this.instanceService.instanceAdd('Added');
-        console.log('Child: Instance added on child');
+        console.log('New instance: Instance added announced$');
     }
 }

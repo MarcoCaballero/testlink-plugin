@@ -1,83 +1,36 @@
-<div layout-gt-sm="row" tdMediaToggle="gt-xs" [mediaClasses]="['push-sm']">
-    <div flex-gt-sm="50">
-        <md-card>
-            <md-card-title>Instance 1</md-card-title>
-            <md-card-subtitle>TestLink Server - http://localhost:8080//testlink....</md-card-subtitle>
-            <md-divider></md-divider>
-            <md-card-content>
-                <!-- card content -->
-                <ng-template>
-
-                </ng-template>
-                <!-- ./card content -->
-            </md-card-content>
-            <md-divider></md-divider>
-            <md-card-actions>
-                <button md-raised-button color="primary" class="text-upper" [routerLink]="['/testlink-plugin/login']">
-                <span>Access</span>
-          </button>
-            </md-card-actions>
-        </md-card>
-    </div>
-    <div flex-gt-sm="50">
-        <md-card>
-            <md-card-header class="textIcon">
-                <div md-card-avatar>
-                    <md-icon svgIcon="assets:testlink"></md-icon>
-                </div>
-                <md-card-title> Instance 1</md-card-title>
-                <md-card-subtitle> TestLink Server - http://localhost:8080//testlink....</md-card-subtitle>
-            </md-card-header>
-
-            <md-divider></md-divider>
-            <md-card-content>
-                <!-- card content -->
-                <md-list>
-                    <md-list-item>
-                        <md-icon mdListIcon>folder</md-icon>
-                        <h3 mdLine> Project - Android app </h3>
-                        <p mdLine>
-                            <span> description if description ... </span>
-                            <span class="demo-2"> -- test plan, suite </span>
-                        </p>
-                    </md-list-item>
-                    <md-list-item>
-                        <md-icon mdListIcon>folder</md-icon>
-                        <h3 mdLine> Project - IOS app </h3>
-                        <p mdLine>
-                            <span> description if description ... </span>
-                            <span class="demo-2"> -- test plan, suite </span>
-                        </p>
-                    </md-list-item>
-                </md-list>
-                <!-- ./card content -->
-            </md-card-content>
-            <md-divider></md-divider>
-            <md-card-actions>
-                <button md-raised-button color="primary" class="text-upper" [routerLink]="['/testlink-plugin/login']">
-                <span>Access</span>
-          </button>
-            </md-card-actions>
-        </md-card>
-    </div>
-    <div flex-gt-sm="50">
-        <md-card>
-            <md-card-title>Instance 1</md-card-title>
-            <md-card-subtitle>TestLink Server - http://localhost:8080//testlink....</md-card-subtitle>
-            <md-divider></md-divider>
-            <md-card-content>
-                <!-- card content -->
-                <ng-template>
-
-                </ng-template>
-                <!-- ./card content -->
-            </md-card-content>
-            <md-divider></md-divider>
-            <md-card-actions>
-                <button md-raised-button color="primary" class="text-upper" [routerLink]="['/testlink-plugin/login']">
-                <span>Access</span>
-          </button>
-            </md-card-actions>
-        </md-card>
-    </div>
-</div>
+<md-card class="push-bottom-xxl" tdMediaToggle="gt-xs" [mediaClasses]="['push']">
+  <!-- <td-search-box class="push-left push-right" placeholder="search here ..." [alwaysVisible]="true" (searchDebounce)="filterUsers($event)"></td-search-box> -->
+  <div layout="row" layout-align="start center" class="pad-left-sm pad-right-sm">
+    <span *ngIf="!searchBox.searchVisible" class="push-left-sm">
+                        <span class="md-title">Blogs by project</span>
+    </span>
+    <td-search-box #searchBox backIcon="arrow_back" class="push-right-sm tc-blue-700" placeholder="Search here the title...."
+      (searchDebounce)="filterBlogs($event)" flex>
+    </td-search-box>
+  </div>
+  <md-divider></md-divider>
+  <md-card-content>
+    <md-list class="pull-top">
+      <md-list-item>
+        <md-icon mdListAvatar>apps</md-icon>
+        <h3 mdLine>TestLink Instances</h3>
+        <span flex></span>
+        <span flex="30" class="pad-left md-body-1 tc-grey-500">Projects</span>
+        <span flex="30" class="md-body-1 tc-grey-500">Created</span>
+        <span flex="30" class="md-body-1 tc-grey-500">Modified</span>
+      </md-list-item>
+      <ng-template let-item let-i="index" let-last="last" ngFor [ngForOf]="instances">
+        <a md-list-item>
+          <md-icon mdListAvatar>dns</md-icon>
+          <h3 mdLine> {{item.title}} </h3>
+          <p mdLine> {{item.description}} </p>
+          <span flex></span>
+          <span flex="30" class="md-body-1 tc-grey-500">TestLink Java project, BLog project, Plugin</span>
+          <span flex="30" class="md-body-1 tc-grey-500">{{item.created | date}}</span>
+          <span flex="30" class="md-body-1 tc-grey-500">{{item.lastAccess | timeAgo}}</span>
+        </a>
+        <md-divider *ngIf="!last" md-inset></md-divider>
+      </ng-template>
+    </md-list>
+  </md-card-content>
+</md-card>

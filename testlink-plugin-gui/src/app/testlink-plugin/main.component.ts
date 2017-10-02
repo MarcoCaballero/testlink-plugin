@@ -12,7 +12,6 @@ import { fadeAnimation } from 'app/app.animations';
     templateUrl: 'main.component.html',
     styleUrls: ['main.component.scss'],
     animations: [fadeAnimation],
-    providers: [InstancesService],
 })
 
 export class MainComponent implements AfterViewInit, OnDestroy {
