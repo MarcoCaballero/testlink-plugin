@@ -1,5 +1,5 @@
-@import '../theme';
-@import '../palette.scss';
+@import '~theme.scss';
+@import '~palette.scss';
 
 /* Variables */
 $primary:       map-get($theme, primary);

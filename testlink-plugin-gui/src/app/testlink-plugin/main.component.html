@@ -8,7 +8,6 @@
       <a md-list-item [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" [routerLink]="['/testlink-plugin']">
         <md-icon mdListIcon>{{item.icon}}</md-icon> {{item.title}}
       </a>
-      {{item | json}}
     </ng-template>
     <a *ngIf="instances.length == 0" md-list-item [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" [routerLink]="['new-instance']">
         Add TestLink instance ... <md-icon mdListIcon>add_box</md-icon>

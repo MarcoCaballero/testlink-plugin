@@ -22,9 +22,9 @@ import { CovalentDynamicFormsModule } from '@covalent/dynamic-forms';
 
 import { mainRoutes } from './main.routes';
 import { MainComponent } from './main.component';
-import { NewInstanceComponent } from './instances/new/new-instance.component';
-import { LoginComponent } from './login/login.component';
+import { InstanceLoginComponent } from './instances/login/instance-login.component';
 import { DashboardInstanceComponent } from './instances/dashboard/dashboard-instance.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 import { InstancesService } from 'services/instances.service';
 
 const MATERIAL_MODULES: any[] = [
@@ -47,7 +47,7 @@ const COVALENT_MODULES: any[] = [
 ];
 
 const TESTLINK_PLUGIN_MODULES: any[] = [
-    MainComponent, NewInstanceComponent, DashboardInstanceComponent, LoginComponent,
+    MainComponent, InstanceLoginComponent, DashboardInstanceComponent, DashboardComponent,
 ];
 const TESTLINK_PLUGIN_SERVICES: any[] = [
     InstancesService,

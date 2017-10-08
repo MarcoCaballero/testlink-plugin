@@ -1,9 +1,8 @@
-import { Component, HostBinding, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy } from '@angular/core';
+import { Component, HostBinding, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, OnInit } from '@angular/core';
 import { TdMediaService } from '@covalent/core';
 
-import { Subscription } from 'rxjs/Subscription';
-
 import { InstancesService } from 'services/instances.service';
+import { IInstance } from 'model/interfaces';
 import { fadeAnimation } from 'app/app.animations';
 
 @Component({
@@ -14,49 +13,15 @@ import { fadeAnimation } from 'app/app.animations';
     animations: [fadeAnimation],
 })
 
-export class MainComponent implements AfterViewInit, OnDestroy {
+export class MainComponent implements AfterViewInit, OnInit {
 
     @HostBinding('@routeAnimation') routeAnimation: boolean = true;
     @HostBinding('class.td-route-animation') classAnimation: boolean = true;
 
-    subscription: Subscription;
-
-    instances: Object[] = [
-        // {
-        //     icon: 'looks_one',
-        //     route: '.',
-        //     title: 'Instance 1',
-        //     description: 'http://aaa/testlink/lib/xmlrpc.php',
-        // }, {
-        //     icon: 'looks_two',
-        //     route: '.',
-        //     title: 'Instance 2',
-        //     description: 'http://aaa/testlink/lib/xmlrpc.php',
-        // }, {
-        //     icon: 'looks_3',
-        //     route: '.',
-        //     title: 'Instance 3',
-        //     description: 'http://aaa/testlink/lib/xmlrpc.php',
-        // },
-    ];
+    instances: IInstance[] = [];
 
     constructor(private _changeDetectorRef: ChangeDetectorRef,
         public media: TdMediaService, private instanceService: InstancesService) {
-
-        this.subscription = instanceService.onInstanceAdded$.subscribe((msg: String): void => {
-            this.instances.push(
-                {
-                    icon: 'looks_one',
-                    route: '.',
-                    title: 'Instance 1',
-                    description: 'http://aaa/testlink/lib/xmlrpc.php',
-                },
-            );
-        });
-
-        instanceService.onInstanceRemoved$.subscribe((msg: String): void => {
-            let obj: Object = this.instances.pop();
-        });
     }
 
     ngAfterViewInit(): void {
@@ -67,7 +32,11 @@ export class MainComponent implements AfterViewInit, OnDestroy {
         });
     }
 
-    ngOnDestroy(): void {
-        this.subscription.unsubscribe();
+    ngOnInit(): void {
+        this.instanceService.getInstances()
+            .then((instances: IInstance[]) => {
+                this.instances = instances;
+            });
     }
+
 }

@@ -1,5 +1,5 @@
 export interface IInstance {
-    id: number;
+    id: string;
     icon: string;
     route: string;
     title: string;

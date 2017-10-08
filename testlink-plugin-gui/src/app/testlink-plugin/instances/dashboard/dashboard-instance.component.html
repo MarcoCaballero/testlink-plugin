@@ -12,22 +12,24 @@
   <md-card-content>
     <md-list class="pull-top">
       <md-list-item>
-        <md-icon mdListAvatar>apps</md-icon>
+        <md-icon mdListAvatar svgIcon="assets:testlink-alpha"></md-icon>
         <h3 mdLine>TestLink Instances</h3>
         <span flex></span>
-        <span flex="30" class="pad-left md-body-1 tc-grey-500">Projects</span>
         <span flex="30" class="md-body-1 tc-grey-500">Created</span>
-        <span flex="30" class="md-body-1 tc-grey-500">Modified</span>
+        <span flex="30" class="md-body-1 tc-grey-500">Last access</span>
+        <span flex="30" class="pad-left md-body-1 tc-grey-500">Run tests</span>
       </md-list-item>
-      <ng-template let-item let-i="index" let-last="last" ngFor [ngForOf]="instances">
+      <ng-template let-item let-i="index" let-last="last" ngFor [ngForOf]="filteredInstances">
         <a md-list-item>
           <md-icon mdListAvatar>dns</md-icon>
           <h3 mdLine> {{item.title}} </h3>
           <p mdLine> {{item.description}} </p>
           <span flex></span>
-          <span flex="30" class="md-body-1 tc-grey-500">TestLink Java project, BLog project, Plugin</span>
           <span flex="30" class="md-body-1 tc-grey-500">{{item.created | date}}</span>
           <span flex="30" class="md-body-1 tc-grey-500">{{item.lastAccess | timeAgo}}</span>
+          <span flex="30" class="md-body-1 tc-grey-500">
+            <button md-raised-button color="accent" [routerLink]="['login-instance', item.id]">Login</button>
+          </span>
         </a>
         <md-divider *ngIf="!last" md-inset></md-divider>
       </ng-template>

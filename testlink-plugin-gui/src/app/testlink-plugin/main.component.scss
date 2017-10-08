@@ -1,9 +1,11 @@
-@import '../../theme';
+@import '~theme.scss';
+@import '~palette.scss';
 
 /* Variables */
 $primary:       map-get($theme, primary);
 $accent:        map-get($theme, accent);
 $warn:          map-get($theme, warn);
+$accent-dark:  mat-palette($md-elastestorange, 900, 800, 300);
 
 
 md-nav-list {
@@ -57,8 +59,29 @@ md-nav-list {
             margin: 0px 28px;
         }
     }
+
+    .mat-raised-button.mat-accent {
+        color: white;
+        font-weight: 700;
+        font-variant-caps: unicase;
+        &:hover {
+            background-color: mat-color($primary) !important;
+        }
+    }
+
+    .hoverable-action-button {
+        color: white !important;
+        font-weight: 700;
+        font-variant-caps: unicase;
+        background-color: mat-color($accent) !important;
+        &:hover {
+            background-color: mat-color($primary) !important;
+        }
+        &:disabled {
+            background-color: rgba(0, 0, 0, 0.12) !important;
+        }
+    }
+
 }
-
-
 
 

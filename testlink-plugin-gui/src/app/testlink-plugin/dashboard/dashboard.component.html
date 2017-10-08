@@ -1,0 +1,68 @@
+<div layout="row">
+    <div flex="66" layout="column">
+        <md-card class="md-card-colored" flex>
+            <md-card class="md-card-colored" flex>
+                <md-card-content class="text-center">
+                    <div class="md-headline">
+                        {{ '300'| digits }}
+                        <md-icon class="tc-grey-500 text-sm">compare_arrows</md-icon>
+                        <div class="md-caption tc-grey-600">Not runned tests</div>
+                    </div>
+                    <md-icon class="icon tc-grey-700 testicons">thumbs_up_down</md-icon>
+                    <div layout="column">
+                        <div class="md-subhead">Test </div>
+                        <div class="md-caption tc-grey-600">updated {{ '2016-06-17 12:59:59' | timeAgo }}</div>
+                    </div>
+                </md-card-content>
+            </md-card>
+        </md-card>
+    </div>
+    <div flex="33" layout="column">
+        <md-card class="md-card-colored" flex>
+            <md-card-content class="text-center">
+                <div class="md-headline">
+                    {{ '300'| digits }}
+                    <md-icon class="tc-grey-500 text-sm">compare_arrows</md-icon>
+                    <div class="md-caption tc-grey-600">Not runned tests</div>
+                </div>
+                <md-icon class="icon tc-grey-700 testicons">thumbs_up_down</md-icon>
+                <div layout="column">
+                    <div class="md-subhead">Test </div>
+                    <div class="md-caption tc-grey-600">updated {{ '2016-06-17 12:59:59' | timeAgo }}</div>
+                </div>
+            </md-card-content>
+        </md-card>
+        <md-card class="md-card-colored" flex>
+            <md-card-content class="text-center">
+                <div class="md-headline">
+                    {{ '2'| digits }}
+                    <md-icon class="tc-red-500 text-sm">arrow_downward</md-icon>
+
+                    <div class="md-caption tc-grey-600">Failed tests</div>
+                </div>
+                <md-icon class="icon tc-red-700 testicons">thumb_down</md-icon>
+                <div layout="column">
+                    <div class="md-subhead">Test </div>
+                    <div class="md-caption tc-grey-600">{{'Project: Android Developers App, Project papapap' | truncate: 20}}</div>
+                    <div class="md-caption tc-grey-600">Test Suite: Test-Sprint-1</div>
+                    <div class="md-caption tc-grey-600">Lorem: Test-Sprint-1</div>
+                    <div class="md-caption tc-grey-600">{{'Test: Test-A, Tes B' | truncate: 15}}</div>
+                </div>
+            </md-card-content>
+        </md-card>
+        <md-card class="md-card-colored" flex>
+            <md-card-content class="text-center">
+                <div class="md-headline">
+                    {{ '5'| digits }}
+                    <md-icon class="tc-green-500 text-sm">arrow_upward</md-icon>
+
+                    <div class="md-caption tc-grey-600">Passed tests</div>
+                </div>
+                <md-icon class="icon tc-green-700 testicons">thumb_up</md-icon>
+                <div layout="column">
+                    <div class="md-subhead">Test </div>
+                    <div class="md-caption tc-grey-600">From {{ '2016-06-17 12:59:59' | timeAgo }}</div>
+                </div>
+            </md-card-content>
+        </md-card>
+    </div>

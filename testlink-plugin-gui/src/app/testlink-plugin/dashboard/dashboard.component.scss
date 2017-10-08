@@ -1,0 +1,21 @@
+@import '~theme.scss';
+@import '~palette.scss';
+
+/* Variables */
+$primary:       map-get($theme, primary);
+$accent:        map-get($theme, accent);
+$warn:          map-get($theme, warn);
+$accent-dark:  mat-palette($md-elastestorange, 900, 800, 300);
+
+.md-headline {
+    font-size: 40px !important;
+}
+
+.testicons {
+    font-size: 46px !important;
+}
+
+
+/* :host /deep/ lets shadowdom style child elements */
+:host /deep/ {
+ }

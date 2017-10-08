@@ -1,0 +1,20 @@
+[
+    {
+        "id": "0",
+        "icon": "looks_one",
+        "route": ".",
+        "title": "Instance 1",
+        "description": "http://localhost/testlink/0/xmlrpc.php",
+        "created": "7/03/2017 11:05 AM",
+        "lastAccess": "7/03/2017 11:05 AM"
+    },
+    {
+        "id": "1",
+        "icon": "looks_two",
+        "route": ".",
+        "title": "Instance 2",
+        "description": "http://localhost/testlink/1/xmlrpc.php",
+        "created": "7/03/2017 11:05 AM",
+        "lastAccess": "7/03/2017 11:05 AM"
+    }
+]
