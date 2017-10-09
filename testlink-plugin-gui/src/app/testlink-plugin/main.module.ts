@@ -15,7 +15,7 @@ import {
     CovalentNotificationsModule, CovalentLayoutModule, CovalentMenuModule,
     CovalentPagingModule, CovalentSearchModule, CovalentStepsModule,
     CovalentCommonModule, CovalentDialogsModule, CovalentExpansionPanelModule,
-    CovalentChipsModule,
+    CovalentChipsModule, CovalentVirtualScrollModule,
 } from '@covalent/core';
 import { CovalentHttpModule } from '@covalent/http';
 import { CovalentDynamicFormsModule } from '@covalent/dynamic-forms';
@@ -40,8 +40,8 @@ const ANGULAR_MODULES: any[] = [
 ];
 
 const COVALENT_MODULES: any[] = [
-    CovalentDataTableModule, CovalentMediaModule, CovalentLoadingModule,
-    CovalentNotificationsModule, CovalentLayoutModule, CovalentMenuModule,
+    CovalentDataTableModule, CovalentMediaModule, CovalentLoadingModule, CovalentVirtualScrollModule,
+    CovalentNotificationsModule, CovalentLayoutModule, CovalentMenuModule, CovalentExpansionPanelModule,
     CovalentPagingModule, CovalentSearchModule, CovalentStepsModule,
     CovalentCommonModule, CovalentDialogsModule, CovalentHttpModule, CovalentDynamicFormsModule,
 ];

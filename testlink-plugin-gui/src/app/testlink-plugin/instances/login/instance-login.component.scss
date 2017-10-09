@@ -7,19 +7,8 @@ $accent:        map-get($theme, accent);
 $warn:          map-get($theme, warn);
 $accent-dark:  mat-palette($md-elastestorange, 900, 800, 300);
 
-.md-headline {
-    font-size: 40px !important;
+.img-logo-login {
+    display: block;
+    margin: auto;
+    width: 40%;
 }
-
-.testicons {
-    font-size: 46px !important;
-}
-
-
-/* :host /deep/ lets shadowdom style child elements */
-:host /deep/ {
-
-    md-select .mat-select-trigger {
-        bottom: 6px !important;
-    }
- }

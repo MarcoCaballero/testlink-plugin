@@ -82,6 +82,13 @@ md-nav-list {
         }
     }
 
+    // Custom utils for testlink-plugin deep DOM
+    .testlink-center {
+        margin: auto;
+    }
+    .border-bottom {
+        border-bottom: 1px solid mat-color($accent) !important;
+    }
 }
 
 

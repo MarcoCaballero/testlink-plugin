@@ -1,6 +1,67 @@
-<div layout="row">
-    <div flex="66" layout="column">
-        <md-card class="md-card-colored" flex>
+<!-- header -->
+<td-layout-manage-list #manageList [opened]="media.registerQuery('gt-sm') | async" [mode]="(media.registerQuery('gt-sm') | async) ? 'side' :  'over'"
+    [sidenavWidth]="(media.registerQuery('gt-xs') | async) ? '257px' : '100%'">
+    <md-toolbar td-sidenav-content>
+        <span>TestLink Actions</span>
+    </md-toolbar>
+    <md-nav-list td-sidenav-content [tdLayoutManageListClose]="!media.query('gt-sm')">
+        <ng-template let-item let-last="last" ngFor [ngForOf]="menuItems">
+            <a md-list-item (click)="!media.query('gt-sm') && manageList.close()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"
+                [routerLink]="item.route">
+                <md-icon mdListIcon>{{item.icon}}</md-icon> {{item.title}}
+            </a>
+        </ng-template>
+    </md-nav-list>
+    <md-toolbar>
+        <div layout="row" layout-align="start center" flex>
+            <button md-icon-button tdLayoutManageListOpen [hideWhenOpened]="true">
+        <md-icon>arrow_back</md-icon>
+      </button>
+            <span>TestLink New Instance</span>
+            <span flex></span>
+            <button mdTooltip="Settings" md-icon-button><md-icon>settings</md-icon></button>
+        </div>
+    </md-toolbar>
+    <!-- ./header -->
+    <!-- content  -->
+    <!-- Left -->
+    <div layout="row">
+        <div flex="66" layout="column">
+            <md-card class="md-card-colored" flex>
+                <md-card-content class="text-center">
+                    <div layout="row" layout-align="start center" class="pad-left-sm pad-right-sm">
+                        <span *ngIf="!searchBox.searchVisible" class="push-left-sm">
+                            <span *ngIf="(selectable && !selectedRows.length) || !selectable" class="md-title">Projects</span>
+                        <span *ngIf="selectedRows.length && selectable" class="md-body-1">0 item(s) selected</span>
+                        </span>
+                        <td-search-box #searchBox backIcon="arrow_back" class="push-right-sm tc-orange-700" placeholder="Search here" (searchDebounce)="search($event)"
+                            flex>
+                        </td-search-box>
+                    </div>
+                    <md-divider></md-divider>
+                    <td-data-table #dataTable [data]="filteredData" [columns]="columns" [selectable]="selectable" [clickable]="clickable" [multiple]="multiple"
+                        [sortable]="true" [sortBy]="sortBy" [(ngModel)]="selectedRows" [sortOrder]="sortOrder" (sortChange)="sort($event)"
+                        (rowClick)="showAlert($event)" [style.height.px]="300">
+                    </td-data-table>
+                    <div class="md-padding" *ngIf="!dataTable.hasData" layout="row" layout-align="center center">
+                        <h3>No results to display.</h3>
+                    </div>
+                    <td-paging-bar #pagingBar [pageSize]="pageSize" [total]="filteredTotal" (change)="page($event)">
+                        <span hide-xs>Rows per page:</span>
+                        <md-select [style.width.px]="50" [(ngModel)]="pageSize">
+                            <md-option *ngFor="let size of [5,50,100,200,500]" [value]="size">
+                                {{size}}
+                            </md-option>
+                        </md-select>
+                        {{pagingBar.range}} <span hide-xs>of {{pagingBar.total}}</span>
+                    </td-paging-bar>
+                    <md-divider class="tc-orange-700"></md-divider>
+                </md-card-content>
+            </md-card>
+        </div>
+        <!-- ./Left -->
+        <!-- Rigth -->
+        <div flex="33" layout="column">
             <md-card class="md-card-colored" flex>
                 <md-card-content class="text-center">
                     <div class="md-headline">
@@ -15,54 +76,46 @@
                     </div>
                 </md-card-content>
             </md-card>
-        </md-card>
-    </div>
-    <div flex="33" layout="column">
-        <md-card class="md-card-colored" flex>
-            <md-card-content class="text-center">
-                <div class="md-headline">
-                    {{ '300'| digits }}
-                    <md-icon class="tc-grey-500 text-sm">compare_arrows</md-icon>
-                    <div class="md-caption tc-grey-600">Not runned tests</div>
-                </div>
-                <md-icon class="icon tc-grey-700 testicons">thumbs_up_down</md-icon>
-                <div layout="column">
-                    <div class="md-subhead">Test </div>
-                    <div class="md-caption tc-grey-600">updated {{ '2016-06-17 12:59:59' | timeAgo }}</div>
-                </div>
-            </md-card-content>
-        </md-card>
-        <md-card class="md-card-colored" flex>
-            <md-card-content class="text-center">
-                <div class="md-headline">
-                    {{ '2'| digits }}
-                    <md-icon class="tc-red-500 text-sm">arrow_downward</md-icon>
+            <md-card class="md-card-colored" flex>
+                <md-card-content class="text-center">
+                    <div class="md-headline">
+                        {{ '2'| digits }}
+                        <md-icon class="tc-red-500 text-sm">arrow_downward</md-icon>
 
-                    <div class="md-caption tc-grey-600">Failed tests</div>
-                </div>
-                <md-icon class="icon tc-red-700 testicons">thumb_down</md-icon>
-                <div layout="column">
-                    <div class="md-subhead">Test </div>
-                    <div class="md-caption tc-grey-600">{{'Project: Android Developers App, Project papapap' | truncate: 20}}</div>
-                    <div class="md-caption tc-grey-600">Test Suite: Test-Sprint-1</div>
-                    <div class="md-caption tc-grey-600">Lorem: Test-Sprint-1</div>
-                    <div class="md-caption tc-grey-600">{{'Test: Test-A, Tes B' | truncate: 15}}</div>
-                </div>
-            </md-card-content>
-        </md-card>
-        <md-card class="md-card-colored" flex>
-            <md-card-content class="text-center">
-                <div class="md-headline">
-                    {{ '5'| digits }}
-                    <md-icon class="tc-green-500 text-sm">arrow_upward</md-icon>
+                        <div class="md-caption tc-grey-600">Failed tests</div>
+                    </div>
+                    <md-icon class="icon tc-red-700 testicons">thumb_down</md-icon>
+                    <div layout="column">
+                        <div class="md-subhead">Test </div>
+                        <div class="md-caption tc-grey-600">{{'Project: Android Developers App, Project papapap' | truncate: 20}}</div>
+                        <div class="md-caption tc-grey-600">Test Suite: Test-Sprint-1</div>
+                        <div class="md-caption tc-grey-600">Lorem: Test-Sprint-1</div>
+                        <div class="md-caption tc-grey-600">{{'Test: Test-A, Tes B' | truncate: 15}}</div>
+                    </div>
+                </md-card-content>
+            </md-card>
+            <md-card class="md-card-colored" flex>
+                <md-card-content class="text-center">
+                    <div class="md-headline">
+                        {{ '5'| digits }}
+                        <md-icon class="tc-green-500 text-sm">arrow_upward</md-icon>
 
-                    <div class="md-caption tc-grey-600">Passed tests</div>
-                </div>
-                <md-icon class="icon tc-green-700 testicons">thumb_up</md-icon>
-                <div layout="column">
-                    <div class="md-subhead">Test </div>
-                    <div class="md-caption tc-grey-600">From {{ '2016-06-17 12:59:59' | timeAgo }}</div>
-                </div>
-            </md-card-content>
-        </md-card>
+                        <div class="md-caption tc-grey-600">Passed tests</div>
+                    </div>
+                    <md-icon class="icon tc-green-700 testicons">thumb_up</md-icon>
+                    <div layout="column">
+                        <div class="md-subhead">Test </div>
+                        <div class="md-caption tc-grey-600">From {{ '2016-06-17 12:59:59' | timeAgo }}</div>
+                    </div>
+                </md-card-content>
+            </md-card>
+        </div>
     </div>
+    <!-- Rigth -->
+    <!-- ./content  -->
+    <!-- footer -->
+    <td-layout-footer-inner>
+        Optional inner footer
+    </td-layout-footer-inner>
+    <!-- ./footer -->
+</td-layout-manage-list>

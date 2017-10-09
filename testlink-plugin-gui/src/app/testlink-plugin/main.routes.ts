@@ -11,6 +11,10 @@ const routes: Routes = [{
   component: MainComponent,
   children: [{
     path: '',
+    redirectTo: 'instances',
+  },
+  {
+    path: 'instances',
     component: DashboardInstanceComponent,
   },
   {

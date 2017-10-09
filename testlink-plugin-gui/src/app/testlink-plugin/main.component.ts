@@ -1,4 +1,4 @@
-import { Component, HostBinding, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, OnInit } from '@angular/core';
+import { Component, HostBinding, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { TdMediaService } from '@covalent/core';
 
 import { InstancesService } from 'services/instances.service';
@@ -13,15 +13,12 @@ import { fadeAnimation } from 'app/app.animations';
     animations: [fadeAnimation],
 })
 
-export class MainComponent implements AfterViewInit, OnInit {
+export class MainComponent implements AfterViewInit {
 
     @HostBinding('@routeAnimation') routeAnimation: boolean = true;
     @HostBinding('class.td-route-animation') classAnimation: boolean = true;
 
-    instances: IInstance[] = [];
-
-    constructor(private _changeDetectorRef: ChangeDetectorRef,
-        public media: TdMediaService, private instanceService: InstancesService) {
+    constructor(private _changeDetectorRef: ChangeDetectorRef, public media: TdMediaService) {
     }
 
     ngAfterViewInit(): void {
@@ -30,13 +27,6 @@ export class MainComponent implements AfterViewInit, OnInit {
             this.media.broadcast();
             this._changeDetectorRef.detectChanges();
         });
-    }
-
-    ngOnInit(): void {
-        this.instanceService.getInstances()
-            .then((instances: IInstance[]) => {
-                this.instances = instances;
-            });
     }
 
 }

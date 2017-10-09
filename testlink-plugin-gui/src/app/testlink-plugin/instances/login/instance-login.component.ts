@@ -14,6 +14,7 @@ import { IInstance } from 'model/interfaces';
 @Component({
     selector: 'testlink-plugin-instance-login',
     templateUrl: 'instance-login.component.html',
+    styleUrls: ['instance-login.component.scss'],
 })
 
 export class InstanceLoginComponent implements OnInit {
@@ -62,7 +63,7 @@ export class InstanceLoginComponent implements OnInit {
 
     async loadInstance(): Promise<void> {
         try {
-            this.loadingService.register('loadingLogin');
+            this.loadingService.register('loadingLoginSection');
             this.loading = true;
             await this.instanceService.getInstances()
                 .then((instances: IInstance[]) => {
@@ -73,7 +74,7 @@ export class InstanceLoginComponent implements OnInit {
             console.log(error);
         } finally {
             this.loading = false;
-            this.loadingService.resolve('loadingLogin');
+            this.loadingService.resolve('loadingLoginSection');
         }
     }
 }
