@@ -4,6 +4,8 @@ import {
     ITdDataTableSortChangeEvent, ITdDataTableColumn, IPageChangeEvent,
 } from '@covalent/core';
 
+import { ITdDynamicElementConfig, TdDynamicElement, TdDynamicType } from '@covalent/dynamic-forms';
+
 import { IProject } from 'model/project';
 
 const BOOLEAN_FORMAT: (v: any) => any = (v: boolean) => (v === true) ? 'ENABLED' : 'NOT ENABLED';
@@ -67,43 +69,11 @@ export class DashboardComponent implements OnInit, AfterViewInit {
             isActive: true,
             isPublic: true,
         },
-        {
-            id: '0',
-            name: 'Android test app',
-            description: 'Test android apps for user experience and performance',
-            prefix: 'ATP',
-            isEnabledRequirements: true,
-            isActive: true,
-            isPublic: true,
-        }, {
-            id: '1',
-            name: 'Java plugin',
-            description: 'esting the Java plugin',
-            prefix: 'JP-001',
-            isEnabledRequirements: true,
-            isActive: true,
-            isPublic: true,
-        }, {
-            id: '2',
-            name: 'Java plugin Revision',
-            description: 'Testing the Java plugin in revision',
-            prefix: 'JP-002',
-            isEnabledRequirements: true,
-            isActive: true,
-            isPublic: true,
-        }, {
-            id: '3',
-            name: 'Project demo Mica',
-            description: 'This is a fake project created to show how the elastest-testlink plugin works',
-            prefix: 'PDM',
-            isEnabledRequirements: true,
-            isActive: true,
-            isPublic: true,
-        },
     ];
 
     filteredProjects: any[] = this.projects;
     filteredTotal: number = this.projects.length;
+    selectedProject: string;
 
     searchTerm: string = '';
     fromRow: number = 1;
@@ -120,6 +90,10 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
     ngOnInit(): void {
         this.filter();
+    }
+
+    change(event: string): void {
+        console.log(event);
     }
 
     sort(sortEvent: ITdDataTableSortChangeEvent): void {

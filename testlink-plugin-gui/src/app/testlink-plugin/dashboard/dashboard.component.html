@@ -1,7 +1,7 @@
 <!-- header -->
 <md-toolbar>
     <div layout="row" layout-align="start center" flex>
-        <span>TestLink Projects</span>
+        <span>Dashboard</span>
         <span flex></span>
         <button mdTooltip="Settings" md-icon-button><md-icon>settings</md-icon></button>
     </div>
@@ -10,11 +10,54 @@
 <!-- content  -->
 <!-- Left -->
 <div layout="row" flex>
+    <div flex="40" layout="column">
+        <md-card class="md-card-colored" flex>
+            <md-card-content class="text-center">
+                <div class="md-headline">
+                    <md-icon class="tc-grey-700">account_circle</md-icon>
+                    José luis bigote
+                    <div class="md-caption tc-grey-600">email@email.com</div>
+                </div>
+                <md-icon class="icon tc-green-300 testicons">verified_user</md-icon>
+                <div layout="column">
+                    <div class="md-subhead">Tester </div>
+                    <div class="md-caption tc-grey-600">updated {{ '2016-06-17 12:59:59' | timeAgo }}</div>
+                </div>
+            </md-card-content>
+        </md-card>
+    </div>
+    <div flex="10" layout="column">
+    </div>
+    <div flex="50" layout="column">
+        <md-card class="md-card-colored" flex>
+            <md-card-content class="text-center">
+                <div class="md-headline small" style="text-align: left;">
+                    <md-icon class="tc-grey-700">description</md-icon>
+                    Projects
+                </div>
+                <div layout="column">
+                    <form>
+                        <md-select style="text-align: left;" (change)="change($event)" color="accent" class="testlink-select testlink-center push-bottom"
+                            placeholder="Select project" [(ngModel)]="selectedProject" name="food" required>
+                            <md-option *ngFor="let project of projects" [value]="project.prefix">
+                                {{project.prefix}}: {{project.name}}
+                            </md-option>
+                        </md-select>
+                    </form>
+                </div>
+            </md-card-content>
+        </md-card>
+    </div>
+</div>
+<div layout="row" flex>
     <md-card class="md-card-colored" flex>
         <md-card-content class="text-center">
             <div layout="row" layout-align="start center" class="pad-left-sm pad-right-sm">
                 <span *ngIf="!searchBox.searchVisible" class="push-left-sm">
-                            <span *ngIf="(selectable && !selectedRows.length) || !selectable" class="md-title">PROJECTS</span>
+                            <span *ngIf="(selectable && !selectedRows.length) || !selectable" class="md-title">
+                                <md-icon class="tc-grey-700">assignment_ind</md-icon>
+                                Test cases assigned to me
+                            </span>
                 <span *ngIf="selectedRows.length && selectable" class="md-body-1">0 item(s) selected</span>
                 </span>
                 <td-search-box #searchBox backIcon="arrow_back" class="push-right-sm tc-orange-700" placeholder="Search here" (searchDebounce)="search($event)"
@@ -24,7 +67,14 @@
             <md-divider></md-divider>
             <td-data-table #dataTable [data]="filteredProjects" [columns]="columns" [selectable]="selectable" [clickable]="clickable"
                 [multiple]="multiple" [sortable]="true" [sortBy]="sortBy" [(ngModel)]="selectedRows" [sortOrder]="sortOrder"
-                (sortChange)="sort($event)" (rowClick)="showAlert($event)" [style.height.px]="500">
+                (sortChange)="sort($event)" (rowClick)="showAlert($event)" [style.height.px]="filteredProjects.length * 60 ">
+            </td-data-table>
+            <div class="md-padding" *ngIf="!dataTable.hasData" layout="row" layout-align="center center">
+                <h3>No results to display.</h3>
+            </div>
+            <td-data-table #dataTable [data]="filteredProjects" [columns]="columns" [selectable]="selectable" [clickable]="clickable"
+                [multiple]="multiple" [sortable]="true" [sortBy]="sortBy" [(ngModel)]="selectedRows" [sortOrder]="sortOrder"
+                (sortChange)="sort($event)" (rowClick)="showAlert($event)" [style.height.px]="filteredProjects.length * 60 ">
             </td-data-table>
             <div class="md-padding" *ngIf="!dataTable.hasData" layout="row" layout-align="center center">
                 <h3>No results to display.</h3>
@@ -46,57 +96,5 @@
             <md-divider></md-divider>
         </md-card-content>
     </md-card>
-    <!-- ./Left -->
-    <!-- Rigth -->
-    <!-- <div flex="33" layout="column">
-            <md-card class="md-card-colored" flex>
-                <md-card-content class="text-center">
-                    <div class="md-headline">
-                        {{ '300'| digits }}
-                        <md-icon class="tc-grey-500 text-sm">compare_arrows</md-icon>
-                        <div class="md-caption tc-grey-600">Not runned tests</div>
-                    </div>
-                    <md-icon class="icon tc-grey-700 testicons">thumbs_up_down</md-icon>
-                    <div layout="column">
-                        <div class="md-subhead">Test </div>
-                        <div class="md-caption tc-grey-600">updated {{ '2016-06-17 12:59:59' | timeAgo }}</div>
-                    </div>
-                </md-card-content>
-            </md-card>
-            <md-card class="md-card-colored" flex>
-                <md-card-content class="text-center">
-                    <div class="md-headline">
-                        {{ '2'| digits }}
-                        <md-icon class="tc-red-500 text-sm">arrow_downward</md-icon>
-
-                        <div class="md-caption tc-grey-600">Failed tests</div>
-                    </div>
-                    <md-icon class="icon tc-red-700 testicons">thumb_down</md-icon>
-                    <div layout="column">
-                        <div class="md-subhead">Test </div>
-                        <div class="md-caption tc-grey-600">{{'Project: Android Developers App, Project papapap' | truncate: 20}}</div>
-                        <div class="md-caption tc-grey-600">Test Suite: Test-Sprint-1</div>
-                        <div class="md-caption tc-grey-600">Lorem: Test-Sprint-1</div>
-                        <div class="md-caption tc-grey-600">{{'Test: Test-A, Tes B' | truncate: 15}}</div>
-                    </div>
-                </md-card-content>
-            </md-card>
-            <md-card class="md-card-colored" flex>
-                <md-card-content class="text-center">
-                    <div class="md-headline">
-                        {{ '5'| digits }}
-                        <md-icon class="tc-green-500 text-sm">arrow_upward</md-icon>
-
-                        <div class="md-caption tc-grey-600">Passed tests</div>
-                    </div>
-                    <md-icon class="icon tc-green-700 testicons">thumb_up</md-icon>
-                    <div layout="column">
-                        <div class="md-subhead">Test </div>
-                        <div class="md-caption tc-grey-600">From {{ '2016-06-17 12:59:59' | timeAgo }}</div>
-                    </div>
-                </md-card-content>
-            </md-card>
-        </div> -->
-    <!-- Rigth -->
 </div>
 <!-- ./content  -->

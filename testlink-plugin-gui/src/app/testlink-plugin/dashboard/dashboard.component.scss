@@ -8,7 +8,10 @@ $warn:          map-get($theme, warn);
 $accent-light:  mat-palette($md-elastestorange, 200, 300, 100);
 
 .md-headline {
-    font-size: 40px !important;
+    font-size: 28px !important;
+    &.small {
+        font-size: 20px !important;
+    }
 }
 
 .testicons {
@@ -38,8 +41,7 @@ $accent-light:  mat-palette($md-elastestorange, 200, 300, 100);
 
     md-select .mat-select-trigger {
         min-width: 44px;
-        font-size: 15px;
-        color: #4352a8;
+        color: mat-color($primary);
         font-weight: 700;
     }
 
@@ -48,6 +50,15 @@ $accent-light:  mat-palette($md-elastestorange, 200, 300, 100);
         // left: -42%;
         position: absolute;
         left: 2%;
+    }
+
+    .testlink-select {
+        width: 300px;
+        border-bottom: solid 1px mat-color($primary);
+    }
+
+    .push-bottom {
+        margin-top:5%;
     }
 
     tr.td-data-table-row {

@@ -1,9 +1,4 @@
-export interface IInstance {
-    id: string;
-    icon: string;
-    route: string;
-    title: string;
-    description: string;
-    created: Date;
-    lastAccess: Date;
+export interface ISelection {
+    label: string;
+    value: string;
 }
