@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { InstancesService } from 'services/instances.service';
 
-import { IInstance } from 'model/interfaces';
+import { IInstance } from 'model/instance';
 
 @Component({
     selector: 'testlink-plugin-instance-login',

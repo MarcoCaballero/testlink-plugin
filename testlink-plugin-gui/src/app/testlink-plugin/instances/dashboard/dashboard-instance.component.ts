@@ -5,7 +5,7 @@ import { TdLoadingService, TdDialogService, TdMediaService } from '@covalent/cor
 import { Subscription } from 'rxjs/Subscription';
 
 import { InstancesService } from 'services/instances.service';
-import { IInstance } from 'model/interfaces';
+import { IInstance } from 'model/instance';
 
 import 'rxjs/add/operator/toPromise';
 

@@ -32,7 +32,7 @@
         <span *ngIf="!searchBox.searchVisible" class="push-left-sm">
                         <span class="md-title">Blogs by project</span>
         </span>
-        <td-search-box #searchBox backIcon="arrow_back" class="push-right-sm tc-blue-700" placeholder="Search here the title...."
+        <td-search-box #searchBox backIcon="arrow_back" class="push-right-sm tc-orange-700" placeholder="Search here the title...."
           (searchDebounce)="filterBlogs($event)" (clear)="filterBlogs($event)" (click)="callme($event)" flex>
         </td-search-box>
       </div>

@@ -5,7 +5,7 @@
 $primary:       map-get($theme, primary);
 $accent:        map-get($theme, accent);
 $warn:          map-get($theme, warn);
-$accent-dark:  mat-palette($md-elastestorange, 900, 800, 300);
+$accent-light:  mat-palette($md-elastestorange, 200, 300, 100);
 
 .md-headline {
     font-size: 40px !important;
@@ -16,10 +16,43 @@ $accent-dark:  mat-palette($md-elastestorange, 900, 800, 300);
 }
 
 
+
+
 /* :host /deep/ lets shadowdom style child elements */
 :host /deep/ {
 
     md-select .mat-select-trigger {
         bottom: 6px !important;
+    }
+
+    span.td-data-table-heading {
+        font-size: 13px;
+        font-weight: unset;
+        color: #4352a8;
+    }
+
+    .md-caption.td-paging-bar {
+        color: #4352a8;
+        font-size: small;
+    }
+
+    md-select .mat-select-trigger {
+        min-width: 44px;
+        font-size: 15px;
+        color: #4352a8;
+        font-weight: 700;
+    }
+
+    span.pull-left {
+        // position: relative;
+        // left: -42%;
+        position: absolute;
+        left: 2%;
+    }
+
+    tr.td-data-table-row {
+        &:hover {
+            background-color: mat-color($accent-light) !important;
+        }
     }
  }

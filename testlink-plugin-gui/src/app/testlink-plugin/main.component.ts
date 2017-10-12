@@ -2,7 +2,7 @@ import { Component, HostBinding, AfterViewInit, ChangeDetectionStrategy, ChangeD
 import { TdMediaService } from '@covalent/core';
 
 import { InstancesService } from 'services/instances.service';
-import { IInstance } from 'model/interfaces';
+import { IInstance } from 'model/instance';
 import { fadeAnimation } from 'app/app.animations';
 
 @Component({
