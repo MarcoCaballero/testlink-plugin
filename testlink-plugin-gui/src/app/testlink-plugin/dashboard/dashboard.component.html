@@ -3,7 +3,9 @@
     <div layout="row" layout-align="start center" flex>
         <span>Dashboard</span>
         <span flex></span>
-        <button mdTooltip="Settings" md-icon-button><md-icon>settings</md-icon></button>
+        <button mdTooltip="Settings" md-icon-button>
+            <md-icon>settings</md-icon>
+        </button>
     </div>
 </md-toolbar>
 <!-- ./header -->
@@ -39,7 +41,7 @@
                     <form>
                         <md-select style="text-align: left;" (change)="change($event)" color="accent" class="testlink-select testlink-center push-bottom"
                             placeholder="Select project" [(ngModel)]="selectedProject" name="food" required>
-                            <md-option *ngFor="let project of projects" [value]="project.prefix">
+                            <md-option *ngFor="let project of projects" [value]="project">
                                 {{project.prefix}}: {{project.name}}
                             </md-option>
                         </md-select>
@@ -54,45 +56,21 @@
         <md-card-content class="text-center">
             <div layout="row" layout-align="start center" class="pad-left-sm pad-right-sm">
                 <span *ngIf="!searchBox.searchVisible" class="push-left-sm">
-                            <span *ngIf="(selectable && !selectedRows.length) || !selectable" class="md-title">
-                                <md-icon class="tc-grey-700">assignment_ind</md-icon>
-                                Test cases assigned to me
-                            </span>
-                <span *ngIf="selectedRows.length && selectable" class="md-body-1">0 item(s) selected</span>
+                    <span *ngIf="(selectable && !selectedRows.length) || !selectable" class="md-title">
+                        <md-icon class="tc-grey-700">assignment_ind</md-icon>
+                        Test cases assigned to me
+                    </span>
+                    <span *ngIf="selectedRows.length && selectable" class="md-body-1">0 item(s) selected</span>
                 </span>
                 <td-search-box #searchBox backIcon="arrow_back" class="push-right-sm tc-orange-700" placeholder="Search here" (searchDebounce)="search($event)"
                     flex>
                 </td-search-box>
             </div>
             <md-divider></md-divider>
-            <td-data-table #dataTable [data]="filteredProjects" [columns]="columns" [selectable]="selectable" [clickable]="clickable"
-                [multiple]="multiple" [sortable]="true" [sortBy]="sortBy" [(ngModel)]="selectedRows" [sortOrder]="sortOrder"
-                (sortChange)="sort($event)" (rowClick)="showAlert($event)" [style.height.px]="filteredProjects.length * 60 ">
-            </td-data-table>
-            <div class="md-padding" *ngIf="!dataTable.hasData" layout="row" layout-align="center center">
-                <h3>No results to display.</h3>
-            </div>
-            <td-data-table #dataTable [data]="filteredProjects" [columns]="columns" [selectable]="selectable" [clickable]="clickable"
-                [multiple]="multiple" [sortable]="true" [sortBy]="sortBy" [(ngModel)]="selectedRows" [sortOrder]="sortOrder"
-                (sortChange)="sort($event)" (rowClick)="showAlert($event)" [style.height.px]="filteredProjects.length * 60 ">
-            </td-data-table>
-            <div class="md-padding" *ngIf="!dataTable.hasData" layout="row" layout-align="center center">
-                <h3>No results to display.</h3>
-            </div>
-            <td-paging-bar #pagingBar [pageSize]="pageSize" [total]="filteredTotal" (change)="page($event)">
-                <span class="pull-left">
-                    Showing {{pagingBar.range}} <span hide-xs>of {{pagingBar.total}}</span>
-                </span>
-                <span hide-xs>
-                    Showing
-                    <md-select [style.width.px]="50" [(ngModel)]="pageSize">
-                        <md-option *ngFor="let size of [5,50,100,200,500]" [value]="size">
-                            {{size}}
-                        </md-option>
-                    </md-select>
-                    entries
-                </span>
-            </td-paging-bar>
+            <ng-template let-plan ngFor [ngForOf]="selectedProject.testPlans">
+                <testlink-plugin-test-plan [builds]="plan.builds">
+                </testlink-plugin-test-plan>
+            </ng-template>
             <md-divider></md-divider>
         </md-card-content>
     </md-card>

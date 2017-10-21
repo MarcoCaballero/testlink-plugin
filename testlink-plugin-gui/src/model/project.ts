@@ -1,3 +1,4 @@
+import { ITestPlan } from './test-plan';
 export interface IProject {
     id: string;
     name: string;
@@ -7,4 +8,5 @@ export interface IProject {
     isEnabledRequirements: boolean;
     isActive: boolean;
     isPublic: boolean;
+    testPlans?: ITestPlan[];
 }

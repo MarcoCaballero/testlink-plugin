@@ -25,6 +25,7 @@ import { MainComponent } from './main.component';
 import { InstanceLoginComponent } from './instances/login/instance-login.component';
 import { DashboardInstanceComponent } from './instances/dashboard/dashboard-instance.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { TestPlanComponent } from './dashboard/test-plans/test-plan.component';
 import { InstancesService } from 'services/instances.service';
 
 const MATERIAL_MODULES: any[] = [
@@ -47,7 +48,7 @@ const COVALENT_MODULES: any[] = [
 ];
 
 const TESTLINK_PLUGIN_MODULES: any[] = [
-    MainComponent, InstanceLoginComponent, DashboardInstanceComponent, DashboardComponent,
+    MainComponent, InstanceLoginComponent, DashboardInstanceComponent, DashboardComponent, TestPlanComponent,
 ];
 const TESTLINK_PLUGIN_SERVICES: any[] = [
     InstancesService,

@@ -1,0 +1,20 @@
+@import '~theme.scss';
+@import '~palette.scss';
+
+/* Variables */
+$primary:       map-get($theme, primary);
+$accent:        map-get($theme, accent);
+$warn:          map-get($theme, warn);
+$accent-light:  mat-palette($md-elastestorange, 200, 300, 100);
+
+
+/* :host /deep/ lets shadowdom style child elements */
+:host /deep/ {
+
+
+    span.pull-right {
+        position: absolute;
+        left: 75%;
+    }
+
+}

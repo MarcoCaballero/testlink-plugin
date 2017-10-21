@@ -7,6 +7,8 @@ import {
 import { ITdDynamicElementConfig, TdDynamicElement, TdDynamicType } from '@covalent/dynamic-forms';
 
 import { IProject } from 'model/project';
+import { ITestPlan } from 'model/test-plan';
+import { IBuild } from 'model/build';
 
 const BOOLEAN_FORMAT: (v: any) => any = (v: boolean) => (v === true) ? 'ENABLED' : 'NOT ENABLED';
 
@@ -16,7 +18,7 @@ const BOOLEAN_FORMAT: (v: any) => any = (v: boolean) => (v === true) ? 'ENABLED'
     styleUrls: ['dashboard.component.scss'],
 })
 
-export class DashboardComponent implements OnInit, AfterViewInit {
+export class DashboardComponent implements OnInit {
     menuItems: Object[] = [
         {
             icon: 'home',
@@ -35,6 +37,70 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         { name: 'isPublic', label: '¿is public?', sortable: true, filter: true, width: 100 },
     ];
 
+    builds: IBuild[] = [
+        {
+            id: '0',
+            testSuitName: 'Main tests',
+            testCase: 'Test browser compatibility',
+            platform: 'CHrome_12.3',
+            priority: 'HIGH',
+            status: 'NOT_RUN',
+            assignedSince: new Date('7/01/2017'),
+        },
+        {
+            id: '1',
+            testSuitName: 'Login tests',
+            testCase: 'Test browser compatibility',
+            platform: 'CHrome_12.3',
+            priority: 'HIGH',
+            status: 'PASSED',
+            assignedSince: new Date('7/01/2017'),
+        },
+        {
+            id: '2',
+            testSuitName: 'Logut tests',
+            testCase: 'Test browser compatibility',
+            platform: 'CHrome_12.3',
+            priority: 'HIGH',
+            status: 'PASSED',
+            assignedSince: new Date('7/01/2017'),
+        },
+    ];
+
+    testplans: ITestPlan[] = [
+        {
+            id: '0',
+            name: 'test-plan-01',
+            description: 'lorem ipsum sit amen sit amen lorep ismums',
+            testCaseCount: 3,
+            buildCount: 3,
+            isActive: true,
+            isPublic: true,
+            builds: this.builds,
+        },
+        {
+            id: '1',
+            name: 'test-plan-02',
+            description: 'lorem ipsum sit amen sit amen lorep ismums',
+            testCaseCount: 3,
+            buildCount: 3,
+            platform: 'Chrome_234.3',
+            isActive: true,
+            isPublic: true,
+            builds: this.builds.slice(1, this.builds.length),
+        },
+        {
+            id: '2',
+            name: 'test-plan-03',
+            description: 'lorem ipsum sit amen sit amen lorep ismums',
+            testCaseCount: 3,
+            buildCount: 3,
+            isActive: true,
+            isPublic: true,
+            builds: this.builds.slice(2, this.builds.length),
+        },
+    ];
+
     projects: IProject[] = [
         {
             id: '0',
@@ -44,6 +110,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
             isEnabledRequirements: true,
             isActive: true,
             isPublic: true,
+            testPlans: this.testplans,
         }, {
             id: '1',
             name: 'Java plugin',
@@ -52,6 +119,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
             isEnabledRequirements: true,
             isActive: true,
             isPublic: true,
+            testPlans: this.testplans.slice(0, 1),
         }, {
             id: '2',
             name: 'Java plugin Revision',
@@ -60,6 +128,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
             isEnabledRequirements: true,
             isActive: true,
             isPublic: true,
+            testPlans: this.testplans.slice(0, this.testplans.length),
         }, {
             id: '3',
             name: 'Project demo Mica',
@@ -68,12 +137,13 @@ export class DashboardComponent implements OnInit, AfterViewInit {
             isEnabledRequirements: true,
             isActive: true,
             isPublic: true,
+            testPlans: this.testplans.slice(1, this.testplans.length),
         },
     ];
 
     filteredProjects: any[] = this.projects;
     filteredTotal: number = this.projects.length;
-    selectedProject: string;
+    selectedProject: IProject = this.projects[0];
 
     searchTerm: string = '';
     fromRow: number = 1;
@@ -89,11 +159,13 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         private dialogService: TdDialogService) { }
 
     ngOnInit(): void {
+
+        this.selectedProject = this.projects[0];
         this.filter();
     }
 
-    change(event: string): void {
-        console.log(event);
+    change(event: any): void {
+        this.selectedProject = event.value;
     }
 
     sort(sortEvent: ITdDataTableSortChangeEvent): void {
@@ -134,13 +206,5 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         newData = this._dataTableService.sortData(newData, this.sortBy, this.sortOrder);
         newData = this._dataTableService.pageData(newData, this.fromRow, this.currentPage * this.pageSize);
         this.filteredProjects = newData;
-    }
-
-    ngAfterViewInit(): void {
-        /* VERY IMPORTANT, DO NOT REMOVE THAT CODE (MdSidenav issues redrawing on re-calling) */
-        setTimeout(() => {
-            this.media.broadcast();
-            this._changeDetectorRef.detectChanges();
-        });
     }
 }
