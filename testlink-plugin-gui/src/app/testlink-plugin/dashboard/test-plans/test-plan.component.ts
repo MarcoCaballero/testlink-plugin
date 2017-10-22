@@ -1,4 +1,7 @@
-import { Component, OnInit, OnChanges, AfterViewInit, Input, ViewChild, SimpleChange, ChangeDetectorRef } from '@angular/core';
+import {
+    Component, OnInit, OnChanges, AfterViewInit, Input, HostBinding, ChangeDetectionStrategy,
+    SimpleChange, ChangeDetectorRef, HostListener,
+} from '@angular/core';
 import { DatePipe } from '@angular/common';
 import {
     TdLoadingService, TdDialogService, TdMediaService, TdDataTableService, TdDataTableSortingOrder,
@@ -7,28 +10,41 @@ import {
 
 import { ITdDynamicElementConfig, TdDynamicElement, TdDynamicType } from '@covalent/dynamic-forms';
 
+import { MdDialog, MdDialogRef, DialogPosition } from '@angular/material';
+
+import { slideInDownAnimation } from 'app/app.animations';
 import { IBuild } from 'model/build';
+import { TestRunnerDialogComponent } from '../test-runner/test-runner-dialog.component';
 
 const BOOLEAN_FORMAT: (v: any) => any = (v: Date) => v.toDateString();
+const SIZE_MODIFICATOR: number = 0.9;
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.OnPush,
     selector: 'testlink-plugin-test-plan',
     templateUrl: 'test-plan.component.html',
     styleUrls: ['test-plan.component.scss'],
+    animations: [slideInDownAnimation],
 })
 
-export class TestPlanComponent implements OnInit, OnChanges, AfterViewInit {
-    @ViewChild('dataTable') dataTableComponent: TdDataTableComponent;
+export class TestPlanComponent implements OnInit, AfterViewInit {
     @Input('builds') builds: IBuild[];
+    @Input('opened') opened: boolean;
+
+    @HostBinding('@routeAnimation') routeAnimation: boolean = true;
+    @HostBinding('class.td-route-animation') classAnimation: boolean = true;
 
     columns: ITdDataTableColumn[] = [
-        { name: 'testSuitName', label: 'Test Suite', sortable: true, filter: true },
-        { name: 'testCase', label: 'Test Case', sortable: true, filter: true },
-        { name: 'platform', label: 'Platform', sortable: true, filter: true },
-        { name: 'priority', label: 'Priority', sortable: true, filter: true, hidden: true },
-        { name: 'status', label: 'Status', sortable: true, filter: true },
-        { name: 'assignedSince', label: 'Assigned since', sortable: true, filter: true, format: BOOLEAN_FORMAT },
+        { name: 'testSuitName', label: 'Test Suite', sortable: true, filter: true, },
+        { name: 'testCase', label: 'Test Case', sortable: true, filter: true, width: { min: 180, max: 250 } },
+        { name: 'platform', label: 'Platform', sortable: true, filter: true, },
+        { name: 'priority', label: 'Priority', sortable: true, filter: true, },
+        { name: 'status', label: 'Status', sortable: true, filter: true, },
+        { name: 'assignedSince', label: 'Assigned since', sortable: true, filter: true, format: BOOLEAN_FORMAT, },
     ];
+    actualWindowWidth: number;
+    actualWindowHeight: number;
+    dialogRef: MdDialogRef<TestRunnerDialogComponent>;
 
     arePanelsOpen: boolean = true;
 
@@ -41,33 +57,27 @@ export class TestPlanComponent implements OnInit, OnChanges, AfterViewInit {
     fromRow: number = 1;
     currentPage: number = 1;
     pageSize: number = 50;
-
-
     changeLog: string[] = [];
+    isDialogOpen: boolean = false;
 
     constructor(private _dataTableService: TdDataTableService, private dialogService: TdDialogService,
-        private _changeDetectorRef: ChangeDetectorRef, public media: TdMediaService) { }
+        private _changeDetectorRef: ChangeDetectorRef, public media: TdMediaService, public mdDialogService: MdDialog, ) { }
+
+    @HostListener('window:resize', ['$event'])
+    onResize(event: any): void {
+        this.actualWindowWidth = event.target.innerWidth;
+        this.actualWindowHeight = event.target.innerHeight;
+        if (this.isDialogOpen) {
+            this.updateDialogSize();
+        }
+    }
 
     ngOnInit(): void {
-        console.log(`input: ${JSON.stringify(this.builds)}`);
+        this.actualWindowWidth = window.innerWidth;
+        this.actualWindowHeight = window.innerHeight;
         this.filteredBuilds = this.builds;
         this.filteredTotal = this.builds.length;
         this.filter();
-    }
-
-    ngOnChanges(changes: { [propKey: string]: SimpleChange }): void {
-        let log: string[] = [];
-        for (let propName in changes) {
-            let changedProp: any = changes[propName];
-            let to: any = JSON.stringify(changedProp.currentValue);
-            if (changedProp.isFirstChange()) {
-                log.push(`Initial value of ${propName} set to ${to}`);
-            } else {
-                let from: any = JSON.stringify(changedProp.previousValue);
-                log.push(`${propName} changed from ${from} to ${to}`);
-            }
-        }
-        this.changeLog.push(log.join(', '));
     }
 
     sort(sortEvent: ITdDataTableSortChangeEvent): void {
@@ -77,7 +87,6 @@ export class TestPlanComponent implements OnInit, OnChanges, AfterViewInit {
     }
 
     filter(): void {
-        this.dataTableComponent.refresh();
         let newData: any[] = this.builds;
         let excludedColumns: string[] = this.columns
             .filter((column: ITdDataTableColumn) => {
@@ -94,9 +103,29 @@ export class TestPlanComponent implements OnInit, OnChanges, AfterViewInit {
     }
 
     showAlert(event: any): void {
-        this.dialogService.openAlert({
-            message: 'You clicked on row: ' + event.row.testSuitName,
+        this.isDialogOpen = true;
+        this.dialogRef = this.mdDialogService.open(TestRunnerDialogComponent, {
+            width: `${this.getProperSize(this.actualWindowWidth)}px`,
+            height: `${this.getProperSize(this.actualWindowHeight)}px`,
+            data: {
+                project: event.row.project,
+                testSuitName: event.row.testSuitName,
+            },
         });
+        this.updateDialogSize();
+        this.dialogRef.afterClosed().subscribe((result: any): void => {
+            console.log(`Dialog result: ${result} `);
+            this.isDialogOpen = false;
+        });
+    }
+
+    updateDialogSize(): void {
+        this.dialogRef.updatePosition({ top: `${(this.actualWindowHeight * 0.05)}px`, left: `${this.actualWindowWidth * 0.1}px` });
+        this.dialogRef.updateSize(`${this.getProperSize(this.actualWindowWidth)}px`, `${this.getProperSize(this.actualWindowHeight)}px`);
+    }
+
+    getProperSize(size: number): number {
+        return size * SIZE_MODIFICATOR;
     }
 
     ngAfterViewInit(): void {
