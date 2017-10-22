@@ -1,7 +1,7 @@
-import { Component, OnInit, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import {
     TdLoadingService, TdDialogService, TdMediaService, TdDataTableService, TdDataTableSortingOrder,
-    ITdDataTableSortChangeEvent, ITdDataTableColumn, IPageChangeEvent,
+    ITdDataTableSortChangeEvent, ITdDataTableColumn, IPageChangeEvent, TdExpansionPanelComponent,
 } from '@covalent/core';
 
 import { ITdDynamicElementConfig, TdDynamicElement, TdDynamicType } from '@covalent/dynamic-forms';
@@ -13,12 +13,16 @@ import { IBuild } from 'model/build';
 const BOOLEAN_FORMAT: (v: any) => any = (v: boolean) => (v === true) ? 'ENABLED' : 'NOT ENABLED';
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Default,
     selector: 'testlink-plugin-dashboard',
     templateUrl: 'dashboard.component.html',
     styleUrls: ['dashboard.component.scss'],
 })
 
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, AfterViewInit {
+
+    @ViewChild('expansionChild') expansionChild: TdExpansionPanelComponent;
+
     menuItems: Object[] = [
         {
             icon: 'home',
@@ -164,6 +168,10 @@ export class DashboardComponent implements OnInit {
         this.filter();
     }
 
+    closeAll(): void {
+        this.expansionChild.close();
+    }
+
     change(event: any): void {
         this.selectedProject = event.value;
     }
@@ -206,5 +214,13 @@ export class DashboardComponent implements OnInit {
         newData = this._dataTableService.sortData(newData, this.sortBy, this.sortOrder);
         newData = this._dataTableService.pageData(newData, this.fromRow, this.currentPage * this.pageSize);
         this.filteredProjects = newData;
+    }
+
+    ngAfterViewInit(): void {
+        /* VERY IMPORTANT, DO NOT REMOVE THAT CODE (MdSidenav issues redrawing on re-calling) */
+        setTimeout(() => {
+            this.media.broadcast();
+            this._changeDetectorRef.detectChanges();
+        });
     }
 }

@@ -1,7 +1,7 @@
-import { Component, OnInit, OnChanges, Input, ViewChild, SimpleChange } from '@angular/core';
+import { Component, OnInit, OnChanges, AfterViewInit, Input, ViewChild, SimpleChange, ChangeDetectorRef } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import {
-    TdLoadingService, TdDialogService, TdDataTableService, TdDataTableSortingOrder,
+    TdLoadingService, TdDialogService, TdMediaService, TdDataTableService, TdDataTableSortingOrder,
     ITdDataTableSortChangeEvent, ITdDataTableColumn, IPageChangeEvent, TdDataTableComponent,
 } from '@covalent/core';
 
@@ -14,9 +14,10 @@ const BOOLEAN_FORMAT: (v: any) => any = (v: Date) => v.toDateString();
 @Component({
     selector: 'testlink-plugin-test-plan',
     templateUrl: 'test-plan.component.html',
+    styleUrls: ['test-plan.component.scss'],
 })
 
-export class TestPlanComponent implements OnInit, OnChanges {
+export class TestPlanComponent implements OnInit, OnChanges, AfterViewInit {
     @ViewChild('dataTable') dataTableComponent: TdDataTableComponent;
     @Input('builds') builds: IBuild[];
 
@@ -28,6 +29,8 @@ export class TestPlanComponent implements OnInit, OnChanges {
         { name: 'status', label: 'Status', sortable: true, filter: true },
         { name: 'assignedSince', label: 'Assigned since', sortable: true, filter: true, format: BOOLEAN_FORMAT },
     ];
+
+    arePanelsOpen: boolean = true;
 
     filteredBuilds: any[];
     filteredTotal: number;
@@ -42,7 +45,8 @@ export class TestPlanComponent implements OnInit, OnChanges {
 
     changeLog: string[] = [];
 
-    constructor(private _dataTableService: TdDataTableService, private dialogService: TdDialogService) { }
+    constructor(private _dataTableService: TdDataTableService, private dialogService: TdDialogService,
+        private _changeDetectorRef: ChangeDetectorRef, public media: TdMediaService) { }
 
     ngOnInit(): void {
         console.log(`input: ${JSON.stringify(this.builds)}`);
@@ -95,4 +99,11 @@ export class TestPlanComponent implements OnInit, OnChanges {
         });
     }
 
+    ngAfterViewInit(): void {
+        /* VERY IMPORTANT, DO NOT REMOVE THAT CODE (MdSidenav issues redrawing on re-calling) */
+        setTimeout(() => {
+            this.media.broadcast();
+            this._changeDetectorRef.detectChanges();
+        });
+    }
 }

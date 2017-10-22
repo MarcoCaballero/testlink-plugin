@@ -14,7 +14,7 @@ import { AppComponent } from './app.component';
 @NgModule({
   declarations: [
     AppComponent,
-    routedComponents
+    routedComponents,
   ],
   imports: [
     AppRoutingModule,

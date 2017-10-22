@@ -39,7 +39,7 @@
                 </div>
                 <div layout="column">
                     <form>
-                        <md-select style="text-align: left;" (change)="change($event)" color="accent" class="testlink-select testlink-center push-bottom"
+                        <md-select style="text-align: left;" (change)="change($event)" color="accent" class="testlink-select testlink-center push-bottom border-bottom"
                             placeholder="Select project" [(ngModel)]="selectedProject" name="food" required>
                             <md-option *ngFor="let project of projects" [value]="project">
                                 {{project.prefix}}: {{project.name}}
@@ -61,16 +61,19 @@
                         Test cases assigned to me
                     </span>
                     <span *ngIf="selectedRows.length && selectable" class="md-body-1">0 item(s) selected</span>
+                    <button md-raised-button (click)="closeAll()" color="primary">Collapse</button>
                 </span>
                 <td-search-box #searchBox backIcon="arrow_back" class="push-right-sm tc-orange-700" placeholder="Search here" (searchDebounce)="search($event)"
                     flex>
                 </td-search-box>
             </div>
             <md-divider></md-divider>
-            <ng-template let-plan ngFor [ngForOf]="selectedProject.testPlans">
-                <testlink-plugin-test-plan [builds]="plan.builds">
-                </testlink-plugin-test-plan>
-            </ng-template>
+            <md-accordion class="example-headers-align">
+                <ng-template let-plan ngFor [ngForOf]="selectedProject.testPlans">
+                    <testlink-plugin-test-plan [builds]="plan.builds">
+                    </testlink-plugin-test-plan>
+                </ng-template>
+            </md-accordion>
             <md-divider></md-divider>
         </md-card-content>
     </md-card>

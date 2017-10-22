@@ -1,19 +1,18 @@
-<td-expansion-panel [expand]="false">
-    <ng-template td-expansion-panel-label>
-        <md-icon>star</md-icon>
-        <span>Google</span>
-    </ng-template>
-    <ng-template td-expansion-panel-sublabel>
-        <span>1600 Amphitheatre Pkwy, Mountain View, CA 94043, USA</span>
-    </ng-template>
-    <form class="md-padding">
-        <div layout="row">
-            SOEMTHING
-        </div>
-        <div layout="row">
+<md-expansion-panel>
+    <md-expansion-panel-header>
+        <md-panel-title>
+            Personal data
+        </md-panel-title>
+        <md-panel-description>
+            Type your name and age
+        </md-panel-description>
+    </md-expansion-panel-header>
+    <form class="md-padding" class="testlink-elevation">
+        <div layout="row" flex>
             <td-data-table #dataTable [data]="filteredBuilds" [columns]="columns" [selectable]="false" [clickable]="true" [multiple]="false"
                 [sortable]="true" [sortBy]="sortBy" [sortOrder]="sortOrder" (sortChange)="sort($event)" (rowClick)="showAlert($event)"
-                [style.height.px]="filteredBuilds.length * 100 " style="width: 100% !important;">
+                [style.height.px]="filteredBuilds.length * 100 "  style="width: 100% !important;">
+
             </td-data-table>
             <div class="md-padding" *ngIf="!dataTable.hasData" layout="row" layout-align="center center">
                 <h3>No results to display.</h3>
@@ -25,7 +24,7 @@
                     Showing {{pagingBar.range}}
                     <span hide-xs>of {{pagingBar.total}}</span>
                 </span>
-                <span hide-xs >
+                <span hide-xs>
                     Showing
                     <md-select [style.width.px]="50" [(ngModel)]="pageSize" [ngModelOptions]="{standalone: true}">
                         <md-option *ngFor="let size of [5,50,100,200,500]" [value]="size">
@@ -38,8 +37,8 @@
         </div>
     </form>
     <md-divider></md-divider>
-    <div layout="row" class="pad-sm">
-        <button md-button color="accent" class="text-upper">Save</button>
-        <button md-button class="text-upper">Cancel</button>
-    </div>
-</td-expansion-panel>
+    <md-action-row>
+        <button md-button color="warn" (click)="prevStep()">Previous</button>
+        <button md-button color="primary" (click)="nextStep()">End</button>
+    </md-action-row>
+</md-expansion-panel>

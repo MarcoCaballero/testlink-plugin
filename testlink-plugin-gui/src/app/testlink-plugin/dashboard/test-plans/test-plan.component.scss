@@ -11,10 +11,9 @@ $accent-light:  mat-palette($md-elastestorange, 200, 300, 100);
 /* :host /deep/ lets shadowdom style child elements */
 :host /deep/ {
 
-
-    span.pull-right {
-        position: absolute;
-        left: 75%;
+    md-expansion-panel .mat-expanded {
+        margin-bottom: 15px;
+        margin-top: 15px;
     }
 
 }

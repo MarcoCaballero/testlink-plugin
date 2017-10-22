@@ -7,7 +7,7 @@ import {
     MdListModule, MdMenuModule, MdTooltipModule,
     MdSlideToggleModule, MdInputModule, MdCheckboxModule,
     MdToolbarModule, MdSnackBarModule, MdSidenavModule,
-    MdTabsModule, MdSelectModule, MdGridListModule,
+    MdTabsModule, MdSelectModule, MdGridListModule, MdExpansionModule,
 } from '@angular/material';
 
 import {
@@ -33,7 +33,7 @@ const MATERIAL_MODULES: any[] = [
     MdListModule, MdMenuModule, MdTooltipModule,
     MdSlideToggleModule, MdInputModule, MdCheckboxModule,
     MdToolbarModule, MdSnackBarModule, MdSidenavModule,
-    MdTabsModule, MdSelectModule, MdGridListModule,
+    MdTabsModule, MdSelectModule, MdGridListModule, MdExpansionModule,
 ];
 
 const ANGULAR_MODULES: any[] = [
