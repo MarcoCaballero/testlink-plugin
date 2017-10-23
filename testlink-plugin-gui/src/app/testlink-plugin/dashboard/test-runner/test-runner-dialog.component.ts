@@ -6,9 +6,22 @@ import { MdDialog, MD_DIALOG_DATA, MdDialogRef } from '@angular/material';
     templateUrl: 'test-runner-dialog.component.html',
 })
 export class TestRunnerDialogComponent {
+    filteringAsync: boolean = false;
+
+    testedBy: string[] = [
+        'Admin',
+        'Pep Serrat',
+        'Maria Gonzalez',
+        'Carles Garcia',
+        'need more?',
+    ];
+
+    asyncModel: string[] = this.testedBy.slice(0, 3);
+
     constructor(public dialogRef: MdDialogRef<TestRunnerDialogComponent>, @Inject(MD_DIALOG_DATA) public data: any) { }
 
     onSaveClick(): void {
         this.dialogRef.close();
     }
+
 }

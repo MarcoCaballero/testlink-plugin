@@ -1,9 +1,85 @@
-The content of the body element is displayed in your browser.The content of the body element is displayed in your browser.The
-content of the body element is displayed in your browser.The content of the body element is displayed in your browser.The
-content of the body element is displayed in your browser.The content of the body element is displayed in your browser.The
-content of the body element is displayed in your browser.The content of the body element is displayed in your browser.The
-content of the body element is displayed in your browser.The content of the body element is displayed in your browser.The
-content of the body element is displayed in your browser.The content of the body element is displayed in your browser.The
-content of the body element is displayed in your browser.The content of the body element is displayed in your browser. passed
-in {{ data.testSuitName }}
-<button (click)="onSaveClick()"></button>
+<md-toolbar color="primary" class="testlink-elevation">
+    <span>Test Suite ID: DEMO_MICA_01</span>
+</md-toolbar>
+<md-toolbar color="accent" class="testlink-elevation">
+    <span>ELT-1 :: Version : 1 // </span>
+    <span class="push-right">TL-DEMO</span>
+    <md-icon class="testrunner-icon">class</md-icon>
+    <span class="testrunner-spacer"></span>
+</md-toolbar>
+
+<md-tab-group class="testrunner-tab-group">
+    <md-tab label="TestPlan" class="testrunner-tab-content ">
+        <ng-template mat-tab-label>
+            <span>TestPlan</span>
+            <md-icon class="testrunner-icon">info_outline</md-icon>
+        </ng-template>
+        Content 1
+    </md-tab>
+    <md-tab label="Platform" class="testrunner-tab-content ">
+        <ng-template mat-tab-label>
+            <span>Platform </span>
+            <md-icon class="testrunner-icon">info_outline</md-icon>
+        </ng-template>
+        Content 2
+
+    </md-tab>
+    <md-tab label="Build" class="testrunner-tab-content ">
+        <ng-template mat-tab-label>
+            <span>Build </span>
+            <md-icon class="testrunner-icon">info_outline</md-icon>
+        </ng-template>
+        Content 3
+    </md-tab>
+    <md-tab label="Recent Tests" class="testrunner-tab-content ">
+        <ng-template mat-tab-label>
+            <span>Recent Tests </span>
+            <md-icon class="testrunner-icon">info_outline</md-icon>
+        </ng-template>
+        <md-list>
+            <h3 md-subheader>Tested by:</h3>
+            <md-list-item>
+                <md-icon md-list-icon>person_pin</md-icon>
+                <td-chips [items]="testedBy" [chipAddition]="false" [chipRemoval]="false" [disabled]="true" [(ngModel)]="asyncModel">
+                    <ng-template td-chip let-chip="chip">
+                        <div class="tc-grey-100 bgc-orange-300" td-chip-avatar>{{chip.substring(0, 1).toUpperCase()}}</div> {{chip}}
+                    </ng-template>
+                </td-chips>
+            </md-list-item>
+            <md-divider></md-divider>
+            <h3 md-subheader>Recent Tests</h3>
+            <md-list-item>
+                <md-icon md-list-icon>note</md-icon>
+                <h4 md-line>Status: Passed, by Jose Luis (tester)</h4>
+                <p md-line> Feb 20, 2016 </p>
+            </md-list-item>
+            <md-list-item>
+                <md-icon md-list-icon>note</md-icon>
+                <h4 md-line>Status: Passed, by Jose Luis (tester)</h4>
+                <p md-line> Feb 20, 2016 </p>
+            </md-list-item>
+        </md-list>
+    </md-tab>
+    <md-tab label="Run test" class="testrunner-tab-content ">
+        <ng-template mat-tab-label>
+            <span>Run test</span>
+            <md-icon class="testrunner-icon">play_circle_outline</md-icon>
+        </ng-template>
+        <md-list>
+            <h3 md-subheader>Preconditions:</h3>
+            <md-list-item>
+                <md-icon md-list-icon>person_pin</md-icon>
+                <h4 md-line>preconditions (if exists) for this test case</h4>
+            </md-list-item>
+            <md-divider></md-divider>
+            <h3 md-subheader>Steps</h3>
+            <md-list-item>
+                steps stuff
+            </md-list-item>
+        </md-list>
+
+        <md-action-row>
+            <button md-raised-button color="primary" (click)="onSaveClick()">Send</button>
+        </md-action-row>
+    </md-tab>
+</md-tab-group>

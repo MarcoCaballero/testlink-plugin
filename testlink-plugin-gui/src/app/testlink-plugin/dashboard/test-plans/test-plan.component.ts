@@ -111,6 +111,7 @@ export class TestPlanComponent implements OnInit, AfterViewInit {
                 project: event.row.project,
                 testSuitName: event.row.testSuitName,
             },
+            panelClass: 'testlink-no-padding',
         });
         this.updateDialogSize();
         this.dialogRef.afterClosed().subscribe((result: any): void => {

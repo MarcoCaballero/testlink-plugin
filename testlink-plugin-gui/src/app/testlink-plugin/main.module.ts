@@ -44,7 +44,7 @@ const ANGULAR_MODULES: any[] = [
 const COVALENT_MODULES: any[] = [
     CovalentDataTableModule, CovalentMediaModule, CovalentLoadingModule, CovalentVirtualScrollModule,
     CovalentNotificationsModule, CovalentLayoutModule, CovalentMenuModule, CovalentExpansionPanelModule,
-    CovalentPagingModule, CovalentSearchModule, CovalentStepsModule,
+    CovalentPagingModule, CovalentSearchModule, CovalentStepsModule, CovalentChipsModule,
     CovalentCommonModule, CovalentDialogsModule, CovalentHttpModule, CovalentDynamicFormsModule,
 ];
 
