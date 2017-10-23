@@ -10,14 +10,14 @@
 
 <md-tab-group class="testrunner-tab-group">
     <md-tab label="TestPlan" class="testrunner-tab-content ">
-        <ng-template mat-tab-label>
+        <ng-template md-tab-label>
             <span>TestPlan</span>
             <md-icon class="testrunner-icon">info_outline</md-icon>
         </ng-template>
         Content 1
     </md-tab>
     <md-tab label="Platform" class="testrunner-tab-content ">
-        <ng-template mat-tab-label>
+        <ng-template md-tab-label>
             <span>Platform </span>
             <md-icon class="testrunner-icon">info_outline</md-icon>
         </ng-template>
@@ -25,14 +25,14 @@
 
     </md-tab>
     <md-tab label="Build" class="testrunner-tab-content ">
-        <ng-template mat-tab-label>
+        <ng-template md-tab-label>
             <span>Build </span>
             <md-icon class="testrunner-icon">info_outline</md-icon>
         </ng-template>
         Content 3
     </md-tab>
     <md-tab label="Recent Tests" class="testrunner-tab-content ">
-        <ng-template mat-tab-label>
+        <ng-template md-tab-label>
             <span>Recent Tests </span>
             <md-icon class="testrunner-icon">info_outline</md-icon>
         </ng-template>
@@ -61,7 +61,7 @@
         </md-list>
     </md-tab>
     <md-tab label="Run test" class="testrunner-tab-content ">
-        <ng-template mat-tab-label>
+        <ng-template md-tab-label>
             <span>Run test</span>
             <md-icon class="testrunner-icon">play_circle_outline</md-icon>
         </ng-template>
@@ -73,10 +73,18 @@
             </md-list-item>
             <md-divider></md-divider>
             <h3 md-subheader>Steps</h3>
-            <md-list-item>
-                steps stuff
-            </md-list-item>
         </md-list>
+        <td-steps>
+            <ng-template let-step ngFor [ngForOf]="steps">
+                <td-step label="{{step.description}}" sublabel="{{step.expected}}" [state]="step.state" [disabled]="false" disableRipple>
+                    This step is required!
+                    <ng-template td-step-actions>
+                        <button md-raised-button color="primary" class="text-upper">Toggle Require</button>
+                        <button md-button class="text-upper">Cancel</button>
+                    </ng-template>
+                </td-step>
+            </ng-template>
+        </td-steps>
 
         <md-action-row>
             <button md-raised-button color="primary" (click)="onSaveClick()">Send</button>

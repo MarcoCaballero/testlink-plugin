@@ -81,7 +81,7 @@ export class DashboardInstanceComponent implements OnInit, OnDestroy, AfterViewI
     }
 
     ngAfterViewInit(): void {
-        /* VERY IMPORTANT, DO NOT REMOVE THAT CODE (MdSidenav issues redrawing on re-calling) */
+        /* VERY IMPORTANT, DO NOT REMOVE THAT CODE (MatSidenav issues redrawing on re-calling) */
         setTimeout(() => {
             this.media.broadcast();
             this._changeDetectorRef.detectChanges();

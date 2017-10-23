@@ -121,5 +121,13 @@ $theme: mat-light-theme($primary, $accent, $warn);
         }
     }
 
+    td-steps .td-circle.mat-inactive {
+        background-color: rgb(115, 115, 115);
+    }
+
+    td-steps .td-step-header .td-step-label-wrapper.mat-inactive, td-steps .td-step-header .td-step-label-wrapper.mat-inactive * {
+        color: rgba(0, 0, 0, 0.87);
+    }
+
 }
 
