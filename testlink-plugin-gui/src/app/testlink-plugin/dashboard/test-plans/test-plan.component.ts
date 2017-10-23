@@ -110,6 +110,7 @@ export class TestPlanComponent implements OnInit, AfterViewInit {
             data: {
                 project: event.row.project,
                 testSuitName: event.row.testSuitName,
+                height: this.actualWindowHeight,
             },
             panelClass: 'testlink-no-padding',
         });

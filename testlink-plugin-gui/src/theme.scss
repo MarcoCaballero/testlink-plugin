@@ -29,7 +29,7 @@ $theme: mat-light-theme($primary, $accent, $warn);
 @include covalent-markdown-theme($theme);
 @include covalent-highlight-theme();
 
-// Custom theme examples
+// Custom theme testrunners
 .white-orange {
     $primary2: mat-palette($mat-grey, 50);
     $accent2:  mat-palette($md-elastestorange, 500);
@@ -65,6 +65,7 @@ $theme: mat-light-theme($primary, $accent, $warn);
 // Add this to your global stylesheet after your theme setup
 .testlink-no-padding .mat-dialog-container {
     padding: 0 !important;
+    overflow: hidden !important;
 
     .push-right {
         // margin-left: 60%;
@@ -79,17 +80,16 @@ $theme: mat-light-theme($primary, $accent, $warn);
     }
 
     .mat-tab-label {
-        min-width: 25%;
+        min-width: 33%;
         color: black;
         font-size: 15px;
         font-weight: 700;
     }
 
     .mat-ink-bar {
-        min-width: 25%;
+        min-width: 33%;
         background: mat-color($primary);
     }
-
 
     .testrunner-tab-content {
         padding: 16px;
@@ -127,6 +127,29 @@ $theme: mat-light-theme($primary, $accent, $warn);
 
     td-steps .td-step-header .td-step-label-wrapper.mat-inactive, td-steps .td-step-header .td-step-label-wrapper.mat-inactive * {
         color: rgba(0, 0, 0, 0.87);
+    }
+
+    .testrunner-radio-group {
+        display: inline-flex;
+        flex-direction: row;
+    }
+
+    .testrunner-radio-button {
+        margin: 5px;
+    }
+
+    .testrunner-selected-value {
+        margin: 15px 0;
+    }
+
+    .testrunner-headers-align .mat-expansion-panel-header-title,
+    .testrunner-headers-align .mat-expansion-panel-header-description {
+      flex-basis: 0;
+    }
+
+    .testrunner-headers-align .mat-expansion-panel-header-description {
+      justify-content: space-between;
+      align-items: center;
     }
 
 }
