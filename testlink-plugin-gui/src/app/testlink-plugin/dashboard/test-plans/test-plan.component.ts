@@ -13,8 +13,9 @@ import { ITdDynamicElementConfig, TdDynamicElement, TdDynamicType } from '@coval
 import { MdDialog, MdDialogRef, DialogPosition } from '@angular/material';
 
 import { slideInDownAnimation } from 'app/app.animations';
-import { IBuild } from 'model/build';
 import { TestRunnerDialogComponent } from '../test-runner/test-runner-dialog.component';
+import { IBuild } from 'model/build';
+import { ITestPlan } from 'model/test-plan';
 
 const BOOLEAN_FORMAT: (v: any) => any = (v: Date) => v.toDateString();
 const SIZE_MODIFICATOR: number = 0.9;
@@ -28,6 +29,7 @@ const SIZE_MODIFICATOR: number = 0.9;
 })
 
 export class TestPlanComponent implements OnInit, AfterViewInit {
+    @Input('plan') plans: ITestPlan;
     @Input('builds') builds: IBuild[];
     @Input('opened') opened: boolean;
 

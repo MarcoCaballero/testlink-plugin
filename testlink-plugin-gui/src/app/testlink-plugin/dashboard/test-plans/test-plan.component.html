@@ -1,10 +1,10 @@
 <md-expansion-panel [expanded]="opened">
     <md-expansion-panel-header>
         <md-panel-title>
-            Personal data
+            TestPlan X {{builds.length}}
         </md-panel-title>
         <md-panel-description>
-            Type your name and age {{filteredBuilds.length}}
+            Some Info ....
         </md-panel-description>
     </md-expansion-panel-header>
     <td-data-table #dataTable [data]="filteredBuilds" [columns]="columns" [selectable]="false" [clickable]="true" [multiple]="true"

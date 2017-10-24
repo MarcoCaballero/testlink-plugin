@@ -32,7 +32,6 @@ import { InstancesService } from 'services/instances.service';
 const MATERIAL_MODULES: any[] = [
     MdButtonModule, MdCardModule, MdIconModule, MdDialogModule,
     MdListModule, MdMenuModule, MdTooltipModule, MdRadioModule,
-    MdListModule, MdMenuModule, MdTooltipModule,
     MdSlideToggleModule, MdInputModule, MdCheckboxModule,
     MdToolbarModule, MdSnackBarModule, MdSidenavModule,
     MdTabsModule, MdSelectModule, MdGridListModule, MdExpansionModule,

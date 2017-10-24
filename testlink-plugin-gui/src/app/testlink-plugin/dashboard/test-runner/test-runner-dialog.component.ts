@@ -12,11 +12,23 @@ export class TestRunnerDialogComponent implements OnInit {
     activeDeactiveStep1Msg: string = 'No select/deselect detected yet';
     selectedStatus: string;
     data: any[] = [];
-    status: Object[] = [
-        'PASSED',
-        'FAILED',
-        'BLOCKED',
-        'NOT_RUN',
+    statusList: Object[] = [
+        {
+            title: 'PASSED',
+            class: 'greened',
+        },
+        {
+            title: 'FAILED',
+            class: 'reded',
+        },
+        {
+            title: 'BLOCKED',
+            class: 'yellowed',
+        },
+        {
+            title: 'NOT_RUN',
+            class: 'greyed',
+        },
     ];
     testedBy: string[] = [
         'Admin',
@@ -37,7 +49,7 @@ export class TestRunnerDialogComponent implements OnInit {
         }, {
             id: 1,
             state: StepState.None,
-            description: 'go to http://youtube.com/step1',
+            description: 'go to http://youtube.com/step1 looking the side middle of the applicaion web sockket dumb content',
             expected: 'displays step1.html page',
             isActive: false,
             status: 'NOT_RUN',
@@ -46,7 +58,55 @@ export class TestRunnerDialogComponent implements OnInit {
             id: 2,
             state: StepState.None,
             description: 'go to http://youtube.com/step2',
-            expected: 'displays step2.html page',
+            expected: 'displays step2.html page  looking the side middle of the applicaion web sockket dumb content',
+            isActive: false,
+            status: 'NOT_RUN',
+        },
+        {
+            id: 2,
+            state: StepState.None,
+            description: 'go to http://youtube.com/step2',
+            expected: 'displays step2.html page  looking the side middle of the applicaion web sockket dumb content',
+            isActive: false,
+            status: 'NOT_RUN',
+        },
+        {
+            id: 2,
+            state: StepState.None,
+            description: 'go to http://youtube.com/step2',
+            expected: 'displays step2.html page  looking the side middle of the applicaion web sockket dumb content',
+            isActive: false,
+            status: 'NOT_RUN',
+        },
+        {
+            id: 2,
+            state: StepState.None,
+            description: 'go to http://youtube.com/step2',
+            expected: 'displays step2.html page  looking the side middle of the applicaion web sockket dumb content',
+            isActive: false,
+            status: 'NOT_RUN',
+        },
+        {
+            id: 2,
+            state: StepState.None,
+            description: 'go to http://youtube.com/step2',
+            expected: 'displays step2.html page  looking the side middle of the applicaion web sockket dumb content',
+            isActive: false,
+            status: 'NOT_RUN',
+        },
+        {
+            id: 2,
+            state: StepState.None,
+            description: 'go to http://youtube.com/step2',
+            expected: 'displays step2.html page  looking the side middle of the applicaion web sockket dumb content',
+            isActive: false,
+            status: 'NOT_RUN',
+        },
+        {
+            id: 100,
+            state: StepState.None,
+            description: 'go to http://youtube.com/step2',
+            expected: 'displays step2.html page  looking the side middle of the applicaion web sockket dumb content',
             isActive: false,
             status: 'NOT_RUN',
         },

@@ -129,6 +129,10 @@ $theme: mat-light-theme($primary, $accent, $warn);
         color: rgba(0, 0, 0, 0.87);
     }
 
+    .tl-push-right {
+        margin-left: 15px;
+    }
+
     .testrunner-radio-group {
         display: inline-flex;
         flex-direction: row;
@@ -150,6 +154,54 @@ $theme: mat-light-theme($primary, $accent, $warn);
     .testrunner-headers-align .mat-expansion-panel-header-description {
       justify-content: space-between;
       align-items: center;
+    }
+
+    .testlink-elevation {
+        box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+    }
+
+    .mat-grid-tile .mat-figure {
+        place-content: left;
+    }
+
+
+    .mat-radio-button.mat-accent .mat-radio-inner-circle {
+
+            background-color: #55c04e;
+
+    }
+
+
+    .mat-radio-button.mat-accent.greened .mat-radio-inner-circle{
+        background-color: #55c04e;
+    }
+    .mat-radio-button.mat-accent.reded .mat-radio-inner-circle{
+        background-color: #EF5350;
+    }
+    .mat-radio-button.mat-accent.yellowed .mat-radio-inner-circle{
+        background-color: #FDD835;
+    }
+    .mat-radio-button.mat-accent.greyed .mat-radio-inner-circle{
+        background-color: #9E9E9E;
+    }
+
+
+    .mat-radio-button.mat-accent.mat-radio-checked.greened .mat-radio-outer-circle {
+        border-color: #55c04e;
+    }
+    .mat-radio-button.mat-accent.mat-radio-checked.reded  .mat-radio-outer-circle {
+        border-color: #EF5350;
+    }
+    .mat-radio-button.mat-accent.mat-radio-checked.yellowed .mat-radio-outer-circle {
+        border-color: #FDD835;
+    }
+    .mat-radio-button.mat-accent.mat-radio-checked.greyed .mat-radio-outer-circle {
+        border-color: #9E9E9E;
+    }
+
+    [md-fab].md-fab-position-bottom-right, .mat-fab.mat-fab-position-bottom-right, [md-fab].md-fab-bottom-right, .mat-fab.mat-fab-bottom-right {
+
+        bottom: 7% !important;
     }
 
 }

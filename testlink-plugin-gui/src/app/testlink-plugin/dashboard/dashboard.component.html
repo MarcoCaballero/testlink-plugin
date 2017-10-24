@@ -66,7 +66,7 @@
         <md-divider></md-divider>
         <md-accordion class="example-headers-align">
             <ng-template let-plan ngFor [ngForOf]="selectedProject.testPlans">
-                <testlink-plugin-test-plan [builds]="plan.builds" [opened]="opened">
+                <testlink-plugin-test-plan [builds]="plan.builds" [plan]="plan" [opened]="opened">
                 </testlink-plugin-test-plan>
             </ng-template>
         </md-accordion>

@@ -14,7 +14,23 @@
             <span>Main Info</span>
             <md-icon class="testrunner-icon">info_outline</md-icon>
         </ng-template>
-        Content 1
+
+        <md-list>
+            <md-list-item>
+                <h3 md-subheader>Summary:</h3>
+                <md-icon md-list-icon>label</md-icon>
+            </md-list-item>
+
+            <md-list-item>
+                <h4 md-line>summary (if exists) for this test case</h4>
+            </md-list-item>
+            <md-divider></md-divider>
+
+            <md-list-item>
+                <h4 md-line>summary (if exists) for this test case</h4>
+            </md-list-item>
+            <md-divider></md-divider>
+        </md-list>
     </md-tab>
     <md-tab label="Recent Tests" class="testrunner-tab-content ">
         <ng-template md-tab-label>
@@ -51,36 +67,63 @@
             <md-icon class="testrunner-icon">play_circle_outline</md-icon>
         </ng-template>
         <md-list>
-            <h3 md-subheader>Preconditions:</h3>
             <md-list-item>
-                <md-icon md-list-icon>person_pin</md-icon>
+                <h3 md-subheader>Preconditions:</h3>
+                <md-icon md-list-icon>input</md-icon>
+            </md-list-item>
+            <md-list-item>
                 <h4 md-line>preconditions (if exists) for this test case</h4>
             </md-list-item>
             <md-divider></md-divider>
-            <h3 md-subheader>Steps</h3>
-            <td-virtual-scroll-container #virtualScroll [style.height.px]="400" [data]="steps">
-                <ng-template let-row="row" let-last="last" tdVirtualScrollRow>
-                    <md-list-item>
-                        <md-icon md-list-icon>person_pin</md-icon>
-                        <h4 md-line> Step: {{row.id + 1}}</h4>
-                    </md-list-item>
-                    <md-list-item>
-                        <h4 md-line> Step to do: {{row.description}} - Expected Result: {{row.expected}}</h4>
-                        <h4 md-line> Expected Result: {{row.expected}}</h4>
-                    </md-list-item>
-                    <md-list-item>
-                        <md-radio-group class="testrunner-radio-group" [(ngModel)]="row.status">
-                            <md-radio-button class="testrunner-radio-button" *ngFor="let status of status" [value]="status">
-                                {{status}}
-                            </md-radio-button>
-                        </md-radio-group>
-                    </md-list-item>
-                    <md-divider *ngIf="!last" mdInset></md-divider>
+            <md-list-item>
+                <md-icon md-list-icon>swap_calls</md-icon>
+                <h3 md-subheader>Steps</h3>
+            </md-list-item>
+            <md-grid-list class="testlink-elevation" cols="10" rowHeight="50px">
+                <md-grid-tile [colspan]="1" [rowspan]="1">
+                    <h2 class="tl-push-right" md-subheader>#
+                    </h2>
+                </md-grid-tile>
+                <md-grid-tile [colspan]="3" [rowspan]="1">
+                    <h2 md-subheader> Step Actions
+                    </h2>
+                </md-grid-tile>
+                <md-grid-tile [colspan]="3" [rowspan]="1">
+                    <h2 md-subheader>Expected
+                    </h2>
+                </md-grid-tile>
+                <md-grid-tile [colspan]="3" [rowspan]="1">
+                    <h2 md-subheader>Status
+                    </h2>
+                </md-grid-tile>
+            </md-grid-list>
+            <md-divider mdInset></md-divider>
+            <td-virtual-scroll-container #virtualScroll [style.height.px]="windowHeight/2" [data]="steps">
+                <ng-template let-first="first" let-row="row" let-last="last" tdVirtualScrollRow>
+                    <md-divider *ngIf="first" mdInset></md-divider>
+                    <md-grid-list cols="10" rowHeight="100px">
+                        <md-grid-tile [colspan]="1" [rowspan]="1">
+                            <p class="tl-push-right"> {{ row.id + 1 }} </p>
+                        </md-grid-tile>
+                        <md-grid-tile [colspan]="3" [rowspan]="1">
+                            <p>{{ row.description }} </p>
+                        </md-grid-tile>
+                        <md-grid-tile [colspan]="3" [rowspan]="1">
+                            <p> {{ row.expected }} </p>
+                        </md-grid-tile>
+                        <md-grid-tile [colspan]="3" [rowspan]="1">
+                            <md-radio-group class="testrunner-radio-group" [(ngModel)]="row.status">
+                                <md-radio-button [ngClass]="status.class" class="testrunner-radio-button" *ngFor="let status of statusList" [value]="status">
+                                    {{status.title.substring(0, 1).toUpperCase()}}
+                                </md-radio-button>
+                            </md-radio-group>
+                        </md-grid-tile>
+                    </md-grid-list>
                 </ng-template>
             </td-virtual-scroll-container>
-            <md-action-row>
-                <button md-raised-button color="primary" (click)="onSaveClick()">Send</button>
-            </md-action-row>
         </md-list>
+        <button md-fab hide-gt-md id="right-side" class="mat-fab-bottom-right" aria-label="New Task" (click)='onSaveClick()'>
+            <md-icon>save</md-icon>
+        </button>
     </md-tab>
 </md-tab-group>
