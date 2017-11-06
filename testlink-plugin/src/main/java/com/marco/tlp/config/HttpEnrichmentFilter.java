@@ -1,4 +1,4 @@
-package com.marco.tlp;
+package com.marco.tlp.config;
 
 import java.io.IOException;
 
@@ -9,28 +9,30 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.marco.tlp.models.Plugin;
 
 @Component
 public class HttpEnrichmentFilter implements Filter {
 
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	private final String SERVER_HEADER = "SERVER_HEADER";
 	private final String KEY_HEADER = "KEY_HEADER";
+
+	@Autowired
+	Plugin plugin;
 
 	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
 			throws IOException, ServletException {
 		HttpServletRequest request = (HttpServletRequest) req;
-		HttpSession session = request.getSession(true);
-
-		if (session != null) {
-			String server = request.getHeader(SERVER_HEADER);
-			String key = request.getHeader(KEY_HEADER);
-			session.setAttribute(SERVER_HEADER, server);
-			session.setAttribute(KEY_HEADER, key);
-		}
-
+		String server = request.getHeader(SERVER_HEADER);
+		String key = request.getHeader(KEY_HEADER);
+		plugin.setApi(server, key);
 		chain.doFilter(req, res);
 	}
 
