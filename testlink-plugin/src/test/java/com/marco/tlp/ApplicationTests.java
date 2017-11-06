@@ -1,4 +1,4 @@
-package testlinkplugin;
+package com.marco.tlp;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

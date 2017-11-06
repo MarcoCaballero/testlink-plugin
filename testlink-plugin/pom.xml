@@ -4,12 +4,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>io.elastest</groupId>
-	<artifactId>testlink-plugin-api</artifactId>
+	<artifactId>testlink-plugin-rest</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>testlink-plugin-api</name>
-	<description>REST API to provide a usefull plugin to testlink</description>
+	<name>testlink-plugin-rest</name>
+	<description>to define....</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
