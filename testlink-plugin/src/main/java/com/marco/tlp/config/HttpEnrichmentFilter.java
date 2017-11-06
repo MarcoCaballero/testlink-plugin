@@ -33,6 +33,7 @@ public class HttpEnrichmentFilter implements Filter {
 		String server = request.getHeader(SERVER_HEADER);
 		String key = request.getHeader(KEY_HEADER);
 		plugin.setApi(server, key);
+		logger.info("Login in the url: " + server + "with the following API KEY -> " + key);
 		chain.doFilter(req, res);
 	}
 
