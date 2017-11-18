@@ -15,16 +15,16 @@ import com.marco.tlp.services.ProjectService;
 import br.eti.kinoshita.testlinkjavaapi.model.TestProject;
 
 @RestController
-@RequestMapping("/api")
-public class EnrichedController {
-	private final String SERVER_HEADER = "SERVER_HEADER";
-	private final String KEY_HEADER = "KEY_HEADER";
-
+@RequestMapping("/testlink-plugin/testproject")
+public class ProjectRestController {
 	@Autowired
 	ProjectService projectService;
 
 	@GetMapping
 	public ResponseEntity<List<TestProject>> get(HttpSession session) {
-		return ResponseEntity.ok().body(projectService.getProjects());
+		List<TestProject> testProject = projectService.getProjects();
+		if (testProject != null)
+			return ResponseEntity.ok().body(testProject);
+		return ResponseEntity.notFound().build();
 	}
 }

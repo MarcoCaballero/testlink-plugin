@@ -32,7 +32,9 @@ public class HttpEnrichmentFilter implements Filter {
 		HttpServletRequest request = (HttpServletRequest) req;
 		String server = request.getHeader(SERVER_HEADER);
 		String key = request.getHeader(KEY_HEADER);
-		plugin.setApi(server, key);
+		if (server == null || key == null)
+			throw new MissingCustomHeaderException("'SERVER_HEADER or KEY_HEADER' on the request is required.");
+		plugin.connectToApi(server, key);
 		logger.info("Login in the url: " + server + "with the following API KEY -> " + key);
 		chain.doFilter(req, res);
 	}
