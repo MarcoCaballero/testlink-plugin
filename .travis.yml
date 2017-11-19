@@ -6,9 +6,6 @@ addons:
     organization: "marcocaballero-github"
     token:
       secure: "$SONAR_TOKEN"
-     branches:
-      only:
-        - master
       github-token: "$GITHUB_TOKEN"
 jdk:
   - oraclejdk8
