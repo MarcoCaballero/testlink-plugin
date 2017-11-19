@@ -5,8 +5,8 @@ addons:
   sonarcloud:
     organization: "marcocaballero-github"
     token:
-      secure: "$SONAR_TOKEN"
-      github-token: "$GITHUB_TOKEN"
+      secure: $SONAR_TOKEN
+      github-token: $GITHUB_TOKEN
 jdk:
   - oraclejdk8
 script:
