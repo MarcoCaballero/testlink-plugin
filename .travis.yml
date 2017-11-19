@@ -10,6 +10,7 @@ jdk:
   - oraclejdk8
 before_script:
   - cd testlink-plugin
+  - mvn -v
 script:
   - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar
 cache:
