@@ -35,11 +35,11 @@ public class HttpEnrichmentFilter implements Filter {
 		server = request.getHeader(SERVER_HEADER);
 		key = request.getHeader(KEY_HEADER);
 		if (server == null) {
-			throw new MissingCustomHeaderException("'SERVER_HEADER or KEY_HEADER' on the request is required.");
+			throw new MissingCustomHeaderException("'SERVER_HEADER' on the request is required.");
 		}
 
 		if (key == null) {
-			throw new MissingCustomHeaderException("'SERVER_HEADER or KEY_HEADER' on the request is required.");
+			throw new MissingCustomHeaderException("'KEY_HEADER' on the request is required.");
 		}
 
 		plugin.connectToApi(server, key);
