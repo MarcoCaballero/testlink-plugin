@@ -11,10 +11,12 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.marco.tlp.models.RPCControllers.TestPlanController;
-import com.marco.tlp.models.RPCControllers.TestProjectController;
+import com.marco.tlp.models.rpccontrollers.BuildController;
+import com.marco.tlp.models.rpccontrollers.TestPlanController;
+import com.marco.tlp.models.rpccontrollers.TestProjectController;
 
 import br.eti.kinoshita.testlinkjavaapi.TestLinkAPI;
+import br.eti.kinoshita.testlinkjavaapi.model.Build;
 import br.eti.kinoshita.testlinkjavaapi.model.TestPlan;
 import br.eti.kinoshita.testlinkjavaapi.model.TestProject;
 import br.eti.kinoshita.testlinkjavaapi.util.TestLinkAPIException;
@@ -56,4 +58,11 @@ public class RPCPlugin implements Plugin {
 	public TestPlan getProjectTestPlan(String planName, String projectName) {
 		return new TestPlanController(api).getTestPlanByName(planName, projectName);
 	}
+
+	@Override
+	public List<Build> getTestPlansBuilds(Integer testPlanId) {
+		return new BuildController(api).getBuildByTestPlan(testPlanId);
+	}
+	
+	
 }

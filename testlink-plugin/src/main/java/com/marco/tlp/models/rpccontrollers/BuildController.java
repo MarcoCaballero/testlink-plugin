@@ -1,4 +1,4 @@
-package com.marco.tlp.models.RPCControllers;
+package com.marco.tlp.models.rpccontrollers;
 
 import java.util.List;
 
@@ -14,5 +14,8 @@ public class BuildController extends Controller<Build> {
 	public List<Build> getBuildByTestPlan(Integer testPlanId) {
 		return this.toList(api.getBuildsForTestPlan(testPlanId));
 	}
-
+	
+	public Build getLatestBuildForTestPlan(Integer testPlanId) {
+		return api.getLatestBuildForTestPlan(testPlanId);
+	}
 }

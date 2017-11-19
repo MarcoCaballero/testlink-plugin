@@ -7,19 +7,19 @@ import org.springframework.stereotype.Service;
 
 import com.marco.tlp.models.Plugin;
 
-import br.eti.kinoshita.testlinkjavaapi.model.TestProject;
+import br.eti.kinoshita.testlinkjavaapi.model.Build;
 
 @Service
-public class ProjectService {
+public class BuildService {
 
 	private Plugin plugin;
-	
+
 	@Autowired
-	public ProjectService(Plugin plugin) {
+	public BuildService(Plugin plugin) {
 		this.plugin = plugin;
 	}
-
-	public List<TestProject> getProjects() {
-		return this.plugin.getProjects();
+	
+	public List<Build> getBuildByPlan(Integer testPlanId) {
+		return this.plugin.getTestPlansBuilds(testPlanId);
 	}
 }

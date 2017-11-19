@@ -1,4 +1,4 @@
-package com.marco.tlp.models.RPCControllers;
+package com.marco.tlp.models.rpccontrollers;
 
 import java.util.List;
 

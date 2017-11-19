@@ -11,8 +11,12 @@ import br.eti.kinoshita.testlinkjavaapi.model.TestPlan;
 
 @Service
 public class TestPlanService {
+	private Plugin plugin;
+	
 	@Autowired
-	Plugin plugin;
+	public TestPlanService(Plugin plugin) {
+		this.plugin = plugin;
+	}
 	
 	public List<TestPlan> getProjectTestPlans(Integer projectId) {
 		return plugin.getProjectTestPlans(projectId);

@@ -21,32 +21,45 @@ import com.marco.tlp.models.Plugin;
 public class HttpEnrichmentFilter implements Filter {
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
-	private final String SERVER_HEADER = "SERVER_HEADER";
-	private final String KEY_HEADER = "KEY_HEADER";
-
+	private static final String SERVER_HEADER = "SERVER_HEADER";
+	private static final String KEY_HEADER = "KEY_HEADER";
+	private String server;
+	private String key;
 	@Autowired
-	Plugin plugin;
+	private Plugin plugin;
+	
 
 	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
 			throws IOException, ServletException {
 		HttpServletRequest request = (HttpServletRequest) req;
-		String server = request.getHeader(SERVER_HEADER);
-		String key = request.getHeader(KEY_HEADER);
-		if (server == null || key == null)
+		server = request.getHeader(SERVER_HEADER);
+		key = request.getHeader(KEY_HEADER);
+		if (server == null) {
 			throw new MissingCustomHeaderException("'SERVER_HEADER or KEY_HEADER' on the request is required.");
+		}
+
+		if (key == null) {
+			throw new MissingCustomHeaderException("'SERVER_HEADER or KEY_HEADER' on the request is required.");
+		}
+
 		plugin.connectToApi(server, key);
-		logger.info("Login in the url: " + server + "with the following API KEY -> " + key);
+		logger.info("Login in the url: {} with the following API KEY -> {}", server, key);
 		chain.doFilter(req, res);
 	}
 
 	@Override
 	public void destroy() {
-
+		restoreMember();
 	}
 
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
-
+		restoreMember();
+	}
+	
+	private void restoreMember() {
+		this.server = null;
+		this.key = null;
 	}
 
 }

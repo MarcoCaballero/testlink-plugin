@@ -13,6 +13,6 @@ public class ExceptionRestController {
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(MissingCustomHeaderException.class)
 	public String exception(MissingCustomHeaderException e) {
-	    return new String("ERROR" + e.getMessage());
+	    return "ERROR" + e.getMessage();
 	}
 }
