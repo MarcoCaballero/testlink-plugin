@@ -66,7 +66,7 @@ $theme: mat-light-theme($primary, $accent, $warn);
 .testlink-no-padding .mat-dialog-container {
     padding: 0 !important;
     overflow: hidden !important;
-
+    max-width: 90vw !important;
     .push-right {
         // margin-left: 60%;
     }
@@ -202,6 +202,10 @@ $theme: mat-light-theme($primary, $accent, $warn);
     [md-fab].md-fab-position-bottom-right, .mat-fab.mat-fab-position-bottom-right, [md-fab].md-fab-bottom-right, .mat-fab.mat-fab-bottom-right {
 
         bottom: 7% !important;
+    }
+
+    .editor {
+        height: 200px;
     }
 
 }

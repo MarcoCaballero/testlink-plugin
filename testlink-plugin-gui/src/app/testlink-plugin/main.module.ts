@@ -19,6 +19,8 @@ import {
 } from '@covalent/core';
 import { CovalentHttpModule } from '@covalent/http';
 import { CovalentDynamicFormsModule } from '@covalent/dynamic-forms';
+import { CovalentTextEditorModule } from '@covalent/text-editor';
+import { CovalentMarkdownModule } from '@covalent/markdown';
 
 import { mainRoutes } from './main.routes';
 import { MainComponent } from './main.component';
@@ -27,6 +29,7 @@ import { DashboardInstanceComponent } from './instances/dashboard/dashboard-inst
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { TestPlanComponent } from './dashboard/test-plans/test-plan.component';
 import { TestRunnerDialogComponent } from './dashboard/test-runner/test-runner-dialog.component';
+import { TextEditorDemoComponent } from './dashboard/test-runner/text-editor.component';
 import { InstancesService } from 'services/instances.service';
 
 const MATERIAL_MODULES: any[] = [
@@ -44,13 +47,13 @@ const ANGULAR_MODULES: any[] = [
 const COVALENT_MODULES: any[] = [
     CovalentDataTableModule, CovalentMediaModule, CovalentLoadingModule, CovalentVirtualScrollModule,
     CovalentNotificationsModule, CovalentLayoutModule, CovalentMenuModule, CovalentExpansionPanelModule,
-    CovalentPagingModule, CovalentSearchModule, CovalentStepsModule, CovalentChipsModule,
-    CovalentCommonModule, CovalentDialogsModule, CovalentHttpModule, CovalentDynamicFormsModule,
+    CovalentPagingModule, CovalentSearchModule, CovalentStepsModule, CovalentChipsModule, CovalentTextEditorModule,
+    CovalentCommonModule, CovalentDialogsModule, CovalentHttpModule, CovalentDynamicFormsModule, CovalentMarkdownModule,
 ];
 
 const TESTLINK_PLUGIN_MODULES: any[] = [
     MainComponent, InstanceLoginComponent, DashboardInstanceComponent, DashboardComponent,
-    TestPlanComponent, TestRunnerDialogComponent,
+    TestPlanComponent, TestRunnerDialogComponent, TextEditorDemoComponent,
 ];
 const TESTLINK_PLUGIN_SERVICES: any[] = [
     InstancesService,

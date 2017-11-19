@@ -1,17 +1,22 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, HostBinding } from '@angular/core';
 import { MdDialog, MD_DIALOG_DATA, MdDialogRef, MdAccordionDisplayMode } from '@angular/material';
-
 import { StepState, TdStepComponent } from '@covalent/core';
+
+import { TdTextEditorComponent } from '@covalent/text-editor';
+
+import { slideInDownAnimation } from '../../../app.animations';
 
 @Component({
     selector: 'testlink-plugin-test-runner-dialog',
     templateUrl: 'test-runner-dialog.component.html',
+    animations: [slideInDownAnimation],
 })
 export class TestRunnerDialogComponent implements OnInit {
+    @HostBinding('@routeAnimation') routeAnimation: boolean = true;
+    @HostBinding('class.td-route-animation') classAnimation: boolean = true;
     filteringAsync: boolean = false;
     activeDeactiveStep1Msg: string = 'No select/deselect detected yet';
     selectedStatus: string;
-    data: any[] = [];
     statusList: Object[] = [
         {
             title: 'PASSED',
@@ -111,9 +116,31 @@ export class TestRunnerDialogComponent implements OnInit {
             status: 'NOT_RUN',
         },
     ];
+    editorVal: string = `# Intro
+    Go ahead, play around with the editor! Be sure to check out **bold** and *italic* styling, or even [links](https://google.com).
+    You can type the Markdown syntax, use the toolbar, or use shortcuts like 'cmd-b' or 'ctrl-b'.
+    ## Lists
+    Unordered lists can be started using the toolbar or by typing '* ', '- ', or '+ '. Ordered lists can be started by typing '1. '.
+    #### Unordered
+    * Lists are a piece of cake
+    * They even auto continue as you type
+    * A double enter will end them
+    * Tabs and shift-tabs work too
+    #### Ordered
+    1. Numbered lists...
+    2. ...work too!
+    ## What about images?
+    ![Yes](https://i.imgur.com/sZlktY7.png)
+    `;
+
+    options: any = {
+        lineWrapping: true,
+        toolbar: true,
+    };
 
     asyncModel: string[] = this.testedBy.slice(0, 3);
     windowHeight: number;
+
 
     constructor(public dialogRef: MdDialogRef<TestRunnerDialogComponent>, @Inject(MD_DIALOG_DATA) public dataService: any) {
 
@@ -121,9 +148,6 @@ export class TestRunnerDialogComponent implements OnInit {
 
     ngOnInit(): void {
         this.windowHeight = this.dataService.height;
-        for (let index: number = 1; index <= 1500; index++) {
-            this.data.push({ index: index, name: 'element-' + index });
-        }
     }
 
     onSaveClick(): void {
@@ -138,4 +162,10 @@ export class TestRunnerDialogComponent implements OnInit {
         this.activeDeactiveStep1Msg = 'Deactive event emitted.';
     }
 
+    isError(title: string): boolean {
+        return title === 'FAILED';
+    }
+    isBlocked(title: string): boolean {
+        return title === 'BLOCKED';
+    }
 }

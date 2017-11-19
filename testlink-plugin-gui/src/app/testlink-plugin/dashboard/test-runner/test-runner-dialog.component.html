@@ -1,12 +1,12 @@
 <md-toolbar color="primary" class="testlink-elevation">
-    <span>Test Suite ID: DEMO_MICA_01</span>
+    <span>Test Suite ID: DEMO_MICA_01</span> <span  class="push-right">ELT-1 :: Version : 1 // TL-DEMO</span>
 </md-toolbar>
-<md-toolbar color="accent" class="testlink-elevation">
+<!-- <md-toolbar color="accent" class="testlink-elevation">
     <span>ELT-1 :: Version : 1 // </span>
     <span class="push-right">TL-DEMO</span>
     <md-icon class="testrunner-icon">class</md-icon>
     <span class="testrunner-spacer"></span>
-</md-toolbar>
+</md-toolbar> -->
 
 <md-tab-group class="testrunner-tab-group">
     <md-tab label="TestPlan" class="testrunner-tab-content ">
@@ -119,10 +119,14 @@
                             </md-radio-group>
                         </md-grid-tile>
                     </md-grid-list>
+                    <ng-template [ngIf]="isError(row.status.title) || isBlocked(row.status.title)">
+                        <p>{{ row.status.title }}</p>
+                        <td-text-editor [value]="editorVal" [options]="options"></td-text-editor>
+                    </ng-template>
                 </ng-template>
             </td-virtual-scroll-container>
         </md-list>
-        <button md-fab hide-gt-md id="right-side" class="mat-fab-bottom-right" aria-label="New Task" (click)='onSaveClick()'>
+        <button md-fab id="right-side" class="mat-fab-bottom-right" aria-label="New Task" (click)='onSaveClick()'>
             <md-icon>save</md-icon>
         </button>
     </md-tab>

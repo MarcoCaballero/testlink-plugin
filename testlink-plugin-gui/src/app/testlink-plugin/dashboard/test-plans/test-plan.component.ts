@@ -18,7 +18,7 @@ import { IBuild } from 'model/build';
 import { ITestPlan } from 'model/test-plan';
 
 const BOOLEAN_FORMAT: (v: any) => any = (v: Date) => v.toDateString();
-const SIZE_MODIFICATOR: number = 0.9;
+const SIZE_MODIFICATOR: number = 0.95;
 
 @Component({
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -124,7 +124,7 @@ export class TestPlanComponent implements OnInit, AfterViewInit {
     }
 
     updateDialogSize(): void {
-        this.dialogRef.updatePosition({ top: `${(this.actualWindowHeight * 0.05)}px`, left: `${this.actualWindowWidth * 0.1}px` });
+        this.dialogRef.updatePosition({ top: `${(this.actualWindowHeight * 0.01)}px`, left: `${this.actualWindowWidth * 0.05}px` });
         this.dialogRef.updateSize(`${this.getProperSize(this.actualWindowWidth)}px`, `${this.getProperSize(this.actualWindowHeight)}px`);
     }
 

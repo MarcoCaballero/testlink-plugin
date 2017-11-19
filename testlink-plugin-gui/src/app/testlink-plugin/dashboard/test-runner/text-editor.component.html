@@ -1,0 +1,20 @@
+<md-card>
+    <md-card-title>Bug Info</md-card-title>
+    <md-card-subtitle>Edit the bug info in the left editor for a real-time preview</md-card-subtitle>
+    <md-divider></md-divider>
+    <md-toolbar show-gt-md>
+      <div layout="row" flex>
+        <span flex="55">Editor</span>
+        <span flex="45">Preview</span>
+      </div>
+    </md-toolbar>
+    <md-divider show-gt-md></md-divider>
+    <div layout-gt-md="row" class="bgc-grey-50" tdMediaToggle="gt-md" [mediaStyles]="{height: '650px'}">
+      <div flex-gt-md="55" layout-gt-md="column" class="pad-sm">
+        <td-text-editor flex-gt-md [(ngModel)]="editorVal"></td-text-editor>
+      </div>
+      <div flex-gt-md="45" layout-gt-md="column" class="md-content pad-sm">
+        <td-markdown flex-gt-md [content]="editorVal"></td-markdown>
+      </div>
+    </div>
+  </md-card>
