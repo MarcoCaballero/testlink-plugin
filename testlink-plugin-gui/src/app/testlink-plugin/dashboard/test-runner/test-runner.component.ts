@@ -1,17 +1,19 @@
-import { Component, Inject, OnInit, HostBinding } from '@angular/core';
-import { MdDialog, MD_DIALOG_DATA, MdDialogRef, MdAccordionDisplayMode } from '@angular/material';
-import { StepState, TdStepComponent } from '@covalent/core';
+import { Component, Inject, OnInit, HostListener, HostBinding, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { MdAccordionDisplayMode } from '@angular/material';
+import { StepState, TdStepComponent, TdMediaService } from '@covalent/core';
 
 import { TdTextEditorComponent } from '@covalent/text-editor';
 
 import { slideInDownAnimation } from '../../../app.animations';
 
 @Component({
-    selector: 'testlink-plugin-test-runner-dialog',
-    templateUrl: 'test-runner-dialog.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'testlink-plugin-test-runner',
+    templateUrl: 'test-runner.component.html',
+    styleUrls: ['test-runner.component.scss'],
     animations: [slideInDownAnimation],
 })
-export class TestRunnerDialogComponent implements OnInit {
+export class TestRunnerComponent implements OnInit, AfterViewInit {
     @HostBinding('@routeAnimation') routeAnimation: boolean = true;
     @HostBinding('class.td-route-animation') classAnimation: boolean = true;
     filteringAsync: boolean = false;
@@ -116,22 +118,26 @@ export class TestRunnerDialogComponent implements OnInit {
             status: 'NOT_RUN',
         },
     ];
-    editorVal: string = `# Intro
-    Go ahead, play around with the editor! Be sure to check out **bold** and *italic* styling, or even [links](https://google.com).
-    You can type the Markdown syntax, use the toolbar, or use shortcuts like 'cmd-b' or 'ctrl-b'.
-    ## Lists
-    Unordered lists can be started using the toolbar or by typing '* ', '- ', or '+ '. Ordered lists can be started by typing '1. '.
-    #### Unordered
-    * Lists are a piece of cake
-    * They even auto continue as you type
-    * A double enter will end them
-    * Tabs and shift-tabs work too
-    #### Ordered
-    1. Numbered lists...
-    2. ...work too!
-    ## What about images?
-    ![Yes](https://i.imgur.com/sZlktY7.png)
-    `;
+
+    navmenu: Object[] = [{
+        icon: 'looks_one',
+        route: '.',
+        title: 'First item',
+        description: 'Item description',
+    }, {
+        icon: 'looks_two',
+        route: '.',
+        title: 'Second item',
+        description: 'Item description',
+    }, {
+        icon: 'looks_3',
+        route: '.',
+        title: 'Third item',
+        description: 'Item description',
+    },
+    ];
+
+    editorVal: string;
 
     options: any = {
         lineWrapping: true,
@@ -140,18 +146,23 @@ export class TestRunnerDialogComponent implements OnInit {
 
     asyncModel: string[] = this.testedBy.slice(0, 3);
     windowHeight: number;
+    failedOrBlocked: number = 0;
 
+    constructor(private _changeDetectorRef: ChangeDetectorRef, public media: TdMediaService) { }
 
-    constructor(public dialogRef: MdDialogRef<TestRunnerDialogComponent>, @Inject(MD_DIALOG_DATA) public dataService: any) {
-
+    @HostListener('window:resize', ['$event'])
+    onResize(event: any): void {
+        this.windowHeight = event.target.innerWidth;
     }
 
     ngOnInit(): void {
-        this.windowHeight = this.dataService.height;
+        // this.windowHeight = this.dataService.height;
+        this.editorVal = `# Intro`;
+        this.windowHeight = window.innerWidth;
     }
 
     onSaveClick(): void {
-        this.dialogRef.close();
+        // this.dialogRef.close();
     }
 
     activeEvent(): void {
@@ -165,7 +176,31 @@ export class TestRunnerDialogComponent implements OnInit {
     isError(title: string): boolean {
         return title === 'FAILED';
     }
+
     isBlocked(title: string): boolean {
         return title === 'BLOCKED';
+    }
+
+    checkStatus(): boolean {
+        let status: boolean = false;
+        this.steps.forEach((step: any): void => {
+            if (this.isError(step.status) || this.isBlocked(step.status)) {
+                status = true;
+            }
+        });
+        console.log(`status: ${status}`);
+        return status;
+    }
+
+    getBackground(i: number): string {
+        return (i % 2 === 0) ? 'white' : '#66666629';
+    }
+
+    ngAfterViewInit(): void {
+        /* VERY IMPORTANT, DO NOT REMOVE THAT CODE (MatSidenav issues redrawing on re-calling) */
+        setTimeout(() => {
+            this.media.broadcast();
+            this._changeDetectorRef.detectChanges();
+        });
     }
 }

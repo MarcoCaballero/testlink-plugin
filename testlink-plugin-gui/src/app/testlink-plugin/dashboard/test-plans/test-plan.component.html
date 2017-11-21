@@ -8,7 +8,7 @@
         </md-panel-description>
     </md-expansion-panel-header>
     <td-data-table #dataTable [data]="filteredBuilds" [columns]="columns" [selectable]="false" [clickable]="true" [multiple]="true"
-        [sortable]="true" [sortBy]="sortBy" [sortOrder]="sortOrder" (sortChange)="sort($event)" (rowClick)="showAlert($event)"
+        [sortable]="true" [sortBy]="sortBy" [sortOrder]="sortOrder" (sortChange)="sort($event)" (rowClick)="goTest()"
         [style.height.px]="(filteredBuilds.length==1)? 120: filteredBuilds.length * 90">
     </td-data-table>
     <div class="md-padding" *ngIf="!dataTable.hasData" layout="row" layout-align="center center">

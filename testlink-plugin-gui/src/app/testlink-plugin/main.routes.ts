@@ -5,6 +5,7 @@ import { MainComponent } from './main.component';
 import { InstanceLoginComponent } from './instances/login/instance-login.component';
 import { DashboardInstanceComponent } from './instances/dashboard/dashboard-instance.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { TestRunnerComponent } from './dashboard/test-runner/test-runner.component';
 
 const routes: Routes = [{
   path: 'testlink-plugin',
@@ -24,6 +25,10 @@ const routes: Routes = [{
   {
     path: 'instance-dashboard',
     component: DashboardInstanceComponent,
+  },
+  {
+    path: 'run-test',
+    component: TestRunnerComponent,
   },
   {
     path: 'dashboard',

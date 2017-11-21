@@ -1,0 +1,166 @@
+@import '~theme.scss';
+@import '~palette.scss';
+
+/* Variables */
+$primary:       map-get($theme, primary);
+$accent:        map-get($theme, accent);
+$warn:          map-get($theme, warn);
+$accent-light:  mat-palette($md-elastestorange, 200, 300, 100);
+
+
+
+
+/* :host /deep/ lets shadowdom style child elements */
+:host /deep/ {
+.push-right {
+
+    position: absolute;
+    left: 70%;
+}
+
+.no-padding {
+    padding: 5px !important;
+}
+
+.testlink-elevation {
+    box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+}
+
+.mat-tab-label-container  {
+    background: mat-color($accent);
+}
+
+.mat-tab-label {
+    min-width: 33%;
+    color: black;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.mat-ink-bar {
+    min-width: 33%;
+    background: mat-color($primary);
+}
+
+.testrunner-tab-content {
+    padding: 16px;
+}
+
+  .testrunner-icon {
+    padding: 0 14px;
+}
+
+.testrunner-spacer {
+    flex: 1 1 auto;
+}
+
+.mat-tab-header-pagination-chevron {
+    border-color: white;
+}
+
+.mat-tab-header-pagination-controls-enabled .mat-tab-header-pagination {
+    display: flex;
+    background: #ffac2f;
+}
+
+.mat-raised-button {
+    color: white;
+    font-weight: 700;
+    background-color: mat-color($accent) !important;
+    &:hover {
+        background-color: mat-color($primary) !important;
+    }
+}
+
+td-steps .td-circle.mat-inactive {
+    background-color: rgb(115, 115, 115);
+}
+
+td-steps .td-step-header .td-step-label-wrapper.mat-inactive, td-steps .td-step-header .td-step-label-wrapper.mat-inactive * {
+    color: rgba(0, 0, 0, 0.87);
+}
+
+.tl-push-right {
+    margin-left: 15px;
+}
+
+.testrunner-radio-group {
+    display: inline-flex;
+    flex-direction: row;
+}
+
+.testrunner-radio-button {
+    margin: 5px;
+}
+
+.testrunner-selected-value {
+    margin: 15px 0;
+}
+
+.testrunner-headers-align .mat-expansion-panel-header-title,
+.testrunner-headers-align .mat-expansion-panel-header-description {
+  flex-basis: 0;
+}
+
+.testrunner-headers-align .mat-expansion-panel-header-description {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.testlink-elevation {
+    box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+}
+
+.mat-grid-tile .mat-figure {
+    place-content: left;
+}
+
+
+.mat-radio-button.mat-accent .mat-radio-inner-circle {
+
+        background-color: #55c04e;
+
+}
+
+
+.mat-radio-button.mat-accent.greened .mat-radio-inner-circle{
+    background-color: #55c04e;
+}
+.mat-radio-button.mat-accent.reded .mat-radio-inner-circle{
+    background-color: #EF5350;
+}
+.mat-radio-button.mat-accent.yellowed .mat-radio-inner-circle{
+    background-color: #FDD835;
+}
+.mat-radio-button.mat-accent.greyed .mat-radio-inner-circle{
+    background-color: #9E9E9E;
+}
+
+
+.mat-radio-button.mat-accent.mat-radio-checked.greened .mat-radio-outer-circle {
+    border-color: #55c04e;
+}
+.mat-radio-button.mat-accent.mat-radio-checked.reded  .mat-radio-outer-circle {
+    border-color: #EF5350;
+}
+.mat-radio-button.mat-accent.mat-radio-checked.yellowed .mat-radio-outer-circle {
+    border-color: #FDD835;
+}
+.mat-radio-button.mat-accent.mat-radio-checked.greyed .mat-radio-outer-circle {
+    border-color: #9E9E9E;
+}
+
+[md-fab].md-fab-position-bottom-right, .mat-fab.mat-fab-position-bottom-right, [md-fab].md-fab-bottom-right, .mat-fab.mat-fab-bottom-right {
+
+    bottom: 7% !important;
+}
+
+.editor {
+    height: 200px;
+}
+}
+
+
+
+
+

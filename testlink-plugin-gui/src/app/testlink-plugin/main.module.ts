@@ -28,8 +28,7 @@ import { InstanceLoginComponent } from './instances/login/instance-login.compone
 import { DashboardInstanceComponent } from './instances/dashboard/dashboard-instance.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { TestPlanComponent } from './dashboard/test-plans/test-plan.component';
-import { TestRunnerDialogComponent } from './dashboard/test-runner/test-runner-dialog.component';
-import { TextEditorDemoComponent } from './dashboard/test-runner/text-editor.component';
+import { TestRunnerComponent } from './dashboard/test-runner/test-runner.component';
 import { InstancesService } from 'services/instances.service';
 
 const MATERIAL_MODULES: any[] = [
@@ -53,7 +52,7 @@ const COVALENT_MODULES: any[] = [
 
 const TESTLINK_PLUGIN_MODULES: any[] = [
     MainComponent, InstanceLoginComponent, DashboardInstanceComponent, DashboardComponent,
-    TestPlanComponent, TestRunnerDialogComponent, TextEditorDemoComponent,
+    TestPlanComponent, TestRunnerComponent,
 ];
 const TESTLINK_PLUGIN_SERVICES: any[] = [
     InstancesService,
@@ -68,7 +67,7 @@ const TESTLINK_PLUGIN_SERVICES: any[] = [
     ],
     exports: [],
     entryComponents: [
-        TestRunnerDialogComponent,
+        TestRunnerComponent,
     ],
     declarations: [
         TESTLINK_PLUGIN_MODULES,
