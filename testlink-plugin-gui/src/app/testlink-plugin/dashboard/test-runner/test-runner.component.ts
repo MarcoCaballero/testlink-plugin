@@ -70,50 +70,10 @@ export class TestRunnerComponent implements OnInit, AfterViewInit {
             status: 'NOT_RUN',
         },
         {
-            id: 2,
+            id: 3,
             state: StepState.None,
-            description: 'go to http://youtube.com/step2',
-            expected: 'displays step2.html page  looking the side middle of the applicaion web sockket dumb content',
-            isActive: false,
-            status: 'NOT_RUN',
-        },
-        {
-            id: 2,
-            state: StepState.None,
-            description: 'go to http://youtube.com/step2',
-            expected: 'displays step2.html page  looking the side middle of the applicaion web sockket dumb content',
-            isActive: false,
-            status: 'NOT_RUN',
-        },
-        {
-            id: 2,
-            state: StepState.None,
-            description: 'go to http://youtube.com/step2',
-            expected: 'displays step2.html page  looking the side middle of the applicaion web sockket dumb content',
-            isActive: false,
-            status: 'NOT_RUN',
-        },
-        {
-            id: 2,
-            state: StepState.None,
-            description: 'go to http://youtube.com/step2',
-            expected: 'displays step2.html page  looking the side middle of the applicaion web sockket dumb content',
-            isActive: false,
-            status: 'NOT_RUN',
-        },
-        {
-            id: 2,
-            state: StepState.None,
-            description: 'go to http://youtube.com/step2',
-            expected: 'displays step2.html page  looking the side middle of the applicaion web sockket dumb content',
-            isActive: false,
-            status: 'NOT_RUN',
-        },
-        {
-            id: 100,
-            state: StepState.None,
-            description: 'go to http://youtube.com/step2',
-            expected: 'displays step2.html page  looking the side middle of the applicaion web sockket dumb content',
+            description: 'go to http://youtube.com/step3',
+            expected: 'displays step3.html page  looking the side middle of the applicaion web sockket dumb content',
             isActive: false,
             status: 'NOT_RUN',
         },
@@ -181,19 +141,51 @@ export class TestRunnerComponent implements OnInit, AfterViewInit {
         return title === 'BLOCKED';
     }
 
-    checkStatus(): boolean {
+    checkStatus(value: any): void {
+        let status: number = 0;
+        let preEditoValue: string = '## Bug Info\n';
+        this.steps.forEach((step: any): void => {
+            if (this.isError(step.status) || this.isBlocked(step.status)) {
+                console.log(`st value: ${step.id} + ${step.status} \n`);
+                status++;
+                preEditoValue += `* ### step id: ${step.id} - status: ${step.status} \n > Add bug info there ... \n\n\n`;
+            }
+        });
+        console.log(`preValue: ${preEditoValue}`);
+        this.editorVal = preEditoValue;
+    }
+
+    existReport(): boolean {
         let status: boolean = false;
         this.steps.forEach((step: any): void => {
             if (this.isError(step.status) || this.isBlocked(step.status)) {
                 status = true;
             }
         });
-        console.log(`status: ${status}`);
         return status;
     }
 
     getBackground(i: number): string {
-        return (i % 2 === 0) ? 'white' : '#66666629';
+        return (i % 2 === 0) ? '#dedede40' : '#ffac2f45';
+    }
+
+    getStatusIcon(value: any): string[] {
+        let icon: string[];
+        switch (value) {
+            case 'FAILED':
+                icon = ['error_outline', 'reded'];
+                break;
+            case 'BLOCKED':
+                icon = ['block', 'yellowed'];
+                break;
+            case 'PASSED':
+                icon = ['check_circle', 'greened'];
+                break;
+            default:
+                icon = ['new_releases', 'greyed'];
+                break;
+        }
+        return icon;
     }
 
     ngAfterViewInit(): void {
