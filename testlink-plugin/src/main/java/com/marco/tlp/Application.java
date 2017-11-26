@@ -15,7 +15,7 @@ public class Application {
 		return new WebMvcConfigurerAdapter() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/api/**").allowedMethods("*").allowedOrigins("*");
+				registry.addMapping("/testlink-plugin/**").allowedMethods("*").allowedOrigins("*");
 			}
 		};
 	}

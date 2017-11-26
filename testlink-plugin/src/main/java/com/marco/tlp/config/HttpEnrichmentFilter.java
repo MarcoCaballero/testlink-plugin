@@ -21,13 +21,12 @@ import com.marco.tlp.models.Plugin;
 public class HttpEnrichmentFilter implements Filter {
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
-	private static final String SERVER_HEADER = "SERVER_HEADER";
-	private static final String KEY_HEADER = "KEY_HEADER";
+	private static final String SERVER_HEADER = "TLP-Server-Url";
+	private static final String KEY_HEADER = "TLP-Api-Key";
 	private String server;
 	private String key;
 	@Autowired
 	private Plugin plugin;
-	
 
 	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
 			throws IOException, ServletException {
@@ -35,11 +34,11 @@ public class HttpEnrichmentFilter implements Filter {
 		server = request.getHeader(SERVER_HEADER);
 		key = request.getHeader(KEY_HEADER);
 		if (server == null) {
-			throw new MissingCustomHeaderException("'SERVER_HEADER' on the request is required.");
+			throw new MissingCustomHeaderException("'" + SERVER_HEADER + "'" + "on the request is required.");
 		}
 
 		if (key == null) {
-			throw new MissingCustomHeaderException("'KEY_HEADER' on the request is required.");
+			throw new MissingCustomHeaderException("'" + KEY_HEADER + "'" +"on the request is required.");
 		}
 
 		plugin.connectToApi(server, key);
@@ -56,7 +55,7 @@ public class HttpEnrichmentFilter implements Filter {
 	public void init(FilterConfig filterConfig) throws ServletException {
 		restoreMember();
 	}
-	
+
 	private void restoreMember() {
 		this.server = null;
 		this.key = null;

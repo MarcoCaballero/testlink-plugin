@@ -16,7 +16,7 @@ import com.marco.tlp.services.ProjectService;
 import br.eti.kinoshita.testlinkjavaapi.model.TestProject;
 
 @RestController
-@RequestMapping("/testlink-plugin/testproject")
+@RequestMapping("/tlp-api/testproject")
 public class ProjectRestController {
 
 	ProjectService projectService;

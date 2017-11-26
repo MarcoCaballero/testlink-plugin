@@ -18,7 +18,7 @@ import com.marco.tlp.services.TestPlanService;
 import br.eti.kinoshita.testlinkjavaapi.model.TestPlan;
 
 @RestController
-@RequestMapping("/testlink-plugin")
+@RequestMapping("/tlp-api")
 public class TestPlanRestController {
 	private TestPlanService testPlanService;
 

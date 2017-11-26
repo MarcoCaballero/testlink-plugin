@@ -17,7 +17,7 @@ import com.marco.tlp.services.BuildService;
 import br.eti.kinoshita.testlinkjavaapi.model.Build;
 
 @RestController
-@RequestMapping("/testlink-plugin")
+@RequestMapping("/tlp-api")
 public class BuildRestController {
 
 	private BuildService buildservice;
