@@ -11,6 +11,7 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
 
+import com.marco.tlp.config.MissingCustomHeaderException;
 import com.marco.tlp.models.rpccontrollers.BuildController;
 import com.marco.tlp.models.rpccontrollers.TestPlanController;
 import com.marco.tlp.models.rpccontrollers.TestProjectController;
@@ -35,12 +36,14 @@ public class RPCPlugin implements Plugin {
 			testlinkURL = new URL(url);
 		} catch (MalformedURLException mue) {
 			logger.error("Wrong TestLink Server Url");
+			throw new MissingCustomHeaderException("Bad URL");
 		}
 
 		try {
 			this.api = new TestLinkAPI(testlinkURL, devKey);
 		} catch (TestLinkAPIException te) {
 			logger.error("Wrong TestLink API KEY");
+			throw new MissingCustomHeaderException("Bad URL or Bad Key --- Access DENIED");
 		}
 	}
 

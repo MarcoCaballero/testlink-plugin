@@ -9,7 +9,7 @@
 	<packaging>jar</packaging>
 
 	<name>testlink-plugin-rest</name>
-	<description>to define....</description>
+	<description>to be define....</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
