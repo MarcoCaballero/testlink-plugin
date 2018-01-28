@@ -1,4 +1,4 @@
-package com.marco.tlp.controllers;
+package com.marco.tlp.api;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
