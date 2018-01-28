@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.marco.tlp.models.Plugin;
-import com.marco.tlp.models.rpccontrollers.TestCaseController;
 import com.marco.tlp.models.rpccontrollers.TestExecution;
 
 import br.eti.kinoshita.testlinkjavaapi.model.TestCase;

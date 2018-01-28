@@ -9,7 +9,7 @@ import br.eti.kinoshita.testlinkjavaapi.model.TestCase;
 
 public class TestCaseController extends Controller<TestCase> {
 	
-	private final String EXECUTION_OK = "success!";
+	private static final String EXECUTION_OK = "success!";
 
 	public TestCaseController(TestLinkAPI api) {
 		super(api);

@@ -2,7 +2,6 @@ package com.marco.tlp.models;
 
 import java.util.List;
 
-import com.marco.tlp.models.rpccontrollers.TestCaseController;
 import com.marco.tlp.models.rpccontrollers.TestExecution;
 
 import br.eti.kinoshita.testlinkjavaapi.model.Build;

@@ -3,6 +3,9 @@ package com.marco.tlp.controllers;
 import java.io.IOException;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.event.Level;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +27,8 @@ import br.eti.kinoshita.testlinkjavaapi.model.TestCase;
 @RequestMapping("/tlp-api")
 public class TestCaseRestController {
 
+	private static final Logger logger = LoggerFactory.getLogger(TestCaseRestController.class);
+
 	private TestCaseService testCaseService;
 
 	@Autowired
@@ -31,7 +36,7 @@ public class TestCaseRestController {
 		assert (testCaseService != null);
 		this.testCaseService = testCaseService;
 	}
-	
+
 	@GetMapping("/testplan/{testPlanId}/testcases")
 	public ResponseEntity<List<TestCase>> getTestCasesForTestPlan(@PathVariable Integer testPlanId) {
 		List<TestCase> testCases = testCaseService.getTestCasesForTestPlan(testPlanId);
@@ -48,10 +53,10 @@ public class TestCaseRestController {
 			return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(testCases);
 		return ResponseEntity.notFound().build();
 	}
-	
+
 	@GetMapping("/testplan/{testPlanId}/build/{buildId}/testcase") // ?platformName=xx
-	public ResponseEntity<TestCase> get(@PathVariable Integer testPlanId,
-			@PathVariable Integer buildId, @RequestParam(value="platform", required=true) String platformName) {
+	public ResponseEntity<TestCase> get(@PathVariable Integer testPlanId, @PathVariable Integer buildId,
+			@RequestParam(value = "platform", required = true) String platformName) {
 		TestCase testCase = testCaseService.getTestCaseByPlatform(testPlanId, buildId, platformName);
 		if (testCase != null)
 			return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(testCase);
@@ -66,7 +71,6 @@ public class TestCaseRestController {
 		return ResponseEntity.notFound().build();
 	}
 
-	
 	@GetMapping("/testcase/{testCaseId}")
 	public ResponseEntity<TestCase> get(@PathVariable Integer testCaseId) {
 		TestCase testCase = testCaseService.getTestCase(testCaseId);
@@ -74,12 +78,14 @@ public class TestCaseRestController {
 			return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(testCase);
 		return ResponseEntity.notFound().build();
 	}
-	
+
 	@PostMapping(value = "/testcase/reportResult", consumes = "application/json")
 	public ResponseEntity<TestCase> execute(@RequestBody String execution) throws IOException {
 		ObjectMapper mapper = new ObjectMapper();
 		TestExecution exec = mapper.readValue(execution, TestExecution.class);
-		System.out.println("exec info: " + exec.toString());
+		if (logger.isInfoEnabled() || logger.isDebugEnabled()) {
+			logger.info("Execution information: {0} ", exec.toString());
+		}
 		TestCase testCase = testCaseService.executeTest(exec);
 		if (testCase != null)
 			return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(testCase);
