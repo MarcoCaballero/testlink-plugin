@@ -18,4 +18,5 @@ public class TestPlanController extends Controller<TestPlan> {
 	public TestPlan getTestPlanByName(String planName, String projectName) {
 		return api.getTestPlanByName(planName, projectName);
 	}
+	
 }

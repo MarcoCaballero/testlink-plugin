@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.marco.tlp.services.TestPlanService;
 
+import br.eti.kinoshita.testlinkjavaapi.model.Platform;
 import br.eti.kinoshita.testlinkjavaapi.model.TestPlan;
 
 @RestController
@@ -33,6 +34,14 @@ public class TestPlanRestController {
 		List<TestPlan> testPlans = testPlanService.getProjectTestPlans(projectID);
 		if (testPlans != null)
 			return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(testPlans);
+		return ResponseEntity.notFound().build();
+	}
+	
+	@GetMapping("/testplan/{testplanId}/platforms")
+	public ResponseEntity<List<Platform>> get(@PathVariable("testplanId") Integer testplanId) {
+		List<Platform> platforms = testPlanService.getTestPlanPlatforms(testplanId);
+		if (platforms != null)
+			return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(platforms);
 		return ResponseEntity.notFound().build();
 	}
 

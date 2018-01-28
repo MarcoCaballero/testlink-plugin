@@ -13,11 +13,16 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.marco.tlp.config.MissingCustomHeaderException;
 import com.marco.tlp.models.rpccontrollers.BuildController;
+import com.marco.tlp.models.rpccontrollers.PlatformController;
+import com.marco.tlp.models.rpccontrollers.TestCaseController;
+import com.marco.tlp.models.rpccontrollers.TestExecution;
 import com.marco.tlp.models.rpccontrollers.TestPlanController;
 import com.marco.tlp.models.rpccontrollers.TestProjectController;
 
 import br.eti.kinoshita.testlinkjavaapi.TestLinkAPI;
 import br.eti.kinoshita.testlinkjavaapi.model.Build;
+import br.eti.kinoshita.testlinkjavaapi.model.Platform;
+import br.eti.kinoshita.testlinkjavaapi.model.TestCase;
 import br.eti.kinoshita.testlinkjavaapi.model.TestPlan;
 import br.eti.kinoshita.testlinkjavaapi.model.TestProject;
 import br.eti.kinoshita.testlinkjavaapi.util.TestLinkAPIException;
@@ -28,7 +33,7 @@ public class RPCPlugin implements Plugin {
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-	protected TestLinkAPI api = null;
+	private TestLinkAPI api = null;
 
 	public void connectToApi(String url, String devKey) {
 		URL testlinkURL = null;
@@ -43,7 +48,7 @@ public class RPCPlugin implements Plugin {
 			this.api = new TestLinkAPI(testlinkURL, devKey);
 		} catch (TestLinkAPIException te) {
 			logger.error("Wrong TestLink API KEY");
-			throw new MissingCustomHeaderException("Bad URL or Bad Key --- Access DENIED");
+			throw new MissingCustomHeaderException("Elastest TestLink-Plugin: UNHAUTORIZED, Bad URL or Key provided" + te.getMessage());
 		}
 	}
 
@@ -66,6 +71,42 @@ public class RPCPlugin implements Plugin {
 	public List<Build> getTestPlansBuilds(Integer testPlanId) {
 		return new BuildController(api).getBuildByTestPlan(testPlanId);
 	}
+
+	@Override
+	public List<TestCase> getTestCasesForTestPlan(Integer testPlanId) {
+		return new TestCaseController(api).getTestCasesForTestPlan(testPlanId);
+	}
+	
+	@Override
+	public List<TestCase> getTestCasesForTestPlanAndBuild(Integer testPlanId, Integer buildId) {
+		return new TestCaseController(api).getTestCasesForTestPlanandBuild(testPlanId, buildId);
+	}
+
+	@Override
+	public List<TestCase> getTestCasesForTestSuite(Integer testSuiteId) {
+		return new TestCaseController(api).getTestCasesForTestSuite(testSuiteId);
+	}
+
+	@Override
+	public TestCase getTestCaseByPlatform(Integer planId, Integer buildId, String platformName) {
+		return new TestCaseController(api).getTestCaseByPlatform(planId, buildId, platformName);
+	}
+	
+	@Override
+	public TestCase getTestCase(Integer testCaseId) {
+		return new TestCaseController(api).getTestCase(testCaseId);
+	}
+
+	@Override
+	public TestCase executeTest(TestExecution execution) {
+		return new TestCaseController(api).executeTest(execution);
+	}
+
+	@Override
+	public List<Platform> getPlansPlatforms(Integer testPlanId) {
+		return new PlatformController(api).getPlansPlatforms(testPlanId);
+	}
 	
 	
+
 }

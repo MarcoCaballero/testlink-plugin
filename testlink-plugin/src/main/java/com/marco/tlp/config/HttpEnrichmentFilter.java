@@ -34,15 +34,13 @@ public class HttpEnrichmentFilter implements Filter {
 		server = request.getHeader(SERVER_HEADER);
 		key = request.getHeader(KEY_HEADER);
 		if (server == null) {
-			throw new MissingCustomHeaderException("'" + SERVER_HEADER + "'" + "on the request is required.");
+			throw new MissingCustomHeaderException("Elastest TestLink-Plugin: No headers provided '" + SERVER_HEADER + "'" + "on the request is required.");
+		}else if (key == null) {
+			throw new MissingCustomHeaderException("Elastest TestLink-Plugin: No headers provided '" + KEY_HEADER + "'" +"on the request is required.");
+		}else {
+			plugin.connectToApi(server, key);
+			logger.info("Login in the url: {} with the following API KEY -> {}", server, key);
 		}
-
-		if (key == null) {
-			throw new MissingCustomHeaderException("'" + KEY_HEADER + "'" +"on the request is required.");
-		}
-
-		plugin.connectToApi(server, key);
-		logger.info("Login in the url: {} with the following API KEY -> {}", server, key);
 		chain.doFilter(req, res);
 	}
 
