@@ -30,6 +30,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { TestPlanComponent } from './dashboard/test-plans/test-plan.component';
 import { TestRunnerComponent } from './dashboard/test-runner/test-runner.component';
 import { InstancesService } from 'services/instances.service';
+import { LocalStorageManagerService } from 'services/local-storage-manager.service';
 
 const MATERIAL_MODULES: any[] = [
     MdButtonModule, MdCardModule, MdIconModule, MdDialogModule,
@@ -55,7 +56,7 @@ const TESTLINK_PLUGIN_MODULES: any[] = [
     TestPlanComponent, TestRunnerComponent,
 ];
 const TESTLINK_PLUGIN_SERVICES: any[] = [
-    InstancesService,
+    InstancesService, LocalStorageManagerService,
 ];
 
 @NgModule({
@@ -72,6 +73,6 @@ const TESTLINK_PLUGIN_SERVICES: any[] = [
     declarations: [
         TESTLINK_PLUGIN_MODULES,
     ],
-    providers: [InstancesService],
+    providers: [TESTLINK_PLUGIN_SERVICES],
 })
 export class MainModule { }

@@ -20,7 +20,8 @@
             <ng-template let-control="control" [tdDynamicFormsError]="'apiKeyElement'">
               <span *ngIf="control.touched || !control.pristine">
                 <span *ngIf="control.hasError('required')">Required.</span>
-              <span *ngIf="control.hasError('correctExt') && !control.hasError('required')">Invalid symbol.</span>
+                <span *ngIf="control.hasError('correctExt') && !control.hasError('required')">Invalid symbol.</span>
+                <span *ngIf="control.hasError('invalidKey') && !control.hasError('required')">TestLink does not recognise the Developer Key.</span>
               </span>
             </ng-template>
           </td-dynamic-forms>
@@ -28,10 +29,10 @@
           <md-divider></md-divider>
         </md-card-content>
         <md-card-actions>
-          <button md-raised-button color="primary" class="text-upper hoverable-action-button" [routerLink]="['/testlink-plugin/dashboard']"
+          <button md-raised-button color="primary" class="text-upper hoverable-action-button" (click)="login(customValidateForm.value)"
             [disabled]="!customValidateForm.valid">
-                  <span>Login</span>
-            </button>
+            <span>Login</span>
+          </button>
         </md-card-actions>
       </ng-template>
     </div>

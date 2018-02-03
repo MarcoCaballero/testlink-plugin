@@ -40,3 +40,10 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# Own
+.metadata
+.recommenders
+.sonarlint
+Servers/*
+docs/*

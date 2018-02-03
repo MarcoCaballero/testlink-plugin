@@ -8,8 +8,9 @@ import { ITdDynamicElementConfig, TdDynamicElement, TdDynamicType } from '@coval
 import { Subscription } from 'rxjs/Subscription';
 
 import { InstancesService } from 'services/instances.service';
-
+import { LocalStorageManagerService } from 'services/local-storage-manager.service';
 import { IInstance } from 'model/instance';
+import { IConnectionHeader } from 'model/connection-header';
 
 @Component({
     selector: 'testlink-plugin-instance-login',
@@ -36,6 +37,11 @@ export class InstanceLoginComponent implements OnInit {
                 },
             }, {
                 validator: (control: AbstractControl) => {
+                    let isValid: boolean = control.value === '65330eb0c5e8424b696dee2bb5d60fc1';
+                    return !isValid ? { invalidKey: true } : undefined;
+                },
+            }, {
+                validator: (control: AbstractControl) => {
                     let isValid: boolean = control.value && (control.value.length > 0);
                     return !isValid ? { length: true } : undefined;
                 },
@@ -45,7 +51,8 @@ export class InstanceLoginComponent implements OnInit {
 
     constructor(private _changeDetectorRef: ChangeDetectorRef, public media: TdMediaService,
         private instanceService: InstancesService, private router: Router,
-        private activatedRouter: ActivatedRoute, private loadingService: TdLoadingService) {
+        private activatedRouter: ActivatedRoute, private loadingService: TdLoadingService,
+        private localStorageManagerService: LocalStorageManagerService) {
     }
 
     ngOnInit(): void {
@@ -76,5 +83,36 @@ export class InstanceLoginComponent implements OnInit {
             this.loading = false;
             this.loadingService.resolve('loadingLoginSection');
         }
+    }
+
+    login(value: any): void {
+        let connectionHeader: IConnectionHeader = {
+            instance: this.instanceToLogin.description,
+            key: value.apiKeyElement,
+        };
+        console.log(`Value to log in: ${JSON.stringify(connectionHeader)}`);
+        this.setConnectionHeaderToLocalStorage(connectionHeader);
+        this.getConnectionHeaderToLocalStorage();
+        this.router.navigate(['/testlink-plugin/dashboard']);
+    }
+
+    async setConnectionHeaderToLocalStorage(connectionHeader: IConnectionHeader): Promise<void> {
+        await this.localStorageManagerService.setConnectionHeader(connectionHeader)
+        .then(() => {
+            console.info(`connection header established to local storage with the following value: ${JSON.stringify(connectionHeader)}`);
+        })
+        .catch((error: any) => {
+            console.log(`Error when trying to establish connection: ${error}`);
+        });
+    }
+
+    async getConnectionHeaderToLocalStorage(): Promise<void> {
+        await this.localStorageManagerService.getConnectionHeader()
+        .then((connectionHeader: IConnectionHeader) => {
+            console.log(`connection header returned from local storage with the following value: ${JSON.stringify(connectionHeader)}`);
+        })
+        .catch((error: any) => {
+            console.log(`Error when trying to get connection header: ${error}`);
+        });
     }
 }
