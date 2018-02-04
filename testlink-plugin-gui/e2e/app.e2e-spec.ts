@@ -7,8 +7,8 @@ describe('testlink-plugin App', () => {
     page = new WebAppPage();
   });
 
-  it('should display welcome message', () => {
+  it('should display title', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('Welcome to app!!');
+    expect(page.getParagraphText()).toEqual('TestLink New Instance');
   });
 });

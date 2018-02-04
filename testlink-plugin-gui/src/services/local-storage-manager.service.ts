@@ -24,4 +24,11 @@ export class LocalStorageManagerService {
     isLocalStorageAvailable(): Promise<Boolean> {
         return Promise.resolve(window.localStorage ? true : false);
     }
+
+    hasConnectionItem(): Promise<Boolean> {
+        if (this.isLocalStorageAvailable) {
+            return Promise.resolve((localStorage.getItem(this.key) !== undefined) ? true : false);
+        }
+        return Promise.resolve(false);
+    }
 }

@@ -13,7 +13,7 @@
         "icon": "looks_two",
         "route": ".",
         "title": "Instance 2",
-        "description": "http://localhost/testlink/1/xmlrpc.php",
+        "description": "http://localhost:80/testlink/lib/api/xmlrpc/v1/xmlrpc.php",
         "created": "7/03/2017 11:05 AM",
         "lastAccess": "7/03/2017 11:05 AM"
     }

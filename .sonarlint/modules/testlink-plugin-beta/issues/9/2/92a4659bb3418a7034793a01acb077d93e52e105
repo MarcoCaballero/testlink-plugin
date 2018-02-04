@@ -1,0 +1,259 @@
+
+f
+squid:S106©"9Replace this use of System.out or System.err by a logger.(âœŠ›H¤RMAJORZ
+CODE_SMELL
+d
+squid:S106i"9Replace this use of System.out or System.err by a logger.(ÂÇ—OH¥RMAJORZ
+CODE_SMELL
+k
+squid:S106Ì"9Replace this use of System.out or System.err by a logger.(ªÓ¼áşÿÿÿÿH¦RMAJORZ
+CODE_SMELL
+k
+squid:S106Ş"9Replace this use of System.out or System.err by a logger.(»ˆ­ØûÿÿÿÿH§RMAJORZ
+CODE_SMELL
+j
+squid:S106>"9Replace this use of System.out or System.err by a logger.(¿§áûÿÿÿÿH¨RMAJORZ
+CODE_SMELL
+k
+squid:S106"9Replace this use of System.out or System.err by a logger.(â†–ƒúÿÿÿÿH©RMAJORZ
+CODE_SMELL
+j
+squid:S106M"9Replace this use of System.out or System.err by a logger.(ÌËÓşÿÿÿÿHªRMAJORZ
+CODE_SMELL
+„squid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ç«Ä¨üÿÿÿÿ8ŠÔ¬š‚,H«RMAJORZ
+CODE_SMELL
+d
+squid:S106^"9Replace this use of System.out or System.err by a logger.(ÂÇ—OH¬RMAJORZ
+CODE_SMELL
+j
+squid:S106J"9Replace this use of System.out or System.err by a logger.(³×ÎØıÿÿÿÿH­RMAJORZ
+CODE_SMELL
+k
+squid:S106½"9Replace this use of System.out or System.err by a logger.(ªÓ¼áşÿÿÿÿH®RMAJORZ
+CODE_SMELL
+jsquid:S1854Š"<Remove this useless assignment to local variable "statusId".(ôÛH¯RMAJORZ
+CODE_SMELL
+“squid:S1192´"áDefine a constant instead of duplicating this literal "----------------------------------------------------------------------------------------------------------------------------------------------------------\n\n\n" 4 times.(š´îÌH°RCRITICALZ
+CODE_SMELL
+~squid:CommentedOutCodeLine!"<This block of commented-out lines of code should be removed.(Í¼‹8ŠÔ¬š‚,H±RMAJORZ
+CODE_SMELL
+f
+squid:S106Ò"9Replace this use of System.out or System.err by a logger.(š´îÌH²RMAJORZ
+CODE_SMELL
+e
+squid:S106‚"9Replace this use of System.out or System.err by a logger.(æİĞ'H³RMAJORZ
+CODE_SMELL
+k
+squid:S106ß"9Replace this use of System.out or System.err by a logger.(ªÓ¼áşÿÿÿÿH´RMAJORZ
+CODE_SMELL
+k
+squid:S106¹"9Replace this use of System.out or System.err by a logger.(­°âüÿÿÿÿHµRMAJORZ
+CODE_SMELL
+k
+squid:S106Í"9Replace this use of System.out or System.err by a logger.(ÑäÛÉûÿÿÿÿH¶RMAJORZ
+CODE_SMELL
+jsquid:S1854p"=Remove this useless assignment to local variable "projectId".(ë—Ç¡H·RMAJORZ
+CODE_SMELL
+k
+squid:S106¯"9Replace this use of System.out or System.err by a logger.(ÑäÛÉûÿÿÿÿH¸RMAJORZ
+CODE_SMELL
+j
+squid:S106?"9Replace this use of System.out or System.err by a logger.(—È©ãùÿÿÿÿH¹RMAJORZ
+CODE_SMELL
+k
+squid:S106Á"9Replace this use of System.out or System.err by a logger.(ªÓ¼áşÿÿÿÿHºRMAJORZ
+CODE_SMELL
+f
+squid:S106´"9Replace this use of System.out or System.err by a logger.(š´îÌH»RMAJORZ
+CODE_SMELL
+f
+squid:S106ƒ"9Replace this use of System.out or System.err by a logger.(…º†H¼RMAJORZ
+CODE_SMELL
+f
+squid:S106¸"9Replace this use of System.out or System.err by a logger.(âœŠ›H½RMAJORZ
+CODE_SMELL
+xsquid:CommentedOutCodeLineV"<This block of commented-out lines of code should be removed.(â ¼H¾RMAJORZ
+CODE_SMELL
+k
+squid:S106Û"9Replace this use of System.out or System.err by a logger.(ªÓ¼áşÿÿÿÿH¿RMAJORZ
+CODE_SMELL
+msquid:S1854q";Remove this useless assignment to local variable "buildId".(úäıÛşÿÿÿÿHÀRMAJORZ
+CODE_SMELL
+j
+squid:S106l"9Replace this use of System.out or System.err by a logger.(»ï•“ÿÿÿÿÿHÁRMAJORZ
+CODE_SMELL
+ksquid:S1854ˆ"=Remove this useless assignment to local variable "projectId".(ë—Ç¡HÂRMAJORZ
+CODE_SMELL
+k
+squid:S106Ù"9Replace this use of System.out or System.err by a logger.(ÑäÛÉûÿÿÿÿHÃRMAJORZ
+CODE_SMELL
+dsquid:S1135¨"2Complete the task associated to this TODO comment.(» æÿÿÿÿÿHÄRINFOZ
+CODE_SMELL
+Gsquid:S3457Ë"6th argument is not used.(áÄ»äHÅRMAJORZ
+CODE_SMELL
+f
+squid:S106Ö"9Replace this use of System.out or System.err by a logger.(âœŠ›HÆRMAJORZ
+CODE_SMELL
+k
+squid:S106»"9Replace this use of System.out or System.err by a logger.(ÑäÛÉûÿÿÿÿHÇRMAJORZ
+CODE_SMELL
+f
+squid:S106Ú"9Replace this use of System.out or System.err by a logger.(¹üÂëHÈRMAJORZ
+CODE_SMELL
+squid:S1192©"ÛDefine a constant instead of duplicating this literal "__________________________________________________________________________________________________________________________________________________________" 4 times.(âœŠ›HÉRCRITICALZ
+CODE_SMELL
+k
+squid:S106²"9Replace this use of System.out or System.err by a logger.(ªÓ¼áşÿÿÿÿHÊRMAJORZ
+CODE_SMELL
+f
+squid:S106á"9Replace this use of System.out or System.err by a logger.(š´îÌHËRMAJORZ
+CODE_SMELL
+—squid:S1192^"hDefine a constant instead of duplicating this literal "Select the plan by typing the plan ID: " 3 times.(ÂÇ—OHÌRCRITICALZ
+CODE_SMELL
+d
+squid:S106x"9Replace this use of System.out or System.err by a logger.(ÂÇ—OHÍRMAJORZ
+CODE_SMELL
+f
+squid:S106Ã"9Replace this use of System.out or System.err by a logger.(š´îÌHÎRMAJORZ
+CODE_SMELL
+j
+squid:S106u"9Replace this use of System.out or System.err by a logger.(İ€çıÿÿÿÿHÏRMAJORZ
+CODE_SMELL
+f
+squid:S106Ç"9Replace this use of System.out or System.err by a logger.(âœŠ›HĞRMAJORZ
+CODE_SMELL
+k
+squid:S106"9Replace this use of System.out or System.err by a logger.(…—·ñüÿÿÿÿHÑRMAJORZ
+CODE_SMELL
+nsquid:S1854‰";Remove this useless assignment to local variable "buildId".(úäıÛşÿÿÿÿHÒRMAJORZ
+CODE_SMELL
+k
+squid:S106É"9Replace this use of System.out or System.err by a logger.(ªÓ¼áşÿÿÿÿHÓRMAJORZ
+CODE_SMELL
+gsquid:S1854o":Remove this useless assignment to local variable "planId".(£Å¡HÔRMAJORZ
+CODE_SMELL
+f
+squid:S106È"9Replace this use of System.out or System.err by a logger.(ÇØîëHÕRMAJORZ
+CODE_SMELL
+j
+squid:S106{"9Replace this use of System.out or System.err by a logger.(»ï•“ÿÿÿÿÿHÖRMAJORZ
+CODE_SMELL
+k
+squid:S106Ü"9Replace this use of System.out or System.err by a logger.(ÑäÛÉûÿÿÿÿH×RMAJORZ
+CODE_SMELL
+f
+squid:S106ª"9Replace this use of System.out or System.err by a logger.(±ãÊ‚HØRMAJORZ
+CODE_SMELL
+|squid:S1192¼"FDefine a constant instead of duplicating this literal "NOTES" 3 times.(ã¯®ùÿÿÿÿHÙRCRITICALZ
+CODE_SMELL
+d
+squid:S106="9Replace this use of System.out or System.err by a logger.(Üò¹KHÚRMAJORZ
+CODE_SMELL
+j
+squid:S106["9Replace this use of System.out or System.err by a logger.(İ€çıÿÿÿÿHÛRMAJORZ
+CODE_SMELL
+hsquid:S1854‹":Remove this useless assignment to local variable "testId".(ö÷ºôHÜRMAJORZ
+CODE_SMELL
+k
+squid:S106«"9Replace this use of System.out or System.err by a logger.(ªÓ¼áşÿÿÿÿHİRMAJORZ
+CODE_SMELL
+e
+squid:S106<"9Replace this use of System.out or System.err by a logger.(Ï„¬¬HŞRMAJORZ
+CODE_SMELL
+k
+squid:S106Ê"9Replace this use of System.out or System.err by a logger.(ÑäÛÉûÿÿÿÿHßRMAJORZ
+CODE_SMELL
+k
+squid:S106¬"9Replace this use of System.out or System.err by a logger.(ÑäÛÉûÿÿÿÿHàRMAJORZ
+CODE_SMELL
+jsquid:S1854W"=Remove this useless assignment to local variable "projectId".(ë—Ç¡HáRMAJORZ
+CODE_SMELL
+k
+squid:S106Ğ"9Replace this use of System.out or System.err by a logger.(ªÓ¼áşÿÿÿÿHâRMAJORZ
+CODE_SMELL
+j
+squid:S106A"9Replace this use of System.out or System.err by a logger.(»åÚóıÿÿÿÿHãRMAJORZ
+CODE_SMELL
+k
+squid:S106Ï"9Replace this use of System.out or System.err by a logger.(»§òùÿÿÿÿHäRMAJORZ
+CODE_SMELL
+k
+squid:S106®"9Replace this use of System.out or System.err by a logger.(ªÓ¼áşÿÿÿÿHåRMAJORZ
+CODE_SMELL
+’squid:S1192¬"ÛDefine a constant instead of duplicating this literal "----------------------------------------------------------------------------------------------------------------------------------------------------------" 8 times.(ÑäÛÉûÿÿÿÿHæRCRITICALZ
+CODE_SMELL
+f
+squid:S106€"9Replace this use of System.out or System.err by a logger.(Ÿ§‰HçRMAJORZ
+CODE_SMELL
+k
+squid:S106„"9Replace this use of System.out or System.err by a logger.(ôÄàËøÿÿÿÿHèRMAJORZ
+CODE_SMELL
+f
+squid:S106À"9Replace this use of System.out or System.err by a logger.(·„÷ŒHéRMAJORZ
+CODE_SMELL
+gsquid:S1854a":Remove this useless assignment to local variable "planId".(£Å¡HêRMAJORZ
+CODE_SMELL
+j
+squid:S106:"9Replace this use of System.out or System.err by a logger.(İ¡òÔøÿÿÿÿHëRMAJORZ
+CODE_SMELL
+e
+squid:S106B"9Replace this use of System.out or System.err by a logger.(çŒ…¾HìRMAJORZ
+CODE_SMELL
+k
+squid:S106º"9Replace this use of System.out or System.err by a logger.(ªÓ¼áşÿÿÿÿHíRMAJORZ
+CODE_SMELL
+j
+squid:S1068"9Replace this use of System.out or System.err by a logger.(›‘ÜŠùÿÿÿÿHîRMAJORZ
+CODE_SMELL
+£squid:S1192T"nDefine a constant instead of duplicating this literal "Select the project by typing the project ID: " 4 times.(İ€çıÿÿÿÿHïRCRITICALZ
+CODE_SMELL
+e
+squid:S106@"9Replace this use of System.out or System.err by a logger.(“‘ÕšHğRMAJORZ
+CODE_SMELL
+k
+squid:S106Ø"9Replace this use of System.out or System.err by a logger.(ªÓ¼áşÿÿÿÿHñRMAJORZ
+CODE_SMELL
+k
+squid:S106±"9Replace this use of System.out or System.err by a logger.(ô×œëşÿÿÿÿHòRMAJORZ
+CODE_SMELL
+j
+squid:S106f"9Replace this use of System.out or System.err by a logger.(İ€çıÿÿÿÿHóRMAJORZ
+CODE_SMELL
+f
+squid:S106’"9Replace this use of System.out or System.err by a logger.(¿‹HôRMAJORZ
+CODE_SMELL
+k
+squid:S106¾"9Replace this use of System.out or System.err by a logger.(ÑäÛÉûÿÿÿÿHõRMAJORZ
+CODE_SMELL
+e
+squid:S106~"9Replace this use of System.out or System.err by a logger.(ïøÍHöRMAJORZ
+CODE_SMELL
+hsquid:S1854‡":Remove this useless assignment to local variable "planId".(£Å¡H÷RMAJORZ
+CODE_SMELL
+Lsquid:S3457Ï"6th argument is not used.(»§òùÿÿÿÿHøRMAJORZ
+CODE_SMELL
+k
+squid:S106×"9Replace this use of System.out or System.err by a logger.( ÄÅìşÿÿÿÿHùRMAJORZ
+CODE_SMELL
+f
+squid:S106Ë"9Replace this use of System.out or System.err by a logger.(áÄ»äHúRMAJORZ
+CODE_SMELL
+k
+squid:S106­"9Replace this use of System.out or System.err by a logger.(ÜÉçäÿÿÿÿÿHûRMAJORZ
+CODE_SMELL
+j
+squid:S106D"9Replace this use of System.out or System.err by a logger.(œÇŞœşÿÿÿÿHüRMAJORZ
+CODE_SMELL
+jsquid:S1854b"=Remove this useless assignment to local variable "projectId".(ë—Ç¡HıRMAJORZ
+CODE_SMELL
+j
+squid:S106T"9Replace this use of System.out or System.err by a logger.(İ€çıÿÿÿÿHşRMAJORZ
+CODE_SMELL
+k
+squid:S106¼"9Replace this use of System.out or System.err by a logger.(ã¯®ùÿÿÿÿHÿRMAJORZ
+CODE_SMELL
+j
+squid:S106;"9Replace this use of System.out or System.err by a logger.(¢˜úŠúÿÿÿÿH€RMAJORZ
+CODE_SMELL
+…squid:S00120"WRename this package name to match the regular expression '^[a-z]+(\.[a-z][a-z0-9]*)*$'.(ÔşŒÀHRMINORZ
+CODE_SMELL

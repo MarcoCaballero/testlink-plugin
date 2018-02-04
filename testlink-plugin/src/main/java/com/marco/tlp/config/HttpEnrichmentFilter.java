@@ -31,6 +31,7 @@ public class HttpEnrichmentFilter implements Filter {
 	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
 			throws IOException, ServletException {
 		HttpServletRequest request = (HttpServletRequest) req;
+		logger.info("Entry request info: " + request.getScheme() + "\n" + request.getRemoteHost() + "\n Header: " +  request.getHeader(SERVER_HEADER) );
 		server = request.getHeader(SERVER_HEADER);
 		key = request.getHeader(KEY_HEADER);
 		if (server == null) {

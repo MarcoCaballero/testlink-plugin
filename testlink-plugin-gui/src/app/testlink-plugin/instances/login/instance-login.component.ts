@@ -7,10 +7,11 @@ import { ITdDynamicElementConfig, TdDynamicElement, TdDynamicType } from '@coval
 
 import { Subscription } from 'rxjs/Subscription';
 
-import { InstancesService } from 'services/instances.service';
-import { LocalStorageManagerService } from 'services/local-storage-manager.service';
 import { IInstance } from 'model/instance';
 import { IConnectionHeader } from 'model/connection-header';
+import { InstancesService } from 'services/instances.service';
+import { LocalStorageManagerService } from 'services/local-storage-manager.service';
+import { TestProjectService } from 'services/tlp-api/test-projects.service';
 
 @Component({
     selector: 'testlink-plugin-instance-login',
@@ -52,7 +53,7 @@ export class InstanceLoginComponent implements OnInit {
     constructor(private _changeDetectorRef: ChangeDetectorRef, public media: TdMediaService,
         private instanceService: InstancesService, private router: Router,
         private activatedRouter: ActivatedRoute, private loadingService: TdLoadingService,
-        private localStorageManagerService: LocalStorageManagerService) {
+        private localStorageManagerService: LocalStorageManagerService, private testProjectService: TestProjectService) {
     }
 
     ngOnInit(): void {
@@ -93,6 +94,7 @@ export class InstanceLoginComponent implements OnInit {
         console.log(`Value to log in: ${JSON.stringify(connectionHeader)}`);
         this.setConnectionHeaderToLocalStorage(connectionHeader);
         this.getConnectionHeaderToLocalStorage();
+        this.getTLPprojects();
         this.router.navigate(['/testlink-plugin/dashboard']);
     }
 
@@ -110,6 +112,16 @@ export class InstanceLoginComponent implements OnInit {
         await this.localStorageManagerService.getConnectionHeader()
         .then((connectionHeader: IConnectionHeader) => {
             console.log(`connection header returned from local storage with the following value: ${JSON.stringify(connectionHeader)}`);
+        })
+        .catch((error: any) => {
+            console.log(`Error when trying to get connection header: ${error}`);
+        });
+    }
+
+    async getTLPprojects(): Promise<void> {
+        await this.testProjectService.getInstances()
+        .then((response: any) => {
+            console.log(`Instances returned: ${JSON.stringify(response)}`);
         })
         .catch((error: any) => {
             console.log(`Error when trying to get connection header: ${error}`);
