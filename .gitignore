@@ -33,11 +33,9 @@ buildNumber.properties
 .mvn/timing.properties
 
 # Project files
-elastest-torm/.classpath
-elastest-torm/.project
-elastest-torm/.settings/
-elastest-torm/.swagger-codegen-ignore
-elastest-torm/.swagger-codegen/VERSION
+testlink-plugin/.classpath
+testlink-plugin/.project
+testlink-plugin/.settings/
 
 
 # Avoid ignoring Maven wrapper jar file (.jar files are usually ignored)
@@ -50,3 +48,10 @@ elastest-torm/.swagger-codegen/VERSION
 .c9/
 *.launch
 .settings/
+
+# Own
+.metadata
+.recommenders
+.sonarlint
+Servers/*
+docs/*
