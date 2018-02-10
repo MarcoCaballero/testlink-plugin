@@ -34,6 +34,8 @@ import { TestRunnerComponent } from './dashboard/test-runner/test-runner.compone
 import { InstancesService } from './services/instances.service';
 import { LocalStorageManagerService } from './services/local-storage-manager.service';
 import { TestProjectService } from './services/tlp-api/test-projects.service';
+import { TlpApiService } from './services/tlp-api/tlp-api.service';
+
 
 const MATERIAL_MODULES: any[] = [
     MdButtonModule, MdCardModule, MdIconModule, MdDialogModule,
@@ -60,7 +62,7 @@ const TESTLINK_PLUGIN_MODULES: any[] = [
 ];
 
 const TESTLINK_PLUGIN_SERVICES: any[] = [
-    InstancesService, LocalStorageManagerService, TestProjectService,
+    TlpApiService, InstancesService, LocalStorageManagerService, TestProjectService,
 ];
 
 @NgModule({

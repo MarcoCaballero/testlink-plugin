@@ -94,10 +94,24 @@ export class InstanceLoginComponent implements OnInit {
             key: value.apiKeyElement,
         };
         console.log(`Value to log in: ${JSON.stringify(connectionHeader)}`);
-        this.setConnectionHeaderToLocalStorage(connectionHeader);
-        this.getConnectionHeaderToLocalStorage();
-        this.getTLPprojects();
-        this.router.navigate(['/testlink-plugin/dashboard']);
+        try {
+            this.loadingService.register('loadingLoginSection');
+            this.loading = true;
+            this.setConnectionHeaderToLocalStorage(connectionHeader)
+                .then((): void => {
+                    this.getConnectionHeaderToLocalStorage();
+                    this.getTLPprojects();
+                    this.router.navigate(['/testlink-plugin/dashboard']);
+                })
+                .catch((error: any) => {
+                    console.error(`error while login: ${error}`);
+                });
+        } catch (error) {
+            console.log(error);
+        } finally {
+            this.loading = false;
+            this.loadingService.resolve('loadingLoginSection');
+        }
     }
 
     async setConnectionHeaderToLocalStorage(connectionHeader: IConnectionHeader): Promise<void> {
@@ -121,7 +135,7 @@ export class InstanceLoginComponent implements OnInit {
     }
 
     async getTLPprojects(): Promise<void> {
-        await this.testProjectService.getInstances()
+        await this.testProjectService.getProjects()
             .then((response: IProject[]) => {
                 this.projects = response;
                 console.log(`Instances returned: ${JSON.stringify(response, undefined, 4)}`);

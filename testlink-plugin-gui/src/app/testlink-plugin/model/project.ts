@@ -1,12 +1,15 @@
 import { ITestPlan } from './test-plan';
 export interface IProject {
-    id: string;
+    id: number;
     name: string;
-    description: string;
     prefix: string;
+    notes: string;
     issueTracker?: string;
-    isEnabledRequirements: boolean;
-    isActive: boolean;
-    isPublic: boolean;
+    enableRequirements: boolean;
+    enableTestPriority: boolean;
+    enableAutomation: boolean;
+    enableInventory: boolean;
+    public: boolean;
+    active: boolean;
     testPlans?: ITestPlan[];
 }

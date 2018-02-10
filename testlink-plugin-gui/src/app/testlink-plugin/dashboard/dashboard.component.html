@@ -39,7 +39,7 @@
                 </div>
                 <div layout="column">
                     <form>
-                        <md-select style="text-align: left;" (change)="change($event)" color="accent" class="testlink-select testlink-center push-bottom border-bottom"
+                        <md-select style="text-align: left;" (change)="change($event)" color="accent" class="testlink-select testlink-center push-bottom"
                             placeholder="Select project" [(ngModel)]="selectedProject" name="food" required>
                             <md-option *ngFor="let project of projects" [value]="project">
                                 {{project.prefix}}: {{project.name}}
