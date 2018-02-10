@@ -4,9 +4,9 @@ import {
     ITdDataTableSortChangeEvent, ITdDataTableColumn, IPageChangeEvent,
 } from '@covalent/core';
 
-import { IProject } from 'model/project';
-import { ITestPlan } from 'model/test-plan';
-import { IBuild } from 'model/build';
+import { IProject } from '../model/project';
+import { ITestPlan } from '../model/test-plan';
+import { IBuild } from '../model/build';
 
 const BOOLEAN_FORMAT: (v: any) => any = (v: boolean) => (v === true) ? 'ENABLED' : 'NOT ENABLED';
 

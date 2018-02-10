@@ -7,11 +7,12 @@ import { ITdDynamicElementConfig, TdDynamicElement, TdDynamicType } from '@coval
 
 import { Subscription } from 'rxjs/Subscription';
 
-import { IInstance } from 'model/instance';
-import { IConnectionHeader } from 'model/connection-header';
-import { InstancesService } from 'services/instances.service';
-import { LocalStorageManagerService } from 'services/local-storage-manager.service';
-import { TestProjectService } from 'services/tlp-api/test-projects.service';
+import { IInstance } from '../../model/instance';
+import { IProject } from '../../model/project';
+import { IConnectionHeader } from '../../model/connection-header';
+import { InstancesService } from '../../services/instances.service';
+import { LocalStorageManagerService } from '../../services/local-storage-manager.service';
+import { TestProjectService } from '../../services/tlp-api/test-projects.service';
 
 @Component({
     selector: 'testlink-plugin-instance-login',
@@ -24,6 +25,7 @@ export class InstanceLoginComponent implements OnInit {
     instances: IInstance[];
     instanceToLogin: IInstance;
     loading: boolean = true;
+    projects: IProject[];
 
     loginFormControls: ITdDynamicElementConfig[] = [
         {
@@ -100,31 +102,33 @@ export class InstanceLoginComponent implements OnInit {
 
     async setConnectionHeaderToLocalStorage(connectionHeader: IConnectionHeader): Promise<void> {
         await this.localStorageManagerService.setConnectionHeader(connectionHeader)
-        .then(() => {
-            console.info(`connection header established to local storage with the following value: ${JSON.stringify(connectionHeader)}`);
-        })
-        .catch((error: any) => {
-            console.log(`Error when trying to establish connection: ${error}`);
-        });
+            .then(() => {
+                console.info(`connection header established to local storage with the following value: ${JSON.stringify(connectionHeader)}`);
+            })
+            .catch((error: any) => {
+                console.log(`Error when trying to establish connection: ${error}`);
+            });
     }
 
     async getConnectionHeaderToLocalStorage(): Promise<void> {
         await this.localStorageManagerService.getConnectionHeader()
-        .then((connectionHeader: IConnectionHeader) => {
-            console.log(`connection header returned from local storage with the following value: ${JSON.stringify(connectionHeader)}`);
-        })
-        .catch((error: any) => {
-            console.log(`Error when trying to get connection header: ${error}`);
-        });
+            .then((connectionHeader: IConnectionHeader) => {
+                console.log(`connection header returned from local storage with the following value: ${JSON.stringify(connectionHeader)}`);
+            })
+            .catch((error: any) => {
+                console.log(`Error when trying to get connection header: ${error}`);
+            });
     }
 
     async getTLPprojects(): Promise<void> {
         await this.testProjectService.getInstances()
-        .then((response: any) => {
-            console.log(`Instances returned: ${JSON.stringify(response)}`);
-        })
-        .catch((error: any) => {
-            console.log(`Error when trying to get connection header: ${error}`);
-        });
+            .then((response: IProject[]) => {
+                this.projects = response;
+                console.log(`Instances returned: ${JSON.stringify(response, undefined, 4)}`);
+
+            })
+            .catch((error: any) => {
+                console.log(`Error when trying to get connection header: ${error}`);
+            });
     }
 }

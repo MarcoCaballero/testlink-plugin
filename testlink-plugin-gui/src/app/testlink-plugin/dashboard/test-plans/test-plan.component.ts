@@ -13,8 +13,8 @@ import { ITdDynamicElementConfig, TdDynamicElement, TdDynamicType } from '@coval
 
 import { slideInDownAnimation } from 'app/app.animations';
 import { TestRunnerComponent } from '../test-runner/test-runner.component';
-import { IBuild } from 'model/build';
-import { ITestPlan } from 'model/test-plan';
+import { IBuild } from '../../model/build';
+import { ITestPlan } from '../../model/test-plan';
 
 import 'rxjs/add/operator/switchMap';
 

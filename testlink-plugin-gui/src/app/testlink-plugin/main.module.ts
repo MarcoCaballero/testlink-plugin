@@ -1,7 +1,8 @@
-import { NgModule, Type  } from '@angular/core';
+import { NgModule, Type } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import {
     MdButtonModule, MdCardModule, MdIconModule, MdDialogModule,
@@ -30,10 +31,9 @@ import { DashboardInstanceComponent } from './instances/dashboard/dashboard-inst
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { TestPlanComponent } from './dashboard/test-plans/test-plan.component';
 import { TestRunnerComponent } from './dashboard/test-runner/test-runner.component';
-import { InstancesService } from 'services/instances.service';
-import { LocalStorageManagerService } from 'services/local-storage-manager.service';
-import { TestProjectService } from 'services/tlp-api/test-projects.service';
-import { TLPApiInterceptor } from 'services/tlp-api/interceptor.service';
+import { InstancesService } from './services/instances.service';
+import { LocalStorageManagerService } from './services/local-storage-manager.service';
+import { TestProjectService } from './services/tlp-api/test-projects.service';
 
 const MATERIAL_MODULES: any[] = [
     MdButtonModule, MdCardModule, MdIconModule, MdDialogModule,
@@ -44,7 +44,7 @@ const MATERIAL_MODULES: any[] = [
 ];
 
 const ANGULAR_MODULES: any[] = [
-    HttpModule, FormsModule, ReactiveFormsModule, CommonModule, RouterModule,
+    HttpModule, FormsModule, ReactiveFormsModule, CommonModule, RouterModule, HttpClientModule,
 ];
 
 const COVALENT_MODULES: any[] = [
@@ -52,7 +52,7 @@ const COVALENT_MODULES: any[] = [
     CovalentNotificationsModule, CovalentLayoutModule, CovalentMenuModule, CovalentExpansionPanelModule,
     CovalentPagingModule, CovalentSearchModule, CovalentStepsModule, CovalentChipsModule, CovalentTextEditorModule,
     CovalentCommonModule, CovalentDialogsModule, CovalentHttpModule, CovalentDynamicFormsModule, CovalentMarkdownModule,
-  ];
+];
 
 const TESTLINK_PLUGIN_MODULES: any[] = [
     MainComponent, InstanceLoginComponent, DashboardInstanceComponent, DashboardComponent,
@@ -63,18 +63,9 @@ const TESTLINK_PLUGIN_SERVICES: any[] = [
     InstancesService, LocalStorageManagerService, TestProjectService,
 ];
 
-const TESTLINK_PLUGIN_INTERCEPTORS: Type<IHttpInterceptor>[] = [
-    TLPApiInterceptor,
-];
-
 @NgModule({
     imports: [
         ANGULAR_MODULES,
-        // CovalentHttpModule.forRoot({
-        //     interceptors: [{
-        //       interceptor: TLPApiInterceptor, paths: ['**'],
-        //     }],
-        //   }),
         MATERIAL_MODULES,
         COVALENT_MODULES,
         mainRoutes,
@@ -86,6 +77,6 @@ const TESTLINK_PLUGIN_INTERCEPTORS: Type<IHttpInterceptor>[] = [
     declarations: [
         TESTLINK_PLUGIN_MODULES,
     ],
-    providers: [TESTLINK_PLUGIN_SERVICES, TESTLINK_PLUGIN_INTERCEPTORS],
+    providers: [TESTLINK_PLUGIN_SERVICES],
 })
 export class MainModule { }

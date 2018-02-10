@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IConnectionHeader } from 'model/connection-header';
+import { IConnectionHeader } from '../model/connection-header';
 
 @Injectable()
 export class LocalStorageManagerService {
