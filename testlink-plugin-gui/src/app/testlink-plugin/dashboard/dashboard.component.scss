@@ -56,6 +56,9 @@ $accent-light:  mat-palette($md-elastestorange, 200, 300, 100);
         }
     }
 
+    .full-min-width .mat-toolbar-layout > md-toolbar-row {
+        min-width: 100% !important;
+    }
 
     span.pull-right {
         position: absolute;

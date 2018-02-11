@@ -33,8 +33,11 @@ import { TestPlanComponent } from './dashboard/test-plans/test-plan.component';
 import { TestRunnerComponent } from './dashboard/test-runner/test-runner.component';
 import { InstancesService } from './services/instances.service';
 import { LocalStorageManagerService } from './services/local-storage-manager.service';
-import { TestProjectService } from './services/tlp-api/test-projects.service';
 import { TlpApiService } from './services/tlp-api/tlp-api.service';
+import { TestProjectService } from './services/tlp-api/test-projects.service';
+import { TestPlanService } from './services/tlp-api/test-plan.service';
+import { BuildService } from './services/tlp-api/build.service';
+import { PlatformService } from './services/tlp-api/platform.service';
 
 
 const MATERIAL_MODULES: any[] = [
@@ -63,6 +66,7 @@ const TESTLINK_PLUGIN_MODULES: any[] = [
 
 const TESTLINK_PLUGIN_SERVICES: any[] = [
     TlpApiService, InstancesService, LocalStorageManagerService, TestProjectService,
+    TestPlanService, PlatformService, BuildService,
 ];
 
 @NgModule({

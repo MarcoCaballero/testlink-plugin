@@ -1,9 +1,12 @@
 import { Component, OnInit, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import {
     TdLoadingService, TdDialogService, TdMediaService, TdDataTableService, TdDataTableSortingOrder,
-    ITdDataTableSortChangeEvent, ITdDataTableColumn, IPageChangeEvent,
+    ITdDataTableSortChangeEvent, ITdDataTableColumn, IPageChangeEvent, LoadingType, LoadingMode,
 } from '@covalent/core';
 
+import { TestProjectService } from '../services/tlp-api/test-projects.service';
+import { TestPlanService } from '../services/tlp-api/test-plan.service';
+import { BuildService } from '../services/tlp-api/build.service';
 import { IProject } from '../model/project';
 import { ITestPlan } from '../model/test-plan';
 import { IBuild } from '../model/build';
@@ -19,6 +22,7 @@ const BOOLEAN_FORMAT: (v: any) => any = (v: boolean) => (v === true) ? 'ENABLED'
 
 export class DashboardComponent implements OnInit, AfterViewInit {
 
+    isInitContext: boolean = true;
     menuItems: Object[] = [
         {
             icon: 'home',
@@ -26,7 +30,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
             title: 'Home',
         },
     ];
-
     columns: ITdDataTableColumn[] = [
         { name: 'name', label: 'Project name', sortable: true, filter: true, width: 150 },
         { name: 'description', label: 'Description', sortable: true, filter: true, width: 300 },
@@ -36,151 +39,58 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         { name: 'isActive', label: '¿is active?', sortable: true, filter: true, width: 100 },
         { name: 'isPublic', label: '¿is public?', sortable: true, filter: true, width: 100 },
     ];
-
-    builds: IBuild[] = [
-        {
-            id: '0',
-            testSuitName: 'Main tests',
-            testCase: 'Test browser compatibility',
-            platform: 'CHrome_12.3',
-            priority: 'HIGH',
-            status: 'NOT_RUN',
-            assignedSince: new Date('7/01/2017'),
-        },
-        {
-            id: '1',
-            testSuitName: 'Login tests',
-            testCase: 'Test browser compatibility',
-            platform: 'CHrome_12.3',
-            priority: 'HIGH',
-            status: 'PASSED',
-            assignedSince: new Date('7/01/2017'),
-        },
-        {
-            id: '2',
-            testSuitName: 'Logut tests',
-            testCase: 'Test browser compatibility',
-            platform: 'CHrome_12.3',
-            priority: 'HIGH',
-            status: 'PASSED',
-            assignedSince: new Date('7/01/2017'),
-        },
-    ];
-
-    testplans: ITestPlan[] = [
-        {
-            id: '0',
-            name: 'test-plan-01',
-            description: 'lorem ipsum sit amen sit amen lorep ismums',
-            testCaseCount: 3,
-            buildCount: 3,
-            isActive: true,
-            isPublic: true,
-            builds: this.builds,
-        },
-        {
-            id: '1',
-            name: 'test-plan-02',
-            description: 'lorem ipsum sit amen sit amen lorep ismums',
-            testCaseCount: 3,
-            buildCount: 3,
-            platform: 'Chrome_234.3',
-            isActive: true,
-            isPublic: true,
-            builds: this.builds.slice(1, this.builds.length),
-        },
-        {
-            id: '2',
-            name: 'test-plan-03',
-            description: 'lorem ipsum sit amen sit amen lorep ismums',
-            testCaseCount: 3,
-            buildCount: 3,
-            isActive: true,
-            isPublic: true,
-            builds: this.builds.slice(2, this.builds.length),
-        },
-    ];
-
-    projects: IProject[] = [
-        {
-            id: 1,
-            name: 'Android test app',
-            prefix: 'ATP',
-            notes: '<p>Test android apps for user experience and perfomance.</p>',
-            enableRequirements: true,
-            enableTestPriority: true,
-            enableAutomation: true,
-            enableInventory: true,
-            public: true,
-            active: true,
-            testPlans: this.testplans,
-        },
-        {
-            id: 19,
-            name: 'Java plugin',
-            prefix: 'JP-001',
-            notes: '<p>Testing the Java plugin</p>',
-            enableRequirements: true,
-            enableTestPriority: true,
-            enableAutomation: true,
-            enableInventory: true,
-            public: true,
-            active: true,
-            testPlans: this.testplans,
-        },
-        {
-            id: 20,
-            name: 'Java plugin Revision',
-            prefix: 'JP-002',
-            notes: '<p>Testing the Java plugin in revision</p>',
-            enableRequirements: true,
-            enableTestPriority: true,
-            enableAutomation: true,
-            enableInventory: false,
-            public: true,
-            active: true,
-            testPlans: this.testplans.slice(0, 1),
-        },
-        {
-            id: 21,
-            name: 'Project demo mica',
-            prefix: 'PDM',
-            notes: '<p>This is a fake project created to show how the elastest-testlink plugin works.</p>',
-            enableRequirements: true,
-            enableTestPriority: true,
-            enableAutomation: true,
-            enableInventory: true,
-            public: true,
-            active: true,
-            testPlans: this.testplans.slice(0, 1),
-        },
-    ];
-
-    filteredProjects: any[] = this.projects;
-    filteredTotal: number = this.projects.length;
-    selectedProject: IProject = this.projects[0];
-
+    projects: IProject[] = [];
+    selectedProject: IProject = undefined;
+    testplans: ITestPlan[] = [];
+    selectedTestPlan: ITestPlan = undefined;
+    builds: IBuild[] = undefined;
     searchTerm: string = '';
-
     opened: boolean = false;
     optionalText: string = (!this.opened) ? 'Open All' : 'Close all';
 
     constructor(private _changeDetectorRef: ChangeDetectorRef, public media: TdMediaService,
-        private _dataTableService: TdDataTableService) { }
-
-    ngOnInit(): void {
-        this.selectedProject = this.projects[0];
+        private _dataTableService: TdDataTableService, private loadingService: TdLoadingService,
+        private testProjectService: TestProjectService, private testPlanService: TestPlanService,
+        private buildService: BuildService) {
     }
 
-    change(event: any): void {
-        this.selectedProject = event.value;
+    ngOnInit(): void {
+        this.loadContext();
+    }
+
+    public async loadContext(): Promise<void> {
+        this.isInitContext = true;
+        try {
+            this.loadingService.register('projectsLoader');
+            this.setProjects();
+        } catch (error) {
+            console.log(error);
+        } finally {
+            this.isInitContext = false;
+            this.loadingService.resolve('projectsLoader');
+        }
+    }
+
+    change(plan: ITestPlan): void {
+        if (plan) {
+            this.selectedTestPlan = plan;
+            console.log(`Changed test-plan: ${JSON.stringify(this.selectedTestPlan, undefined, 4)}`);
+        }
+
+    }
+
+    public changeSelectedProject(project: IProject): void {
+        this.isInitContext = true;
+        if (this.selectedProject) { this.selectedProject.color = 'white'; }
+        this.selectedProject = project;
+        this.selectedProject.color = 'yellow';
+        this.setTestPlans(project.id);
     }
 
     ngAfterViewInit(): void {
         /* VERY IMPORTANT, DO NOT REMOVE THAT CODE (MdSidenav issues redrawing on re-calling) */
         setTimeout(() => {
-            this.media.broadcast();
-            this._changeDetectorRef.detectChanges();
+            this.refreshView();
         });
     }
 
@@ -188,5 +98,71 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         this.opened = !this.opened;
         this.optionalText = (!this.opened) ? 'Open All' : 'Close all';
         console.log(`opened: ${this.opened}`);
+    }
+
+    private setProjects(): IProject[] {
+        this.testProjectService.getProjects()
+            .then((response: IProject[]) => {
+                this.projects = response;
+                console.log(`Projects loaded on set projects: ${JSON.stringify(this.projects, undefined, 4)}`);
+                if (this.isInitContext && response.length > 0) {
+                    this.selectedProject = response[0];
+                    this.setTestPlans(response[0].id);
+                }
+                this.refreshView();
+                return response;
+            })
+            .catch((error: any) => {
+                console.log(`Error when trying to get test plan: ${error}`);
+            });
+        return undefined;
+    }
+
+    private setTestPlans(projectId: number): ITestPlan[] {
+        this.isInitContext = true;
+        try {
+            this.loadingService.register('stepLoader');
+            this.testPlanService.getPlans(projectId)
+                .then((response: ITestPlan[]) => {
+                    this.testplans = response;
+                    console.log(`Projects loaded on set testplans: ${JSON.stringify(this.testplans, undefined, 4)}`);
+                    if (this.isInitContext && response.length > 0) {
+                        this.selectedTestPlan = response[0];
+                        this.setBuilds(response[0].id);
+                        this.isInitContext = false;
+                    }
+                    this.refreshView();
+                    return response;
+                })
+                .catch((error: any) => {
+                    console.log(`Error when trying to get test plan: ${error}`);
+                });
+        } catch (error) {
+            console.log(error);
+        } finally {
+            this.isInitContext = false;
+            this.loadingService.resolve('stepLoader');
+        }
+
+        return undefined;
+    }
+
+    private setBuilds(tesPlanId: number): IBuild[] {
+        this.buildService.getBuilds(tesPlanId)
+            .then((response: IBuild[]) => {
+                this.builds = response;
+                console.log(`Projects loaded on set builds: ${JSON.stringify(this.builds, undefined, 4)}`);
+                this.refreshView();
+                return response;
+            })
+            .catch((error: any) => {
+                console.log(`Error when trying to get build: ${error}`);
+            });
+        return undefined;
+    }
+
+    private refreshView(): void {
+        this.media.broadcast();
+        this._changeDetectorRef.detectChanges();
     }
 }

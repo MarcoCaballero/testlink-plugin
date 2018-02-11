@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, OnDestroy, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { TdLoadingService, TdDialogService, TdMediaService } from '@covalent/core';
+import { TdLoadingService, TdDialogService, TdMediaService, LoadingMode, LoadingType } from '@covalent/core';
 import { Subscription } from 'rxjs/Subscription';
 
 import { InstancesService } from '../../services/instances.service';
@@ -65,13 +65,13 @@ export class DashboardInstanceComponent implements OnInit, OnDestroy, AfterViewI
 
     async loadInstances(): Promise<void> {
         try {
-            this.loadingService.register('loadingDashboard');
+            this.loadingService.register('loadingDashboardInstance');
             this.instances = await this.instanceService.getAll().toPromise();
         } catch (error) {
             console.log(error);
         } finally {
             this.filteredInstances = Object.assign([], this.instances);
-            this.loadingService.resolve('loadingDashboard');
+            this.loadingService.resolve('loadingDashboardInstance');
         }
 
     }

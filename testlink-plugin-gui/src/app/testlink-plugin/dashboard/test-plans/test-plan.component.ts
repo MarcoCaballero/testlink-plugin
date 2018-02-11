@@ -67,7 +67,7 @@ export class TestPlanComponent implements OnInit, AfterViewInit {
 
     ngOnInit(): void {
         this.filteredBuilds = this.builds;
-        this.filteredTotal = this.builds.length;
+        this.filteredTotal = (this.builds) ? this.builds.length : 0;
         this.filter();
     }
 
@@ -87,10 +87,14 @@ export class TestPlanComponent implements OnInit, AfterViewInit {
                 return column.name;
             });
         newData = this._dataTableService.filterData(newData, this.searchTerm, true, excludedColumns);
-        this.filteredTotal = newData.length;
-        newData = this._dataTableService.sortData(newData, this.sortBy, this.sortOrder);
-        newData = this._dataTableService.pageData(newData, this.fromRow, this.currentPage * this.pageSize);
-        this.filteredBuilds = newData;
+        this.filteredTotal = (newData) ? newData.length : 0;
+        if (newData) {
+            newData = this._dataTableService.sortData(newData, this.sortBy, this.sortOrder);
+            newData = this._dataTableService.pageData(newData, this.fromRow, this.currentPage * this.pageSize);
+            this.filteredBuilds = newData;
+        } else {
+            this.filteredBuilds = [];
+        }
     }
 
     goTest(): void {

@@ -1,12 +1,12 @@
 import { IBuild } from './build';
 export interface ITestPlan {
-    id: string;
+    id: number;
     name: string;
-    description: string;
-    testCaseCount: number;
-    buildCount: number;
-    platform?: string;
-    isActive: boolean;
-    isPublic: boolean;
+    projectName?: string;
+    notes: string;
+    customFields: string[];
+    platforms?: string[];
+    active: boolean;
+    public: boolean;
     builds?: IBuild[];
 }

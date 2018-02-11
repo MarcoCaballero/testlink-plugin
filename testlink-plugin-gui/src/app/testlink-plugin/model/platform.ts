@@ -1,6 +1,5 @@
-export interface IBuild {
+export interface IPlatform {
     id: number;
-    testPlanId: string;
     name: string;
     notes: string;
 }

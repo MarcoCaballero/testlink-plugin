@@ -11,5 +11,5 @@ export interface IProject {
     enableInventory: boolean;
     public: boolean;
     active: boolean;
-    testPlans?: ITestPlan[];
+    color: string | 'white';
 }

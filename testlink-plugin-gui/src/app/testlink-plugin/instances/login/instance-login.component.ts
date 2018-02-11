@@ -99,8 +99,6 @@ export class InstanceLoginComponent implements OnInit {
             this.loading = true;
             this.setConnectionHeaderToLocalStorage(connectionHeader)
                 .then((): void => {
-                    this.getConnectionHeaderToLocalStorage();
-                    this.getTLPprojects();
                     this.router.navigate(['/testlink-plugin/dashboard']);
                 })
                 .catch((error: any) => {

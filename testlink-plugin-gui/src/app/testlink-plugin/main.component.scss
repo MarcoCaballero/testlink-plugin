@@ -102,8 +102,12 @@ md-nav-list {
     }
 
 
-    .mat-dialog-container{
+    .mat-dialog-container {
         padding: 0px !important;
+    }
+
+    .full-min-width {
+        min-width: 100% !important;
     }
 }
 

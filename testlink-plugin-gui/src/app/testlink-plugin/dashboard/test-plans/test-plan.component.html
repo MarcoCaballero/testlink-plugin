@@ -1,7 +1,7 @@
 <md-expansion-panel [expanded]="opened">
     <md-expansion-panel-header>
         <md-panel-title>
-                <h4 md-subheader> TestPlan X {{builds.length}} </h4>
+                <h4 md-subheader> TestPlan X {{builds?.length}} </h4>
         </md-panel-title>
         <md-panel-description>
             Some Info ....
@@ -10,7 +10,7 @@
     <ng-template ngFor [ngForOf]="[1,2,3]" let-i='index' let-build>
         <h3 md-subheader text-left style="text-align: left">Build: {{i}}</h3>
         <td-data-table #dataTable [data]="filteredBuilds" [columns]="columns" [selectable]="false" [clickable]="true" [multiple]="true"
-            [sortable]="true" [sortBy]="sortBy" [sortOrder]="sortOrder" (sortChange)="sort($event)" (rowClick)="goTest()" [style.height.px]="(filteredBuilds.length==1)? 120: filteredBuilds.length * 90">
+            [sortable]="true" [sortBy]="sortBy" [sortOrder]="sortOrder" (sortChange)="sort($event)" (rowClick)="goTest()" [style.height.px]="(filteredBuilds?.length==1)? 120: filteredBuilds?.length * 90">
         </td-data-table>
         <div class="md-padding" *ngIf="!dataTable.hasData" layout="row" layout-align="center center">
             <h3>No results to display.</h3>
