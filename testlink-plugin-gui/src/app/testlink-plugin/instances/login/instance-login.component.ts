@@ -7,12 +7,12 @@ import { ITdDynamicElementConfig, TdDynamicElement, TdDynamicType } from '@coval
 
 import { Subscription } from 'rxjs/Subscription';
 
-import { IInstance } from '../../model/instance';
-import { IProject } from '../../model/project';
-import { IConnectionHeader } from '../../model/connection-header';
-import { InstancesService } from '../../services/instances.service';
-import { LocalStorageManagerService } from '../../services/local-storage-manager.service';
-import { TestProjectService } from '../../services/tlp-api/test-projects.service';
+import { IInstance } from 'model/instance';
+import { IProject } from 'model/project';
+import { IConnectionHeader } from 'model/connection-header';
+import { InstancesService } from 'services/instances.service';
+import { LocalStorageManagerService } from 'services/local-storage-manager.service';
+import { TestProjectService } from 'services/tlp-api/test-projects.service';
 
 @Component({
     selector: 'testlink-plugin-instance-login',

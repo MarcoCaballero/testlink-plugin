@@ -4,8 +4,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { TdLoadingService, TdDialogService, TdMediaService, LoadingMode, LoadingType } from '@covalent/core';
 import { Subscription } from 'rxjs/Subscription';
 
-import { InstancesService } from '../../services/instances.service';
-import { IInstance } from '../../model/instance';
+import { InstancesService } from 'services/instances.service';
+import { IInstance } from 'model/instance';
 
 import 'rxjs/add/operator/toPromise';
 

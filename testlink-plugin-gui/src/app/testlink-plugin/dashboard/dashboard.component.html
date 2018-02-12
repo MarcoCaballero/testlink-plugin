@@ -73,12 +73,11 @@
         </div>
     </div>
     <div layout="row" tdMediaToggle="gt-xs" [mediaClasses]="['push-sm']">
-
         <md-card class="md-card-colored" flex>
             <md-card-content class="text-center">
                 <div layout="row" layout-align="start center" class="pad-left-sm pad-right-sm">
                     <span *ngIf="!searchBox.searchVisible" class="push-left-sm md-title">
-                        <md-icon class="tc-grey-700">chrome_reader_mode</md-icon>
+                        <md-icon class="tc-grey-700">dashboard</md-icon>
                         Test cases by build
                     </span>
                     <button *ngIf="!searchBox.searchVisible" class="push-right-own" md-raised-button color="accent" (click)="toggleOpened()">{{optionalText}}</button>
@@ -102,14 +101,6 @@
                             <br>
                         </span>
                     </ng-template>
-                    <!-- <div class="md-padding" *ngIf="selectedProject?.testPlans?.length === 0;else mainTemplate" layout="row" layout-align="center center">
-                        <h3>No Test Plans created yet.</h3>
-                    </div>
-                    <ng-template #mainTemplate let-plan ngFor [ngForOf]="selectedProject?.testPlans">
-                        <testlink-plugin-test-plan *ngIf="plan?.builds;else secondTemplate" [builds]="plan.builds" [plan]="plan" [opened]="opened">
-                        </testlink-plugin-test-plan>
-                        <ng-template #secondTemplate><h3>No Builds created yet for testPlan: ID->{{plan.id}}; name->{{plan.name}}</h3></ng-template>
-                    </ng-template> -->
                 </md-accordion>
                 <md-divider></md-divider>
             </md-card-content>

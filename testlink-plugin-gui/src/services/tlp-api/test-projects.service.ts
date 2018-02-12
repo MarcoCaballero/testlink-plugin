@@ -2,20 +2,20 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 
-import { testPlanUrl } from 'assets/data/paths';
-import { IBuild } from '../../model/build';
-import { TlpApiService } from '../../services/tlp-api/tlp-api.service';
+import { testProjectsUrl } from 'assets/data/paths';
+import { IProject } from 'model/project';
+import { TlpApiService } from 'services/tlp-api/tlp-api.service';
 
 import 'rxjs/add/operator/toPromise';
 
 @Injectable()
-export class BuildService {
+export class TestProjectService {
 
     constructor(private tlpApiService: TlpApiService) {
     }
 
-    getBuilds(testPlanId: number): Promise<IBuild[]> {
-        return this.tlpApiService.get<IBuild[]>(`${testPlanUrl}/${testPlanId}/builds`)
+    getProjects(): Promise<IProject[]> {
+        return this.tlpApiService.get<IProject[]>(testProjectsUrl)
             .toPromise()
             .then((response: any) => {
                 console.log(`responsed: ${JSON.stringify(response)}`);

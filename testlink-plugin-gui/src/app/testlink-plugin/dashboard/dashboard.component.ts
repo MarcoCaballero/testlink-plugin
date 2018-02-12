@@ -4,12 +4,12 @@ import {
     ITdDataTableSortChangeEvent, ITdDataTableColumn, IPageChangeEvent, LoadingType, LoadingMode,
 } from '@covalent/core';
 
-import { TestProjectService } from '../services/tlp-api/test-projects.service';
-import { TestPlanService } from '../services/tlp-api/test-plan.service';
-import { BuildService } from '../services/tlp-api/build.service';
-import { IProject } from '../model/project';
-import { ITestPlan } from '../model/test-plan';
-import { IBuild } from '../model/build';
+import { TestProjectService } from 'services/tlp-api/test-projects.service';
+import { TestPlanService } from 'services/tlp-api/test-plan.service';
+import { BuildService } from 'services/tlp-api/build.service';
+import { IProject } from 'model/project';
+import { ITestPlan } from 'model/test-plan';
+import { IBuild } from 'model/build';
 
 const BOOLEAN_FORMAT: (v: any) => any = (v: boolean) => (v === true) ? 'ENABLED' : 'NOT ENABLED';
 

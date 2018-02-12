@@ -6,7 +6,7 @@ import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 
-import { IInstance } from '../model/instance';
+import { IInstance } from 'model/instance';
 
 @Injectable()
 export class InstancesService {

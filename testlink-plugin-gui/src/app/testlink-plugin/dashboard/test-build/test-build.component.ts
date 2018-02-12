@@ -3,8 +3,8 @@ import { ITdDataTableColumn, TdDataTableSortingOrder, TdMediaService, TdDataTabl
 import { Router } from '@angular/router';
 
 import { TestRunnerComponent, } from '../test-runner/test-runner.component';
-import { IBuild } from '../../model/build';
-import { ITestCase } from '../../model/test-case';
+import { IBuild } from 'model/build';
+import { ITestCase } from 'model/test-case';
 
 import { slideInDownAnimation } from 'app/app.animations';
 

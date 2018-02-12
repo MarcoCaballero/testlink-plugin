@@ -31,14 +31,13 @@ import { DashboardInstanceComponent } from './instances/dashboard/dashboard-inst
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { TestBuildComponent } from './dashboard/test-build/test-build.component';
 import { TestRunnerComponent } from './dashboard/test-runner/test-runner.component';
-import { InstancesService } from './services/instances.service';
-import { LocalStorageManagerService } from './services/local-storage-manager.service';
-import { TlpApiService } from './services/tlp-api/tlp-api.service';
-import { TestProjectService } from './services/tlp-api/test-projects.service';
-import { TestPlanService } from './services/tlp-api/test-plan.service';
-import { BuildService } from './services/tlp-api/build.service';
-import { PlatformService } from './services/tlp-api/platform.service';
-
+import { InstancesService } from 'services/instances.service';
+import { LocalStorageManagerService } from 'services/local-storage-manager.service';
+import { TlpApiService } from 'services/tlp-api/tlp-api.service';
+import { TestProjectService } from 'services/tlp-api/test-projects.service';
+import { TestPlanService } from 'services/tlp-api/test-plan.service';
+import { BuildService } from 'services/tlp-api/build.service';
+import { PlatformService } from 'services/tlp-api/platform.service';
 
 const MATERIAL_MODULES: any[] = [
     MdButtonModule, MdCardModule, MdIconModule, MdDialogModule,

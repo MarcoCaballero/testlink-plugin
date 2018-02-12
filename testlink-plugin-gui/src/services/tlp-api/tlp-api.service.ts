@@ -3,8 +3,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
 
-import { IConnectionHeader } from '../../model/connection-header';
-import { LocalStorageManagerService } from '../../services/local-storage-manager.service';
+import { IConnectionHeader } from 'model/connection-header';
+import { LocalStorageManagerService } from 'services/local-storage-manager.service';
 
 import 'rxjs/add/operator/toPromise';
 
