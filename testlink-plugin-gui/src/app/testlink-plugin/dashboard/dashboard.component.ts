@@ -59,31 +59,26 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     }
 
     public async loadContext(): Promise<void> {
-        this.isInitContext = true;
-        try {
-            this.loadingService.register('projectsLoader');
-            this.setProjects();
-        } catch (error) {
-            console.log(error);
-        } finally {
-            this.isInitContext = false;
-            this.loadingService.resolve('projectsLoader');
-        }
+        this.loadingService.register('projectsLoader');
+        this.loadingService.register();
+        this.setInitialProjects();
     }
 
     change(plan: ITestPlan): void {
         if (plan) {
             this.selectedTestPlan = plan;
             console.log(`Changed test-plan: ${JSON.stringify(this.selectedTestPlan, undefined, 4)}`);
+            this.loadingService.register('buildsLoader');
+            this.setTestBuilds(plan.id);
         }
 
     }
 
     public changeSelectedProject(project: IProject): void {
-        this.isInitContext = true;
-        if (this.selectedProject) { this.selectedProject.color = 'white'; }
+        this.resetCssStyle();
         this.selectedProject = project;
-        this.selectedProject.color = 'yellow';
+        this.aplyCssStyle();
+        this.loadingService.register('testPlanLoader');
         this.setTestPlans(project.id);
     }
 
@@ -100,69 +95,78 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         console.log(`opened: ${this.opened}`);
     }
 
-    private setProjects(): IProject[] {
+    private setInitialProjects(): any {
         this.testProjectService.getProjects()
             .then((response: IProject[]) => {
                 this.projects = response;
                 console.log(`Projects loaded on set projects: ${JSON.stringify(this.projects, undefined, 4)}`);
-                if (this.isInitContext && response.length > 0) {
+                if (response.length > 0) {
+                    this.resetCssStyle();
                     this.selectedProject = response[0];
+                    this.aplyCssStyle();
+                    this.loadingService.resolve('projectsLoader');
+                    this.loadingService.register('testPlanLoader');
                     this.setTestPlans(response[0].id);
+                    this.refreshView();
+                } else {
+                    this.loadingService.resolve();
                 }
-                this.refreshView();
-                return response;
             })
             .catch((error: any) => {
                 console.log(`Error when trying to get test plan: ${error}`);
             });
-        return undefined;
     }
 
-    private setTestPlans(projectId: number): ITestPlan[] {
-        this.isInitContext = true;
-        try {
-            this.loadingService.register('stepLoader');
-            this.testPlanService.getPlans(projectId)
-                .then((response: ITestPlan[]) => {
-                    this.testplans = response;
-                    console.log(`Projects loaded on set testplans: ${JSON.stringify(this.testplans, undefined, 4)}`);
-                    if (this.isInitContext && response.length > 0) {
-                        this.selectedTestPlan = response[0];
-                        this.setBuilds(response[0].id);
-                        this.isInitContext = false;
-                    }
-                    this.refreshView();
-                    return response;
-                })
-                .catch((error: any) => {
-                    console.log(`Error when trying to get test plan: ${error}`);
-                });
-        } catch (error) {
-            console.log(error);
-        } finally {
-            this.isInitContext = false;
-            this.loadingService.resolve('stepLoader');
-        }
-
-        return undefined;
+    private setTestPlans(projectId: number): any {
+        this.testPlanService.getPlans(projectId)
+            .then((response: ITestPlan[]) => {
+                this.testplans = response;
+                console.log(`Projects loaded on set testplans: ${JSON.stringify(this.testplans, undefined, 4)}`);
+                if (response.length > 0) {
+                    this.selectedTestPlan = response[0];
+                    this.loadingService.register('buildsLoader');
+                    this.setTestBuilds(response[0].id);
+                } else {
+                    this.selectedTestPlan = undefined;
+                    this.builds = [];
+                    this.loadingService.resolve();
+                }
+                this.refreshView();
+                this.loadingService.resolve('testPlanLoader');
+            })
+            .catch((error: any) => {
+                console.log(`Error when trying to get test plan: ${error}`);
+            });
     }
 
-    private setBuilds(tesPlanId: number): IBuild[] {
-        this.buildService.getBuilds(tesPlanId)
+    private setTestBuilds(testPlanId: number): any {
+        this.buildService.getBuilds(testPlanId)
             .then((response: IBuild[]) => {
                 this.builds = response;
                 console.log(`Projects loaded on set builds: ${JSON.stringify(this.builds, undefined, 4)}`);
                 this.refreshView();
-                return response;
+                this.loadingService.resolve('buildsLoader');
+                this.loadingService.resolve();
             })
             .catch((error: any) => {
                 console.log(`Error when trying to get build: ${error}`);
             });
-        return undefined;
     }
 
     private refreshView(): void {
         this.media.broadcast();
         this._changeDetectorRef.detectChanges();
+    }
+
+    private aplyCssStyle(): void {
+        this.selectedProject.bgcolor = '#ffac2f';
+        this.selectedProject.color = 'white';
+    }
+
+    private resetCssStyle(): void {
+        if (this.selectedProject) {
+            this.selectedProject.color = '';
+            this.selectedProject.bgcolor = '';
+        }
     }
 }

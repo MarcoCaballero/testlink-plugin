@@ -5,13 +5,10 @@
     </md-toolbar>
     <md-nav-list td-sidenav-content [tdLayoutManageListClose]="!media.query('gt-sm')" *tdLoading="'projectsLoader'; mode:'indeterminate'; type:'circle'; strategy:'overlay'; color:'accent'">
         <ng-template let-project let-last="last" ngFor [ngForOf]="projects" let-i="index">
-            <a md-list-item (click)="changeSelectedProject(project)" [ngStyle]="{ 'background-color': project.color }">
-                <md-icon mdListIcon>folder_special</md-icon> {{project.prefix}}: {{project.name}}
+            <a md-list-item (click)="changeSelectedProject(project)" [ngStyle]="{ 'background-color': project?.bgcolor,  'color': project?.color}">
+                <md-icon [ngStyle]="{ 'color': project?.color}" mdListIcon>folder_special</md-icon> {{project.prefix}}: {{project.name}}
             </a>
         </ng-template>
-        project: {{selectedProject?.name}}
-        <br> plan: {{selectedTestPlan?.name}}
-
     </md-nav-list>
     <md-toolbar>
         <div layout="row" layout-align="start center" flex>
@@ -49,11 +46,11 @@
                         <md-icon class="tc-grey-700">description</md-icon>
                         Test Plan
                     </div>
-                    <div *tdLoading="'stepLoader'; mode:'indeterminate'; type:'circle'; strategy:'overlay'; color:'accent'">
+                    <div *tdLoading="'testPlanLoader'; mode:'indeterminate'; type:'circle'; strategy:'overlay'; color:'accent'">
                         <div layout="column" *ngIf="testplans?.length > 0; else noPlanTemplate">
                             <form>
                                 <md-select style="text-align: left;" color="accent" class="testlink-select testlink-center push-bottom border-bottom" placeholder="Select test plan"
-                                    [(ngModel)]="selectedTestPlan" name="food" required>
+                                    [(ngModel)]="selectedTestPlan" name="food" (change)="change($event.value)" required>
                                     <md-option *ngFor="let plan of testplans" [value]="plan">
                                         {{plan.id}}: {{plan.name}}
                                     </md-option>
@@ -61,7 +58,16 @@
                             </form>
                         </div>
                     </div>
-                    <ng-template #noPlanTemplate> NO TESTPLANS CREATED </ng-template>
+                    <ng-template #noPlanTemplate>
+                        <span class="push-left-sm md-title">
+                            <div layout="row" layout-align="center center">
+                                <md-icon mdListAvatar>info_outline</md-icon>
+                                <h3 mdLine class="push-left-sm md-title">No Test Plans created yet.</h3>
+                            </div>
+                            <span flex="30" class="md-body-1 tc-grey-500">Select other project in the left bar.</span>
+                            <br>
+                        </span>
+                    </ng-template>
                 </md-card-content>
             </md-card>
         </div>
@@ -73,16 +79,29 @@
                 <div layout="row" layout-align="start center" class="pad-left-sm pad-right-sm">
                     <span *ngIf="!searchBox.searchVisible" class="push-left-sm md-title">
                         <md-icon class="tc-grey-700">chrome_reader_mode</md-icon>
-                        TestPlan Builds Management
+                        Test cases by build
                     </span>
-                    <button *ngIf="!searchBox.searchVisible" class="push-right" md-raised-button color="accent" (click)="toggleOpened()">{{optionalText}}</button>
+                    <button *ngIf="!searchBox.searchVisible" class="push-right-own" md-raised-button color="accent" (click)="toggleOpened()">{{optionalText}}</button>
                     <td-search-box #searchBox backIcon="arrow_back" class="push-right-sm tc-orange-700" placeholder="Search here" (searchDebounce)="search($event)"
                         flex>
                     </td-search-box>
                 </div>
                 <md-divider></md-divider>
-                <md-accordion class="example-headers-align">
-
+                <md-accordion class="example-headers-align" *tdLoading="'buildsLoader'; mode:'indeterminate'; type:'circle'; strategy:'overlay'; color:'accent'">
+                    <ng-template #mainTemplate let-build ngFor [ngForOf]="builds" *ngIf="builds?.length >0; else noBuildsTemplate">
+                        <testlink-plugin-test-build [build]="build" [opened]="opened">
+                        </testlink-plugin-test-build>
+                    </ng-template>
+                    <ng-template #noBuildsTemplate>
+                        <span class="push-left-sm md-title">
+                            <div layout="row" layout-align="center center">
+                                <md-icon mdListAvatar>info_outline</md-icon>
+                                <h3 mdLine class="push-left-sm md-title">No builds created yet.</h3>
+                            </div>
+                            <span flex="30" class="md-body-1 tc-grey-500">Select other testplan or project.</span>
+                            <br>
+                        </span>
+                    </ng-template>
                     <!-- <div class="md-padding" *ngIf="selectedProject?.testPlans?.length === 0;else mainTemplate" layout="row" layout-align="center center">
                         <h3>No Test Plans created yet.</h3>
                     </div>

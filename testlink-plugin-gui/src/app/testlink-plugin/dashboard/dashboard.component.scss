@@ -76,4 +76,9 @@ $accent-light:  mat-palette($md-elastestorange, 200, 300, 100);
       align-items: center;
     }
 
+    .push-right-own {
+        position: absolute;
+        left: 31%;
+    }
+
 }

@@ -29,7 +29,7 @@ import { MainComponent } from './main.component';
 import { InstanceLoginComponent } from './instances/login/instance-login.component';
 import { DashboardInstanceComponent } from './instances/dashboard/dashboard-instance.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { TestPlanComponent } from './dashboard/test-plans/test-plan.component';
+import { TestBuildComponent } from './dashboard/test-build/test-build.component';
 import { TestRunnerComponent } from './dashboard/test-runner/test-runner.component';
 import { InstancesService } from './services/instances.service';
 import { LocalStorageManagerService } from './services/local-storage-manager.service';
@@ -61,7 +61,7 @@ const COVALENT_MODULES: any[] = [
 
 const TESTLINK_PLUGIN_MODULES: any[] = [
     MainComponent, InstanceLoginComponent, DashboardInstanceComponent, DashboardComponent,
-    TestPlanComponent, TestRunnerComponent,
+    TestBuildComponent, TestRunnerComponent,
 ];
 
 const TESTLINK_PLUGIN_SERVICES: any[] = [

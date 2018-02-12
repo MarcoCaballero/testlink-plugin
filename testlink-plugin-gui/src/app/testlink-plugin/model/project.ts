@@ -11,5 +11,6 @@ export interface IProject {
     enableInventory: boolean;
     public: boolean;
     active: boolean;
-    color: string | 'white';
+    color?: string;
+    bgcolor?: string;
 }

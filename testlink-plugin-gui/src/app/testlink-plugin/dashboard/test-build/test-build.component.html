@@ -1,0 +1,36 @@
+<md-expansion-panel [expanded]="opened">
+    <md-expansion-panel-header>
+        <md-panel-title>
+            <h4 md-subheader> Build: {{selectedBuild?.name}} </h4>
+        </md-panel-title>
+        <md-panel-description>
+            Some Info ....
+        </md-panel-description>
+    </md-expansion-panel-header>
+    <td-data-table #dataTable [data]="filteredTestCases" [columns]="columns" [selectable]="false" [clickable]="true" [multiple]="true"
+        [sortable]="true" [sortBy]="sortBy" [sortOrder]="sortOrder" (sortChange)="sort($event)" (rowClick)="goTest()" [style.height.px]="(filteredTestCases?.length==1)? 120: filteredTestCases?.length * 90">
+    </td-data-table>
+    <div class="md-padding" *ngIf="!dataTable.hasData" layout="row" layout-align="center center">
+        <h3>No results to display.</h3>
+    </div>
+    <td-paging-bar #pagingBar [pageSize]="pageSize" [total]="filteredTotal" (change)="page($event)">
+        <span>
+            Showing {{pagingBar.range}}
+            <span hide-xs>of {{pagingBar.total}}</span>
+        </span>
+        <span hide-xs>
+            Showing
+            <md-select [style.width.px]="50" [(ngModel)]="pageSize" [ngModelOptions]="{standalone: true}">
+                <md-option *ngFor="let size of [5,50,100,200,500]" [value]="size">
+                    {{size}}
+                </md-option>
+            </md-select>
+            entries
+        </span>
+    </td-paging-bar>
+    <md-divider></md-divider>
+    <md-action-row>
+        <!-- <button md-button color="warn" (click)="prevStep()">Previous</button>
+        <button md-button color="primary" (click)="nextStep()">End</button> -->
+    </md-action-row>
+</md-expansion-panel>
