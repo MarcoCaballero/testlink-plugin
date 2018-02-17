@@ -1,12 +1,16 @@
 import { Component, OnInit, AfterViewInit, ChangeDetectorRef, ChangeDetectionStrategy, Input, HostBinding, } from '@angular/core';
-import { ITdDataTableColumn, TdDataTableSortingOrder, TdMediaService, TdDataTableService, ITdDataTableSortChangeEvent } from '@covalent/core';
+import {
+    ITdDataTableColumn, TdDataTableSortingOrder, TdMediaService, TdDataTableService,
+    ITdDataTableSortChangeEvent, TdLoadingService
+} from '@covalent/core';
 import { Router } from '@angular/router';
 
+import { slideInDownAnimation } from 'app/app.animations';
 import { TestRunnerComponent, } from '../test-runner/test-runner.component';
 import { IBuild } from 'model/build';
+import { ITestPlan } from 'model/test-plan';
 import { ITestCase } from 'model/test-case';
-
-import { slideInDownAnimation } from 'app/app.animations';
+import { TestCaseService } from 'services/tlp-api/test-case.service';
 
 const BOOLEAN_FORMAT: (v: any) => any = (v: Date) => v.toDateString();
 
@@ -20,6 +24,7 @@ const BOOLEAN_FORMAT: (v: any) => any = (v: Date) => v.toDateString();
 
 export class TestBuildComponent implements OnInit, AfterViewInit {
     @Input('build') selectedBuild: IBuild;
+    @Input('plan') selectedTestPlan: ITestPlan;
     @Input('opened') opened: boolean;
 
     @HostBinding('@routeAnimation') routeAnimation: boolean = true;
@@ -29,8 +34,10 @@ export class TestBuildComponent implements OnInit, AfterViewInit {
 
     columns: ITdDataTableColumn[] = [
         { name: 'name', label: 'Test Case', sortable: true, filter: true, width: { min: 180, max: 250 } },
-        { name: 'executionType', label: 'Platform', sortable: true, filter: true, },
-        { name: 'platform', label: 'Priority', sortable: true, filter: true, },
+        { name: 'fullExternalId', label: 'External ID', sortable: true, filter: true, },
+        { name: 'executionType', label: 'Execution Type', sortable: true, filter: true, },
+        { name: 'platform.name', label: 'Platform', sortable: true, filter: true, },
+        { name: 'version', label: 'Version', sortable: true, filter: true, },
         { name: 'executionStatus', label: 'Status', sortable: true, filter: true, },
     ];
 
@@ -48,12 +55,12 @@ export class TestBuildComponent implements OnInit, AfterViewInit {
     isDialogOpen: boolean = false;
 
     constructor(private _dataTableService: TdDataTableService, private router: Router,
-        private _changeDetectorRef: ChangeDetectorRef, public media: TdMediaService, ) { }
+        private _changeDetectorRef: ChangeDetectorRef, public media: TdMediaService,
+        private testCaseService: TestCaseService, private loadingService: TdLoadingService) { }
 
     ngOnInit(): void {
-        this.filteredTestCases = this.testCases;
-        this.filteredTotal = (this.testCases) ? this.testCases.length : 0;
-        this.filter();
+        this.loadingService.register('TestCaseLoader');
+        this.setTestCases();
     }
 
     sort(sortEvent: ITdDataTableSortChangeEvent): void {
@@ -91,6 +98,27 @@ export class TestBuildComponent implements OnInit, AfterViewInit {
         setTimeout(() => {
             this.refreshView();
         });
+    }
+
+    private setTestCases(): any {
+        this.testCaseService.getTestCases(this.selectedTestPlan.id, this.selectedBuild.id)
+            .then((response: ITestCase[]) => {
+                this.testCases = response;
+                this.setUndefPlatforms();
+            })
+            .catch((error: any) => {
+                console.log(`Error when trying to get test plan: ${error}`);
+            });
+    }
+
+    private setUndefPlatforms() {
+        for (let testcase of this.testCases) {
+            testcase.platform.name = (testcase.platform.name == "") ? 'Any' : testcase.platform.name;
+        }
+        this.filteredTestCases = this.testCases;
+        this.filteredTotal = (this.testCases) ? this.testCases.length : 0;
+        this.filter();
+        this.loadingService.resolve('TestCaseLoader');
     }
 
     private refreshView(): void {

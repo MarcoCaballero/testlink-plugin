@@ -88,7 +88,7 @@
                 <md-divider></md-divider>
                 <md-accordion class="example-headers-align" *tdLoading="'buildsLoader'; mode:'indeterminate'; type:'circle'; strategy:'overlay'; color:'accent'">
                     <ng-template #mainTemplate let-build ngFor [ngForOf]="builds" *ngIf="builds?.length >0; else noBuildsTemplate">
-                        <testlink-plugin-test-build [build]="build" [opened]="opened">
+                        <testlink-plugin-test-build [build]="build" [opened]="opened" [plan]="selectedTestPlan">
                         </testlink-plugin-test-build>
                     </ng-template>
                     <ng-template #noBuildsTemplate>

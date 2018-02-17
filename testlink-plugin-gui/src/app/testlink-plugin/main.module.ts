@@ -38,6 +38,7 @@ import { TestProjectService } from 'services/tlp-api/test-projects.service';
 import { TestPlanService } from 'services/tlp-api/test-plan.service';
 import { BuildService } from 'services/tlp-api/build.service';
 import { PlatformService } from 'services/tlp-api/platform.service';
+import { TestCaseService } from 'services/tlp-api/test-case.service';
 
 const MATERIAL_MODULES: any[] = [
     MdButtonModule, MdCardModule, MdIconModule, MdDialogModule,
@@ -65,7 +66,7 @@ const TESTLINK_PLUGIN_MODULES: any[] = [
 
 const TESTLINK_PLUGIN_SERVICES: any[] = [
     TlpApiService, InstancesService, LocalStorageManagerService, TestProjectService,
-    TestPlanService, PlatformService, BuildService,
+    TestPlanService, PlatformService, BuildService, TestCaseService
 ];
 
 @NgModule({

@@ -113,6 +113,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
                 }
             })
             .catch((error: any) => {
+                this.loadingService.resolve('projectsLoader');
                 console.log(`Error when trying to get test plan: ${error}`);
             });
     }
@@ -135,6 +136,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
                 this.loadingService.resolve('testPlanLoader');
             })
             .catch((error: any) => {
+                this.loadingService.resolve('testPlanLoader');
                 console.log(`Error when trying to get test plan: ${error}`);
             });
     }
@@ -149,6 +151,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
                 this.loadingService.resolve();
             })
             .catch((error: any) => {
+                this.loadingService.resolve('buildsLoader');
                 console.log(`Error when trying to get build: ${error}`);
             });
     }

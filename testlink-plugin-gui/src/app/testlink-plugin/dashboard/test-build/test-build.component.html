@@ -1,4 +1,4 @@
-<md-expansion-panel [expanded]="opened">
+<md-expansion-panel [expanded]="opened" *tdLoading="'TestCaseLoader'; mode:'indeterminate'; type:'circle'; strategy:'overlay'; color:'accent'">
     <md-expansion-panel-header>
         <md-panel-title>
             <h4 md-subheader> Build: {{selectedBuild?.name}} </h4>
