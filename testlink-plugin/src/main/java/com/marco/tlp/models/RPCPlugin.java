@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.marco.tlp.config.MissingCustomHeaderException;
+import com.marco.tlp.models.rpccontrollers.AuthController;
 import com.marco.tlp.models.rpccontrollers.BuildController;
 import com.marco.tlp.models.rpccontrollers.PlatformController;
 import com.marco.tlp.models.rpccontrollers.TestCaseController;
@@ -22,6 +23,7 @@ import com.marco.tlp.models.rpccontrollers.TestProjectController;
 import br.eti.kinoshita.testlinkjavaapi.TestLinkAPI;
 import br.eti.kinoshita.testlinkjavaapi.model.Build;
 import br.eti.kinoshita.testlinkjavaapi.model.Platform;
+import br.eti.kinoshita.testlinkjavaapi.model.ReportTCResultResponse;
 import br.eti.kinoshita.testlinkjavaapi.model.TestCase;
 import br.eti.kinoshita.testlinkjavaapi.model.TestPlan;
 import br.eti.kinoshita.testlinkjavaapi.model.TestProject;
@@ -98,7 +100,7 @@ public class RPCPlugin implements Plugin {
 	}
 
 	@Override
-	public TestCase executeTest(TestExecution execution) {
+	public ReportTCResultResponse executeTest(TestExecution execution) {
 		return new TestCaseController(api).executeTest(execution);
 	}
 
@@ -107,6 +109,9 @@ public class RPCPlugin implements Plugin {
 		return new PlatformController(api).getPlansPlatforms(testPlanId);
 	}
 	
-	
+	@Override
+	public boolean isAuthKey(String url, String key) {
+		return new AuthController(url).isAuthKey(key);
+	}
 
 }

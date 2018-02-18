@@ -26,4 +26,5 @@ export interface ITestCase {
     executionStatus: string;
     platform: IPlatform;
     featureId: number;
+    icon?: string;
 }

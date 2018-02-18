@@ -31,9 +31,10 @@ public class HttpEnrichmentFilter implements Filter {
 	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
 			throws IOException, ServletException {
 		HttpServletRequest request = (HttpServletRequest) req;
-		if (!request.getMethod().equals(HttpMethod.OPTIONS.toString())) {
-			logger.info("Entry request info: " + request.getScheme() + "\n" + request.getRemoteHost() + "\n"
-					+ request.getMethod() + "\n Header: " + request.getHeader(SERVER_HEADER));
+		logger.info("Entry request info: " + request.getScheme() + "\n" + request.getRemoteHost() + "\n"
+				+ request.getMethod() + "\n Url: " + request.getRequestURI() + "\n Header: "
+				+ request.getHeader(SERVER_HEADER));
+		if (willApplyFilter(request)) {
 			String server = request.getHeader(SERVER_HEADER);
 			String key = request.getHeader(KEY_HEADER);
 			this.prepareTLPContext(server, key);
@@ -67,6 +68,11 @@ public class HttpEnrichmentFilter implements Filter {
 			plugin.connectToApi(server, key);
 			logger.info("Login in the url: {} with the following API KEY -> {}", server, key);
 		}
+	}
+
+	private boolean willApplyFilter(HttpServletRequest request) {
+		return !request.getMethod().equals(HttpMethod.OPTIONS.toString())
+				&& !request.getRequestURI().equalsIgnoreCase("/tlp-api/authorization");
 	}
 
 }

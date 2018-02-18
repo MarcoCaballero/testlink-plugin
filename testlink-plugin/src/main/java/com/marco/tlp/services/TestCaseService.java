@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.marco.tlp.models.Plugin;
 import com.marco.tlp.models.rpccontrollers.TestExecution;
 
+import br.eti.kinoshita.testlinkjavaapi.model.ReportTCResultResponse;
 import br.eti.kinoshita.testlinkjavaapi.model.TestCase;
 
 @Service
@@ -41,7 +42,7 @@ public class TestCaseService {
 		return plugin.getTestCase(testCaseId);
 	}
 
-	public TestCase executeTest(TestExecution execution) {
+	public ReportTCResultResponse executeTest(TestExecution execution) {
 		return plugin.executeTest(execution);
 	}
 }

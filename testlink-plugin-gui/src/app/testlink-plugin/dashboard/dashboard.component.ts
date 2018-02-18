@@ -55,6 +55,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     }
 
     change(plan: ITestPlan): void {
+        this.caseNumber = 0;
         if (plan) {
             this.selectedTestPlan = plan;
             console.log(`Changed test-plan: ${JSON.stringify(this.selectedTestPlan, undefined, 4)}`);

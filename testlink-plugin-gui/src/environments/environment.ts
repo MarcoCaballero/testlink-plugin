@@ -5,5 +5,5 @@
 
 export const environment: any = {
   production: false,
-  tlpApiUrl: 'http://127.0.0.1:8080/tlp-api/',
+  tlpApiUrl: 'http://127.0.0.1:8080/tlp-api',
 };

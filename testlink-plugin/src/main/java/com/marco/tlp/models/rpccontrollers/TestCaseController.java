@@ -43,13 +43,14 @@ public class TestCaseController extends Controller<TestCase> {
 		return null;
 	}
 
-	public TestCase executeTest(TestExecution execution) {
+	public ReportTCResultResponse executeTest(TestExecution execution) {
 		ReportTCResultResponse executionResponse = null;
 		executionResponse = api.reportTCResult(execution.getId(), null, execution.getTestPlanId(),
 				getExecutionSatus(execution), execution.getBuildId(), null, execution.getNotes(), null, null, null,
 				execution.getPlatformName(), null, null);
 		if (checkExecution(executionResponse)) {
-			return getTestCaseByPlatform(execution.getTestPlanId(), execution.getBuildId(), execution.getPlatformName());
+			return executionResponse;
+			// return getTestCaseByPlatform(execution.getTestPlanId(), execution.getBuildId(), execution.getPlatformName());
 		} else {
 			return null;
 		}

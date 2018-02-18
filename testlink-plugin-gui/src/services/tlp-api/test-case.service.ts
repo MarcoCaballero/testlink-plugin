@@ -15,7 +15,7 @@ export class TestCaseService {
     }
 
     getTestCases(planId: number, buildId: number): Promise<ITestCase[]> {
-        return this.tlpApiService.get<ITestCase[]>(`${testPlanUrl}/${planId}/build/${buildId}`)
+        return this.tlpApiService.get<ITestCase[]>(`${testPlanUrl}/${planId}/build/${buildId}/testcases`)
             .toPromise()
             .then((response: any) => {
                 console.log(`responsed: ${JSON.stringify(response)}`);

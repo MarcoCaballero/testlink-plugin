@@ -20,6 +20,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.marco.tlp.models.rpccontrollers.TestExecution;
 import com.marco.tlp.services.TestCaseService;
 
+import br.eti.kinoshita.testlinkjavaapi.model.ReportTCResultResponse;
 import br.eti.kinoshita.testlinkjavaapi.model.TestCase;
 
 @RestController
@@ -44,7 +45,7 @@ public class TestCaseRestController {
 		return ResponseEntity.notFound().build();
 	}
 
-	@GetMapping("/testplan/{testPlanId}/build/{buildId}")
+	@GetMapping("/testplan/{testPlanId}/build/{buildId}/testcases")
 	public ResponseEntity<List<TestCase>> getTestCasesForTestPlanAndBuild(@PathVariable Integer testPlanId,
 			@PathVariable Integer buildId) {
 		List<TestCase> testCases = testCaseService.getTestCasesForTestPlanAndName(testPlanId, buildId);
@@ -62,7 +63,7 @@ public class TestCaseRestController {
 		return ResponseEntity.notFound().build();
 	}
 
-	@GetMapping("/testsuite/{testSuiteId}")
+	@GetMapping("/testsuite/{testSuiteId}/testcases")
 	public ResponseEntity<List<TestCase>> getTestCasesForTestSuite(@PathVariable Integer testSuiteId) {
 		List<TestCase> testCases = testCaseService.getTestCasesForTestSuite(testSuiteId);
 		if (testCases != null)
@@ -79,15 +80,15 @@ public class TestCaseRestController {
 	}
 
 	@PostMapping(value = "/testcase/reportResult", consumes = "application/json")
-	public ResponseEntity<TestCase> execute(@RequestBody String execution) throws IOException {
+	public ResponseEntity<ReportTCResultResponse> execute(@RequestBody String execution) throws IOException {
 		ObjectMapper mapper = new ObjectMapper();
 		TestExecution exec = mapper.readValue(execution, TestExecution.class);
+		ReportTCResultResponse response = testCaseService.executeTest(exec);
 		if (logger.isInfoEnabled() || logger.isDebugEnabled()) {
-			logger.info("Execution information: {0} ", exec.toString());
+			logger.info("Execution information:" + response.toString());
 		}
-		TestCase testCase = testCaseService.executeTest(exec);
-		if (testCase != null)
-			return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(testCase);
+		if (response != null)
+			return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(response);
 		return ResponseEntity.badRequest().build();
 	}
 }

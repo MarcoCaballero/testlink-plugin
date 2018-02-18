@@ -6,6 +6,7 @@ import com.marco.tlp.models.rpccontrollers.TestExecution;
 
 import br.eti.kinoshita.testlinkjavaapi.model.Build;
 import br.eti.kinoshita.testlinkjavaapi.model.Platform;
+import br.eti.kinoshita.testlinkjavaapi.model.ReportTCResultResponse;
 import br.eti.kinoshita.testlinkjavaapi.model.TestCase;
 import br.eti.kinoshita.testlinkjavaapi.model.TestPlan;
 import br.eti.kinoshita.testlinkjavaapi.model.TestProject;
@@ -32,8 +33,10 @@ public interface Plugin {
 
 	public TestCase getTestCase(Integer testCaseId);
 
-	public TestCase executeTest(TestExecution execution);
+	public ReportTCResultResponse executeTest(TestExecution execution);
 
 	public List<Platform> getPlansPlatforms(Integer testPlanId);
+	
+	public boolean isAuthKey(String url, String key);
 
 }

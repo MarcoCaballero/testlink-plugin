@@ -43,6 +43,7 @@ export class TestBuildComponent implements OnInit, AfterViewInit {
     testCases: ITestCase[] = [];
 
     columns: ITdDataTableColumn[] = [
+        { name: 'icon', label: '', width: 100 },
         { name: 'name', label: 'Test Case', sortable: true, filter: true, width: { min: 180, max: 250 } },
         { name: 'fullExternalId', label: 'External ID', sortable: true, filter: true, },
         { name: 'executionType', label: 'Execution Type', sortable: true, filter: true, },
@@ -129,6 +130,7 @@ export class TestBuildComponent implements OnInit, AfterViewInit {
     private setUndefPlatforms() {
         for (let testcase of this.testCases) {
             testcase.platform.name = (testcase.platform.name == "") ? 'Any' : testcase.platform.name;
+            testcase.icon = '../assets/icons/ic_note_black_24dp_1x.png';
         }
         this.filteredTestCases = this.testCases;
         this.filteredTotal = (this.testCases) ? this.testCases.length : 0;

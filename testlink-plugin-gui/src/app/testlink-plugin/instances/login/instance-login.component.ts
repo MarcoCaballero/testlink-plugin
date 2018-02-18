@@ -13,6 +13,7 @@ import { IConnectionHeader } from 'model/connection-header';
 import { InstancesService } from 'services/instances.service';
 import { LocalStorageManagerService } from 'services/local-storage-manager.service';
 import { TestProjectService } from 'services/tlp-api/test-projects.service';
+import { AuthService } from 'services/tlp-api/auth.service';
 
 @Component({
     selector: 'testlink-plugin-instance-login',
@@ -40,11 +41,6 @@ export class InstanceLoginComponent implements OnInit {
                 },
             }, {
                 validator: (control: AbstractControl) => {
-                    let isValid: boolean = control.value === '65330eb0c5e8424b696dee2bb5d60fc1';
-                    return !isValid ? { invalidKey: true } : undefined;
-                },
-            }, {
-                validator: (control: AbstractControl) => {
                     let isValid: boolean = control.value && (control.value.length > 0);
                     return !isValid ? { length: true } : undefined;
                 },
@@ -55,7 +51,8 @@ export class InstanceLoginComponent implements OnInit {
     constructor(private _changeDetectorRef: ChangeDetectorRef, public media: TdMediaService,
         private instanceService: InstancesService, private router: Router,
         private activatedRouter: ActivatedRoute, private loadingService: TdLoadingService,
-        private localStorageManagerService: LocalStorageManagerService, private testProjectService: TestProjectService) {
+        private localStorageManagerService: LocalStorageManagerService,
+        private testProjectService: TestProjectService, private authservice: AuthService) {
     }
 
     ngOnInit(): void {
@@ -89,27 +86,13 @@ export class InstanceLoginComponent implements OnInit {
     }
 
     login(value: any): void {
-        let connectionHeader: IConnectionHeader = {
-            instance: this.instanceToLogin.description,
-            key: value.apiKeyElement,
-        };
-        console.log(`Value to log in: ${JSON.stringify(connectionHeader)}`);
-        try {
-            this.loadingService.register('loadingLoginSection');
-            this.loading = true;
-            this.setConnectionHeaderToLocalStorage(connectionHeader)
-                .then((): void => {
-                    this.router.navigate(['/testlink-plugin/dashboard']);
-                })
-                .catch((error: any) => {
-                    console.error(`error while login: ${error}`);
-                });
-        } catch (error) {
-            console.log(error);
-        } finally {
-            this.loading = false;
-            this.loadingService.resolve('loadingLoginSection');
-        }
+        this.checkLogin(value.apiKeyElement)
+            .then((result) => {
+                console.log(`Check login: ${result}`);
+                /* if (result) {
+                    this.doLogin(value);
+                } */
+            });
     }
 
     async setConnectionHeaderToLocalStorage(connectionHeader: IConnectionHeader): Promise<void> {
@@ -142,5 +125,45 @@ export class InstanceLoginComponent implements OnInit {
             .catch((error: any) => {
                 console.log(`Error when trying to get connection header: ${error}`);
             });
+    }
+
+    checkDevKey(key: string) {
+        return this.authservice.isAuth(key);
+    }
+
+    private checkLogin(key: string) {
+        let connectionHeader: IConnectionHeader = {
+            instance: this.instanceToLogin.description,
+            key: key,
+        };
+        this.loadingService.register('loadingLoginSection');
+        this.loading = true;
+        this.setConnectionHeaderToLocalStorage(connectionHeader);
+        this.loadingService.resolve('loadingLoginSection');
+        return this.authservice.isAuth(key);
+    }
+
+    private doLogin(value: any) {
+        let connectionHeader: IConnectionHeader = {
+            instance: this.instanceToLogin.description,
+            key: value.apiKeyElement,
+        };
+        console.log(`Value to log in: ${JSON.stringify(connectionHeader)}`);
+        try {
+            this.loadingService.register('loadingLoginSection');
+            this.loading = true;
+            this.setConnectionHeaderToLocalStorage(connectionHeader)
+                .then((): void => {
+                    this.router.navigate(['/testlink-plugin/dashboard']);
+                })
+                .catch((error: any) => {
+                    console.error(`error while login: ${error}`);
+                });
+        } catch (error) {
+            console.log(error);
+        } finally {
+            this.loading = false;
+            this.loadingService.resolve('loadingLoginSection');
+        }
     }
 }
