@@ -1,17 +1,24 @@
-<md-expansion-panel [expanded]="opened" *tdLoading="'TestCaseLoader'; mode:'indeterminate'; type:'circle'; strategy:'overlay'; color:'accent'">
+<md-expansion-panel [expanded]="opened">
     <md-expansion-panel-header>
         <md-panel-title>
             <h4 md-subheader> Build: {{selectedBuild?.name}} </h4>
         </md-panel-title>
         <md-panel-description>
-                {{selectedBuild?.notes}}
+            {{selectedBuild?.notes}}
         </md-panel-description>
     </md-expansion-panel-header>
     <td-data-table #dataTable [data]="filteredTestCases" [columns]="columns" [selectable]="false" [clickable]="true" [multiple]="true"
         [sortable]="true" [sortBy]="sortBy" [sortOrder]="sortOrder" (sortChange)="sort($event)" (rowClick)="goTest()" [style.height.px]="(filteredTestCases?.length==1)? 120: filteredTestCases?.length * 90">
     </td-data-table>
     <div class="md-padding" *ngIf="!dataTable.hasData" layout="row" layout-align="center center">
-        <h3>No results to display.</h3>
+        <span class="push-left-sm md-title">
+            <div layout="row" layout-align="center center">
+                <md-icon mdListAvatar>info_outline</md-icon>
+                <h3 mdLine class="push-left-sm md-title">Test case not found.</h3>
+            </div>
+            <span flex="30" class="md-body-1 tc-grey-500">Test case does not exist in {{selectedBuild?.name}} (build).</span>
+            <br>
+        </span>
     </div>
     <td-paging-bar #pagingBar [pageSize]="pageSize" [total]="filteredTotal" (change)="page($event)">
         <span>

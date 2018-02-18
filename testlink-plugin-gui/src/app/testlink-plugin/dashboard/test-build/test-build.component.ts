@@ -1,7 +1,10 @@
-import { Component, OnInit, AfterViewInit, ChangeDetectorRef, ChangeDetectionStrategy, Input, HostBinding, } from '@angular/core';
+import {
+    Component, OnInit, AfterViewInit, EventEmitter, ChangeDetectorRef,
+    ChangeDetectionStrategy, HostBinding, Input, Output,
+} from '@angular/core';
 import {
     ITdDataTableColumn, TdDataTableSortingOrder, TdMediaService, TdDataTableService,
-    ITdDataTableSortChangeEvent, TdLoadingService
+    ITdDataTableSortChangeEvent, TdLoadingService, IPageChangeEvent
 } from '@covalent/core';
 import { Router } from '@angular/router';
 
@@ -26,6 +29,13 @@ export class TestBuildComponent implements OnInit, AfterViewInit {
     @Input('build') selectedBuild: IBuild;
     @Input('plan') selectedTestPlan: ITestPlan;
     @Input('opened') opened: boolean;
+    private _searchTerm = '';
+    @Input()
+    set searchTerm(searchTerm: string) {
+        this._searchTerm = searchTerm;
+        this.filter();
+    }
+    @Output() onTestCaseChanges = new EventEmitter<number>();
 
     @HostBinding('@routeAnimation') routeAnimation: boolean = true;
     @HostBinding('class.td-route-animation') classAnimation: boolean = true;
@@ -36,7 +46,7 @@ export class TestBuildComponent implements OnInit, AfterViewInit {
         { name: 'name', label: 'Test Case', sortable: true, filter: true, width: { min: 180, max: 250 } },
         { name: 'fullExternalId', label: 'External ID', sortable: true, filter: true, },
         { name: 'executionType', label: 'Execution Type', sortable: true, filter: true, },
-        { name: 'platform.name', label: 'Platform', sortable: true, filter: true, },
+        { name: 'platform.name', label: 'Platform', sortable: false, filter: true, },
         { name: 'version', label: 'Version', sortable: true, filter: true, },
         { name: 'executionStatus', label: 'Status', sortable: true, filter: true, },
     ];
@@ -47,7 +57,6 @@ export class TestBuildComponent implements OnInit, AfterViewInit {
     selectedTestcase: ITestCase;
     sortBy: string = 'executionStatus';
     sortOrder: TdDataTableSortingOrder = TdDataTableSortingOrder.Descending;
-    searchTerm: string = '';
     fromRow: number = 1;
     currentPage: number = 1;
     pageSize: number = 50;
@@ -59,13 +68,20 @@ export class TestBuildComponent implements OnInit, AfterViewInit {
         private testCaseService: TestCaseService, private loadingService: TdLoadingService) { }
 
     ngOnInit(): void {
-        this.loadingService.register('TestCaseLoader');
         this.setTestCases();
     }
 
     sort(sortEvent: ITdDataTableSortChangeEvent): void {
+        console.log('sorting');
         this.sortBy = sortEvent.name;
         this.sortOrder = sortEvent.order;
+        this.filter();
+    }
+
+    page(pagingEvent: IPageChangeEvent): void {
+        this.fromRow = pagingEvent.fromRow;
+        this.currentPage = pagingEvent.page;
+        this.pageSize = pagingEvent.pageSize;
         this.filter();
     }
 
@@ -78,15 +94,11 @@ export class TestBuildComponent implements OnInit, AfterViewInit {
             }).map((column: ITdDataTableColumn) => {
                 return column.name;
             });
-        newData = this._dataTableService.filterData(newData, this.searchTerm, true, excludedColumns);
-        this.filteredTotal = (newData) ? newData.length : 0;
-        if (newData) {
-            newData = this._dataTableService.sortData(newData, this.sortBy, this.sortOrder);
-            newData = this._dataTableService.pageData(newData, this.fromRow, this.currentPage * this.pageSize);
-            this.testCases = newData;
-        } else {
-            this.testCases = [];
-        }
+        newData = this._dataTableService.filterData(newData, this._searchTerm, true, excludedColumns);
+        this.filteredTotal = newData.length;
+        newData = this._dataTableService.sortData(newData, this.sortBy, this.sortOrder);
+        newData = this._dataTableService.pageData(newData, this.fromRow, this.currentPage * this.pageSize);
+        this.filteredTestCases = newData;
     }
 
     goTest(): void {
@@ -101,9 +113,12 @@ export class TestBuildComponent implements OnInit, AfterViewInit {
     }
 
     private setTestCases(): any {
+        console.log('set');
         this.testCaseService.getTestCases(this.selectedTestPlan.id, this.selectedBuild.id)
             .then((response: ITestCase[]) => {
                 this.testCases = response;
+                console.log(`send emit: ${this.testCases.length}`);
+                this.onTestCaseChanges.emit(this.testCases.length);
                 this.setUndefPlatforms();
             })
             .catch((error: any) => {
@@ -118,7 +133,6 @@ export class TestBuildComponent implements OnInit, AfterViewInit {
         this.filteredTestCases = this.testCases;
         this.filteredTotal = (this.testCases) ? this.testCases.length : 0;
         this.filter();
-        this.loadingService.resolve('TestCaseLoader');
     }
 
     private refreshView(): void {

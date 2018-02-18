@@ -1,7 +1,6 @@
 import { Component, OnInit, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import {
-    TdLoadingService, TdDialogService, TdMediaService, TdDataTableService, TdDataTableSortingOrder,
-    ITdDataTableSortChangeEvent, ITdDataTableColumn, IPageChangeEvent, LoadingType, LoadingMode,
+    TdLoadingService, TdDialogService, TdMediaService, LoadingType, LoadingMode,
 } from '@covalent/core';
 
 import { TestProjectService } from 'services/tlp-api/test-projects.service';
@@ -30,28 +29,19 @@ export class DashboardComponent implements OnInit, AfterViewInit {
             title: 'Home',
         },
     ];
-    columns: ITdDataTableColumn[] = [
-        { name: 'name', label: 'Project name', sortable: true, filter: true, width: 150 },
-        { name: 'description', label: 'Description', sortable: true, filter: true, width: 300 },
-        { name: 'prefix', label: 'Prefix', sortable: true, filter: true, width: 50 },
-        { name: 'issue tracker', label: 'issues tracker', sortable: true, filter: true, hidden: true },
-        { name: 'isEnabledRequirements', label: 'Requirement', sortable: true, filter: true, width: 100 },
-        { name: 'isActive', label: '¿is active?', sortable: true, filter: true, width: 100 },
-        { name: 'isPublic', label: '¿is public?', sortable: true, filter: true, width: 100 },
-    ];
     projects: IProject[] = [];
     selectedProject: IProject = undefined;
     testplans: ITestPlan[] = [];
     selectedTestPlan: ITestPlan = undefined;
     builds: IBuild[] = undefined;
-    searchTerm: string = '';
+    caseNumber = 0;
     opened: boolean = false;
+    searchTerm: string = '';
     optionalText: string = (!this.opened) ? 'Open All' : 'Close all';
 
     constructor(private _changeDetectorRef: ChangeDetectorRef, public media: TdMediaService,
-        private _dataTableService: TdDataTableService, private loadingService: TdLoadingService,
-        private testProjectService: TestProjectService, private testPlanService: TestPlanService,
-        private buildService: BuildService) {
+        private loadingService: TdLoadingService, private testProjectService: TestProjectService,
+        private testPlanService: TestPlanService, private buildService: BuildService) {
     }
 
     ngOnInit(): void {
@@ -74,12 +64,29 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
     }
 
-    public changeSelectedProject(project: IProject): void {
+    search(searchTerm: string): void {
+        this.searchTerm = searchTerm;
+        this.opened = true;
+        this.optionalText = (!this.opened) ? 'Open All' : 'Close all';
+    }
+
+    toggleOpened(): void {
+        this.opened = !this.opened;
+        this.optionalText = (!this.opened) ? 'Open All' : 'Close all';
+        console.log(`opened: ${this.opened}`);
+    }
+
+    changeSelectedProject(project: IProject): void {
         this.resetCssStyle();
         this.selectedProject = project;
         this.aplyCssStyle();
         this.loadingService.register('testPlanLoader');
+        this.caseNumber = 0;
         this.setTestPlans(project.id);
+    }
+
+    onTestCaseChanges(caseNumber: number) {
+        this.caseNumber += caseNumber;
     }
 
     ngAfterViewInit(): void {
@@ -87,12 +94,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         setTimeout(() => {
             this.refreshView();
         });
-    }
-
-    toggleOpened(): void {
-        this.opened = !this.opened;
-        this.optionalText = (!this.opened) ? 'Open All' : 'Close all';
-        console.log(`opened: ${this.opened}`);
     }
 
     private setInitialProjects(): any {

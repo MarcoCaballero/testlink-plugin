@@ -26,16 +26,29 @@
         <div flex="50" layout="column">
             <md-card class="md-card-colored" flex>
                 <md-card-content class="text-center">
-                    <div class="md-headline">
-                        <md-icon class="tc-grey-700">account_circle</md-icon>
-                        José luis García
-                        <div class="md-caption tc-grey-600">email@email.com</div>
+                    <div class="md-headline small" style="text-align: left;">
+                        <md-icon class="tc-grey-700">info_outline</md-icon>
+                        Project Info:
                     </div>
-                    <md-icon class="icon tc-green-300 testicons">verified_user</md-icon>
-                    <div layout="column">
-                        <div class="md-subhead">Tester </div>
-                        <div class="md-caption tc-grey-600">updated {{ '2016-06-17 12:59:59' | timeAgo }}</div>
-                    </div>
+                    <md-list>
+                        <md-list-item>
+                            <md-icon mdListAvatar>folder_special</md-icon>
+                            <h4 mdLine>{{selectedProject?.name}}</h4>
+                            <p mdLine>Selected project name</p>
+                        </md-list-item>
+                        <md-divider mdInset></md-divider>
+                        <md-list-item>
+                            <md-icon mdListAvatar>assignment</md-icon>
+                            <h4 mdLine>Test plans: {{testplans?.length}}</h4>
+                            <p mdLine>number of test plans</p>
+                        </md-list-item>
+                        <md-divider mdInset></md-divider>
+                        <md-list-item>
+                            <md-icon mdListAvatar>build</md-icon>
+                            <h4 mdLine>Builds: {{builds?.length}}</h4>
+                            <p mdLine>number of builds</p>
+                        </md-list-item>
+                    </md-list>
                 </md-card-content>
             </md-card>
         </div>
@@ -43,7 +56,7 @@
             <md-card class="md-card-colored" flex>
                 <md-card-content class="text-center">
                     <div class="md-headline small" style="text-align: left;">
-                        <md-icon class="tc-grey-700">description</md-icon>
+                        <md-icon class="tc-grey-700">assignment</md-icon>
                         Test Plan
                     </div>
                     <div *tdLoading="'testPlanLoader'; mode:'indeterminate'; type:'circle'; strategy:'overlay'; color:'accent'">
@@ -51,22 +64,41 @@
                             <form>
                                 <md-select style="text-align: left;" color="accent" class="testlink-select testlink-center push-bottom border-bottom" placeholder="Select test plan"
                                     [(ngModel)]="selectedTestPlan" name="food" (change)="change($event.value)" required>
-                                    <md-option *ngFor="let plan of testplans" [value]="plan">
+                                    <md-option *ngFor="let plan of testplans" [value]="plan" flex>
                                         {{plan.id}}: {{plan.name}}
                                     </md-option>
                                 </md-select>
                             </form>
+                            <md-list id="tlp-padding-list" flex>
+                                <md-list-item style="float: left" class="text-center">
+                                    <div style="float: left">
+                                        <md-icon class="text-30" mdListAvatar>assignment</md-icon>
+                                        <h4 mdLine>{{testplans?.length}}</h4>
+                                    </div>
+                                </md-list-item>
+                                <md-list-item style="float: left" class="text-center">
+                                    <div style="float: left">
+                                        <md-icon class="text-30" mdListAvatar>build</md-icon>
+                                        <h4 mdLine>{{builds?.length}}</h4>
+                                    </div>
+                                </md-list-item>
+                                <md-list-item style="float: left" class="text-center">
+                                    <div style="float: left">
+                                        <md-icon class="text-30" mdListAvatar>note</md-icon>
+                                        <h4 mdLine> {{caseNumber}}</h4>
+                                    </div>
+                                </md-list-item>
+                            </md-list>
                         </div>
                     </div>
                     <ng-template #noPlanTemplate>
-                        <span class="push-left-sm md-title">
-                            <div layout="row" layout-align="center center">
-                                <md-icon mdListAvatar>info_outline</md-icon>
-                                <h3 mdLine class="push-left-sm md-title">No Test Plans created yet.</h3>
-                            </div>
-                            <span flex="30" class="md-body-1 tc-grey-500">Select other project in the left bar.</span>
-                            <br>
-                        </span>
+                        <div layout="column" layout-align="center center" class="tc-grey-500 md-typography pad-lg">
+                            <md-icon mdListAvatar class="text-super">assignment</md-icon>
+                            <h3 mdLine class="push-left-sm md-title" [style.margin.px]="0">No Test Plans.</h3>
+                            <span flex="40" class="md-body-1 tc-grey-500">There are no test plans within
+                                <i>{{selectedProject?.name}}</i> (Project)</span>
+                            <button md-raised-button color="accent" class="text-upper tlp-correct-button" tdLayoutManageListOpen [hideWhenOpened]="true">Select other Test Project</button>
+                        </div>
                     </ng-template>
                 </md-card-content>
             </md-card>
@@ -74,7 +106,7 @@
     </div>
     <div layout="row" tdMediaToggle="gt-xs" [mediaClasses]="['push-sm']">
         <md-card class="md-card-colored" flex>
-            <md-card-content class="text-center">
+            <md-card-content class="text-center" *tdLoading="'buildsLoader'; mode:'indeterminate'; type:'circle'; strategy:'overlay'; color:'accent'">
                 <div layout="row" layout-align="start center" class="pad-left-sm pad-right-sm">
                     <span *ngIf="!searchBox.searchVisible" class="push-left-sm md-title">
                         <md-icon class="tc-grey-700">dashboard</md-icon>
@@ -82,24 +114,25 @@
                     </span>
                     <button *ngIf="!searchBox.searchVisible" class="push-right-own" md-raised-button color="accent" (click)="toggleOpened()">{{optionalText}}</button>
                     <td-search-box #searchBox backIcon="arrow_back" class="push-right-sm tc-orange-700" placeholder="Search here" (searchDebounce)="search($event)"
-                        flex>
+                        (clear)="searchTerm = ''" flex>
                     </td-search-box>
                 </div>
                 <md-divider></md-divider>
-                <md-accordion class="example-headers-align" *tdLoading="'buildsLoader'; mode:'indeterminate'; type:'circle'; strategy:'overlay'; color:'accent'">
+                <md-accordion class="example-headers-align">
                     <ng-template #mainTemplate let-build ngFor [ngForOf]="builds" *ngIf="builds?.length >0; else noBuildsTemplate">
-                        <testlink-plugin-test-build [build]="build" [opened]="opened" [plan]="selectedTestPlan">
+                        <testlink-plugin-test-build (onTestCaseChanges)="onTestCaseChanges($event)" [build]="build" [opened]="opened" [plan]="selectedTestPlan"
+                            [searchTerm]="searchTerm">
                         </testlink-plugin-test-build>
                     </ng-template>
                     <ng-template #noBuildsTemplate>
-                        <span class="push-left-sm md-title">
-                            <div layout="row" layout-align="center center">
-                                <md-icon mdListAvatar>info_outline</md-icon>
-                                <h3 mdLine class="push-left-sm md-title">No builds created yet.</h3>
-                            </div>
-                            <span flex="30" class="md-body-1 tc-grey-500">Select other testplan or project.</span>
-                            <br>
-                        </span>
+                        <div layout="column" layout-align="center center" class="tc-grey-500 md-typography pad-lg">
+                            <md-icon mdListAvatar class="text-super">build</md-icon>
+                            <h3 mdLine class="push-left-sm md-title" [style.margin.px]="0">No Builds.</h3>
+                            <span *ngIf="selectedTestPlan" flex="40" class="md-body-1 tc-grey-500">There are no builds within
+                                <i>{{selectedTestPlan?.name}}</i> (Test Plan)</span>
+                            <span *ngIf="!selectedTestPlan" flex="40" class="md-body-1 tc-grey-500">There are no test plans within
+                                <i>{{selectedProject?.name}}</i> (Project), therefore, there are no builds</span>
+                        </div>
                     </ng-template>
                 </md-accordion>
                 <md-divider></md-divider>

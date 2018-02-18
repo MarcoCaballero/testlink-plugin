@@ -14,8 +14,18 @@ $accent-light:  mat-palette($md-elastestorange, 200, 300, 100);
     }
 }
 
+#tlp-padding-list {
+    margin: auto;
+    margin-top: 3em;
+}
+
 .testicons {
     font-size: 46px !important;
+}
+
+.tlp-correct-button {
+    margin-top: 13px;
+    margin-bottom: -13px;
 }
 
 /* :host /deep/ lets shadowdom style child elements */
@@ -40,6 +50,7 @@ $accent-light:  mat-palette($md-elastestorange, 200, 300, 100);
         min-width: 44px;
         color: mat-color($primary);
         font-weight: 700;
+        font-size: 15.3px;
     }
 
     .testlink-select {
