@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { TdMediaService, TdDialogService, TdLoadingService, LoadingType, LoadingMode } from '@covalent/core';
 import { ITdDynamicElementConfig, TdDynamicElement, TdDynamicType } from '@covalent/dynamic-forms';
+import { TdHeadshakeAnimation } from '@covalent/core';
 
 import { Subscription } from 'rxjs/Subscription';
 
@@ -19,6 +20,7 @@ import { AuthService } from 'services/tlp-api/auth.service';
     selector: 'testlink-plugin-instance-login',
     templateUrl: 'instance-login.component.html',
     styleUrls: ['instance-login.component.scss'],
+    animations: [TdHeadshakeAnimation({ duration: 1000, delay: 0 })],
 })
 
 export class InstanceLoginComponent implements OnInit {
@@ -27,6 +29,9 @@ export class InstanceLoginComponent implements OnInit {
     instanceToLogin: IInstance;
     loading: boolean = true;
     projects: IProject[];
+    headshakeState: boolean = false;
+    isAuthLogin: boolean = false;
+    showError: boolean = false;
 
     loginFormControls: ITdDynamicElementConfig[] = [
         {
@@ -86,13 +91,23 @@ export class InstanceLoginComponent implements OnInit {
     }
 
     login(value: any): void {
+        this.loadingService.register('loadingLoginSection');
         this.checkLogin(value.apiKeyElement)
-            .then((result) => {
-                console.log(`Check login: ${result}`);
-                /* if (result) {
+            .then((authinfo) => {
+                console.log(`Check login: ${JSON.stringify(authinfo.result)}`);
+                this.isAuthLogin = authinfo.result;
+                this.loadingService.resolve('loadingLoginSection');
+                if (this.isAuthLogin) {
                     this.doLogin(value);
-                } */
+                } else {
+                    this.showError = true;
+                    this.headshakeState = !this.headshakeState;
+                }
             });
+    }
+
+    goBack() {
+        this.showError = false;
     }
 
     async setConnectionHeaderToLocalStorage(connectionHeader: IConnectionHeader): Promise<void> {
@@ -113,22 +128,6 @@ export class InstanceLoginComponent implements OnInit {
             .catch((error: any) => {
                 console.log(`Error when trying to get connection header: ${error}`);
             });
-    }
-
-    async getTLPprojects(): Promise<void> {
-        await this.testProjectService.getProjects()
-            .then((response: IProject[]) => {
-                this.projects = response;
-                console.log(`Instances returned: ${JSON.stringify(response, undefined, 4)}`);
-
-            })
-            .catch((error: any) => {
-                console.log(`Error when trying to get connection header: ${error}`);
-            });
-    }
-
-    checkDevKey(key: string) {
-        return this.authservice.isAuth(key);
     }
 
     private checkLogin(key: string) {

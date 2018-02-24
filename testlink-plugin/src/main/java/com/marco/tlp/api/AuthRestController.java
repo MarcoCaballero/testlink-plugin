@@ -6,7 +6,6 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -32,18 +31,42 @@ public class AuthRestController {
 	}
 
 	@GetMapping
-	public ResponseEntity<Void> get(HttpSession session, HttpRequest req) {
-
+	public ResponseEntity<AuthResponse> get(HttpSession session, HttpServletRequest req) {
 		logger.info("AUTHORIZED: PROCEED TO LOGIN");
-		HttpServletRequest request = (HttpServletRequest) req;
-		String url = request.getHeader(SERVER_HEADER);
-		String key = request.getHeader(KEY_HEADER);
-		if (url != null && key!= null) {
+		String url = req.getHeader(SERVER_HEADER);
+		String key = req.getHeader(KEY_HEADER);
+		if (url != null && key != null) {
 			logger.info("AUTHORIZED: PROCEED TO LOGIN");
 			boolean result = authService.isAuthorized(url, key);
-			return (result) ? ResponseEntity.ok().build() :  ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-		}else {
-			return ResponseEntity.badRequest().build();
+			return (result) ? ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(new AuthResponse(url, true))
+					: ResponseEntity.status(HttpStatus.UNAUTHORIZED).contentType(MediaType.APPLICATION_JSON)
+							.body(new AuthResponse(url, false));
+		} else {
+			return ResponseEntity.badRequest().contentType(MediaType.APPLICATION_JSON)
+					.body(new AuthResponse(url, false));
 		}
+	}
+
+	private class AuthResponse {
+		private String url;
+		private String result;
+
+		public AuthResponse(String url, Boolean status) {
+			this.url = url;
+			this.result = status.toString();
+		}
+				
+		public String getUrl() {
+			return url;
+		}
+
+		public String getResult() {
+			return result;
+		}
+
+		@Override
+		public String toString() {
+			return "AuthResponse {url:" + getUrl() + ", result:" + getResult()  + "}";
+		}	
 	}
 }

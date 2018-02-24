@@ -1,39 +1,61 @@
-<td-layout-card-over color="primary" cardWidth="60" class="will-load">
+<td-layout-card-over color="primary" cardWidth="60" class="will-load" [@tdHeadshake]="headshakeState">
   <!-- content -->
-  <div layout-gt-sm="row" tdMediaToggle="gt-xs" [mediaClasses]="['push-sm']">
-    <div flex-gt-sm="100">
+  <div layout-gt-sm="row" tdMediaToggle="gt-xs" [mediaClasses]="['push-sm']" *tdLoading="'loadingLoginSection'; mode:'indeterminate'; type:'circle'; strategy:'overlay'; color:'accent'">
+    <div *ngIf="!showError" flex-gt-sm="100">
       <!-- <ng-template tdLoading="loadingLoginSection"> -->
-        <div class="testlink-center border-bottom">
-          <img class="img-logo-login" src="assets/icons/testlink-mini-alpha.svg" alt="testlink-logo">
-        </div>
-        <div class="md-padding" *ngIf="instances?.length === 0" layout="row" layout-align="center center">
-          <h3>Loading instances</h3>
-        </div>
-        <md-card-title>
-          Login to {{instanceToLogin?.title}}
-        </md-card-title>
-        <md-card-subtitle>connects to TestLink instance - {{instanceToLogin?.description}}</md-card-subtitle>
+      <div class="testlink-center border-bottom">
+        <img class="img-logo-login" src="assets/icons/testlink-mini-alpha.svg" alt="testlink-logo">
+      </div>
+      <div class="md-padding" *ngIf="instances?.length === 0" layout="row" layout-align="center center">
+        <h3>Loading instances</h3>
+      </div>
+      <md-card-title>
+        Login to {{instanceToLogin?.title}}
+      </md-card-title>
+      <md-card-subtitle>connects to TestLink instance - {{instanceToLogin?.description}}</md-card-subtitle>
+      <md-divider></md-divider>
+      <md-card-content>
+        <!-- card content -->
+        <td-dynamic-forms #customValidateForm [elements]="loginFormControls">
+          <ng-template let-control="control" [tdDynamicFormsError]="'apiKeyElement'">
+            <span *ngIf="control.touched || !control.pristine">
+              <span *ngIf="control.hasError('required')">Required.</span>
+              <span *ngIf="control.hasError('correctExt') && !control.hasError('required')">Invalid symbol.</span>
+              <span *ngIf="control.hasError('invalidKey') && !control.hasError('required')">TestLink does not recognise the Developer Key.</span>
+            </span>
+          </ng-template>
+        </td-dynamic-forms>
+        <!-- ./card content -->
         <md-divider></md-divider>
-        <md-card-content>
-          <!-- card content -->
-          <td-dynamic-forms #customValidateForm [elements]="loginFormControls">
-            <ng-template let-control="control" [tdDynamicFormsError]="'apiKeyElement'">
-              <span *ngIf="control.touched || !control.pristine">
-                <span *ngIf="control.hasError('required')">Required.</span>
-                <span *ngIf="control.hasError('correctExt') && !control.hasError('required')">Invalid symbol.</span>
-                <span *ngIf="control.hasError('invalidKey') && !control.hasError('required')">TestLink does not recognise the Developer Key.</span>
-              </span>
-            </ng-template>
-          </td-dynamic-forms>
-          <!-- ./card content -->
-          <md-divider></md-divider>
-        </md-card-content>
-        <md-card-actions>
-          <button md-raised-button color="primary" class="text-upper hoverable-action-button" (click)="login(customValidateForm.value)"
-            [disabled]="!customValidateForm.valid">
-            <span>Login</span>
-          </button>
-        </md-card-actions>
+      </md-card-content>
+      <md-card-actions>
+        <button md-raised-button color="primary" class="text-upper hoverable-action-button" (click)="login(customValidateForm.value)"
+          [disabled]="!customValidateForm.valid">
+          <span>Login</span>
+        </button>
+      </md-card-actions>
+      <!-- </ng-template> -->
+    </div>
+    <div flex-gt-sm="100" *ngIf="showError">
+      <md-card-title>
+        Login Error
+      </md-card-title>
+      <md-card-content>
+        <md-divider></md-divider>
+        <!-- card content -->
+        <div layout="column" layout-align="center center" class="tc-grey-500 md-typography pad-lg">
+          <md-icon mdListAvatar  class="text-super tc-red-300">error_outline</md-icon>
+          <h3 mdLine class="push-left-sm md-title tc-red-300" [style.margin.px]="0">Error, Try again!</h3>
+          <span flex="40" class="md-body-1 tc-red-300"><i>Error when trying to connect to TestLink, please check the url and developer key.</i></span>
+        </div>
+        <!-- ./card content -->
+        <md-divider></md-divider>
+      </md-card-content>
+      <md-card-actions>
+        <button md-raised-button color="primary" class="text-upper hoverable-action-button" (click)="goBack()">
+          <span>BACK</span>
+        </button>
+      </md-card-actions>
       <!-- </ng-template> -->
     </div>
   </div>

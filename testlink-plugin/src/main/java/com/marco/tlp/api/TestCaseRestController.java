@@ -85,7 +85,7 @@ public class TestCaseRestController {
 		TestExecution exec = mapper.readValue(execution, TestExecution.class);
 		ReportTCResultResponse response = testCaseService.executeTest(exec);
 		if (logger.isInfoEnabled() || logger.isDebugEnabled()) {
-			logger.info("Execution information:" + response.toString());
+			logger.info("Execution information: {} ", response.toString());
 		}
 		if (response != null)
 			return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(response);

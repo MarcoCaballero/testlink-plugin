@@ -50,7 +50,6 @@ public class TestCaseController extends Controller<TestCase> {
 				execution.getPlatformName(), null, null);
 		if (checkExecution(executionResponse)) {
 			return executionResponse;
-			// return getTestCaseByPlatform(execution.getTestPlanId(), execution.getBuildId(), execution.getPlatformName());
 		} else {
 			return null;
 		}

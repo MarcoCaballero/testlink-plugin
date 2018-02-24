@@ -7,7 +7,7 @@
         </md-panel-title>
         <md-panel-description>
             Notes:
-            <i>{{selectedBuild?.notes}}</i>
+            <i>{{(selectedBuild?.notes.length > 40) ? (selectedBuild?.notes | slice:0:40)+'...' : selectedBuild?.notes}}</i>
             <md-icon mdTooltip="Build" mdListAvatar>build</md-icon>
         </md-panel-description>
     </md-expansion-panel-header>

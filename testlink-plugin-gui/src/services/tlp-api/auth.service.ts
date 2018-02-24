@@ -16,15 +16,14 @@ export class AuthService {
     isAuth(devKey: string): Promise<any> {
         let headers = new HttpHeaders();
         headers = headers.set('TLP-Api-Key', devKey);
-        return this.tlpApiService.getAuth<boolean>(`${authUrl}`, headers)
+        return this.tlpApiService.getAuth<any>(`${authUrl}`, headers)
             .toPromise()
             .then((response: any) => {
-                console.log(`responsed: ${JSON.stringify(response)}`);
-                return response.status;
+                return response;
             })
             .catch((error: any) => {
                 console.log(error);
-                return error.status;
+                return error;
             });
     }
 }
