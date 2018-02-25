@@ -121,7 +121,6 @@ export class TestBuildComponent implements OnInit, AfterViewInit {
     }
 
     private setTestCases(): any {
-        console.log('set');
         this.testCaseService.getTestCases(this.selectedTestPlan.id, this.selectedBuild.id)
             .then((response: ITestCase[]) => {
                 this.testCases = response;

@@ -18,7 +18,15 @@ export class TestCaseService {
         return this.tlpApiService.get<ITestCase[]>(`${testPlanUrl}/${planId}/build/${buildId}/testcases`)
             .toPromise()
             .then((response: any) => {
-                console.log(`responsed: ${JSON.stringify(response)}`);
+                return response;
+            })
+            .catch((error: any) => console.error(error));
+    }
+
+    getTestCaseByPlatform(planId: number, buildId: number, testId: number, platform: string): Promise<ITestCase> {
+        return this.tlpApiService.get<ITestCase[]>(`${testPlanUrl}/${planId}/build/${buildId}/testcase/${testId}?platform=${platform}`)
+            .toPromise()
+            .then((response: any) => {
                 return response;
             })
             .catch((error: any) => console.error(error));

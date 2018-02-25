@@ -2,13 +2,14 @@ import { Component, Inject, OnInit, HostListener, HostBinding, AfterViewInit, Ch
 import { MdAccordionDisplayMode } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { StepState, TdStepComponent, TdMediaService, TdLoadingService, LoadingType, LoadingMode } from '@covalent/core';
+import { StepState, TdStepComponent, TdMediaService, TdLoadingService, TdDialogService } from '@covalent/core';
 import { TdTextEditorComponent } from '@covalent/text-editor';
 
 import { Subscription } from 'rxjs/Subscription';
 
 import { slideInDownAnimation } from '../../../app.animations';
 import { ITestCase } from 'model/test-case';
+import { ITestCaseStep } from 'model/step';
 import { TestCaseService } from 'services/tlp-api/test-case.service';
 
 @Component({
@@ -21,9 +22,11 @@ import { TestCaseService } from 'services/tlp-api/test-case.service';
 export class TestRunnerComponent implements OnInit, AfterViewInit {
     @HostBinding('@routeAnimation') routeAnimation: boolean = true;
     @HostBinding('class.td-route-animation') classAnimation: boolean = true;
-    filteringAsync: boolean = false;
     activeDeactiveStep1Msg: string = 'No select/deselect detected yet';
-    selectedStatus: string;
+
+    platforms: string[] = [
+    ];
+
     statusList: Object[] = [
         {
             title: 'PASSED',
@@ -42,94 +45,31 @@ export class TestRunnerComponent implements OnInit, AfterViewInit {
             class: 'greyed',
         },
     ];
-    testedBy: string[] = [
-        'Admin',
-        'Pep Serrat',
-        'Maria Gonzalez',
-        'Carles Garcia',
-        'need more?',
-    ];
-
-    steps: any[] = [
-        {
-            id: 0,
-            state: StepState.None,
-            description: 'go to http://youtube.com',
-            expected: 'displays index.html page',
-            isActive: true,
-            status: 'NOT_RUN',
-        }, {
-            id: 1,
-            state: StepState.None,
-            description: 'go to http://youtube.com/step1 looking the side middle of the applicaion web sockket dumb content',
-            expected: 'displays step1.html page',
-            isActive: false,
-            status: 'NOT_RUN',
-        },
-        {
-            id: 2,
-            state: StepState.None,
-            description: 'go to http://youtube.com/step2',
-            expected: 'displays step2.html page  looking the side middle of the applicaion web sockket dumb content',
-            isActive: false,
-            status: 'NOT_RUN',
-        },
-        {
-            id: 3,
-            state: StepState.None,
-            description: 'go to http://youtube.com/step3',
-            expected: 'displays step3.html page  looking the side middle of the applicaion web sockket dumb content',
-            isActive: false,
-            status: 'NOT_RUN',
-        },
-    ];
-
-    navmenu: Object[] = [{
-        icon: 'looks_one',
-        route: '.',
-        title: 'First item',
-        description: 'Item description',
-    }, {
-        icon: 'looks_two',
-        route: '.',
-        title: 'Second item',
-        description: 'Item description',
-    }, {
-        icon: 'looks_3',
-        route: '.',
-        title: 'Third item',
-        description: 'Item description',
-    },
-    ];
-
+    steps: ITestCaseStep[] = [];
     editorVal: string;
-
-    options: any = {
-        lineWrapping: true,
-        toolbar: true,
-    };
-
-    asyncModel: string[] = this.testedBy.slice(0, 3);
     failedOrBlocked: number = 0;
     selectedTestcase: ITestCase;
     testId: number;
     planId: number;
     buildId: number;
     platform: string;
+    reportResult: string = 'NOT_RUN';
 
     constructor(private _changeDetectorRef: ChangeDetectorRef, public media: TdMediaService,
-        private router: Router, private activatedRouter: ActivatedRoute,
-        private testCaseService: TestCaseService, ) { }
+        private router: Router, private activatedRouter: ActivatedRoute, private dialogService: TdDialogService,
+        private testCaseService: TestCaseService, private loadingService: TdLoadingService) { }
 
     ngOnInit(): void {
         this.editorVal = `# Test result failures:`;
         this.activatedRouter.queryParams.subscribe((params: { platform: string, testbuild: any, testplan: any, testcase: any }) => {
-            this.platform = params.platform;
+            this.platform = (params.platform === 'Any') ? '' : params.platform;
+            this.platforms = [`${params.platform}`];
             this.testId = params.testcase;
             this.planId = params.testplan;
             this.buildId = params.testbuild;
         });
-        console.log(`Received: plan: ${this.planId}, build: ${this.buildId}, platform: ${this.platform}`);
+        this.loadingService.register();
+        this.getTestCase();
     }
 
     onSaveClick(): void {
@@ -153,17 +93,17 @@ export class TestRunnerComponent implements OnInit, AfterViewInit {
     }
 
     checkStatus(value: any): void {
-        let status: number = 0;
-        let preEditoValue: string = '## Bug Info\n';
+        let preEditoValue: string = '## Report result\n';
         this.steps.forEach((step: any): void => {
             if (this.isError(step.status) || this.isBlocked(step.status)) {
-                console.log(`st value: ${step.id} + ${step.status} \n`);
-                status++;
-                preEditoValue += `* ### step id: ${step.id} - status: ${step.status} \n > Add bug info there ... \n\n\n`;
+                preEditoValue += `* ### step id: ${step.number} - status: ${step.status} \n > Add bug info there ... \n\n\n`;
             }
         });
-        console.log(`preValue: ${preEditoValue}`);
+        if (this.isError(this.reportResult) || this.isBlocked(this.reportResult)) {
+            preEditoValue += `## Final result to report: ${this.reportResult}\n Add some info about the bug.... \n\n`;
+        }
         this.editorVal = preEditoValue;
+        this.refreshView();
     }
 
     existReport(): boolean {
@@ -173,7 +113,42 @@ export class TestRunnerComponent implements OnInit, AfterViewInit {
                 status = true;
             }
         });
+        if (this.isError(this.reportResult) || this.isBlocked(this.reportResult)) {
+            status = true;
+        }
         return status;
+    }
+
+    sendResult(): void {
+        if (this.reportResult === 'NOT_RUN') {
+            this.openAlert();
+        } else {
+            this.dialogService.openConfirm({
+                message: 'Are you sure you want to send the result?',
+                title: 'Confirm',
+                cancelButton: 'Cancel',
+                acceptButton: 'Yes',
+            }).afterClosed().subscribe((accept: boolean) => {
+                if (accept) {
+                    console.log('Result sending');
+                } else {
+                    console.log('Result NOT sending');
+                }
+            });
+        }
+    }
+
+    async goBack(): Promise<void> {
+        this.dialogService.openConfirm({
+            message: 'All non saved data will be lost, continue ?',
+            title: 'Confirm',
+            cancelButton: 'No',
+            acceptButton: 'Yes',
+        }).afterClosed().subscribe((accept: boolean) => {
+            if (accept) {
+                this.router.navigate(['/testlink-plugin/dashboard']);
+            }
+        });
     }
 
     getBackground(i: number): string {
@@ -202,8 +177,39 @@ export class TestRunnerComponent implements OnInit, AfterViewInit {
     ngAfterViewInit(): void {
         /* VERY IMPORTANT, DO NOT REMOVE THAT CODE (MatSidenav issues redrawing on re-calling) */
         setTimeout(() => {
-            this.media.broadcast();
-            this._changeDetectorRef.detectChanges();
+            this.refreshView();
+        });
+    }
+
+    openAlert(): void {
+        this.dialogService.openAlert({
+            message: 'You didn\'t set the Test Result, NOT_RUN is not available to report',
+            title: 'Invalid Report',
+            closeButton: 'Ok',
+        });
+    }
+    private refreshView(): void {
+        this.media.broadcast();
+        this._changeDetectorRef.detectChanges();
+    }
+
+    private getTestCase(): any {
+        this.testCaseService.getTestCaseByPlatform(this.planId, this.buildId, this.testId, this.platform)
+            .then((response: ITestCase) => {
+                this.selectedTestcase = response;
+                this.steps = this.selectedTestcase.steps;
+                this.setInitialStepStatus();
+                this.refreshView();
+                this.loadingService.resolve();
+            })
+            .catch((error: any) => {
+                console.log(`Error when trying to get test plan: ${error}`);
+            });
+    }
+
+    private setInitialStepStatus(): void {
+        this.steps.forEach((step: ITestCaseStep) => {
+            step.status = 'NOT_RUN';
         });
     }
 }

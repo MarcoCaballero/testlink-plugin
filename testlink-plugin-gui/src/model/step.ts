@@ -6,4 +6,5 @@ export interface ITestCaseStep {
     expectedResults: string;
     active: boolean;
     executionType: string;
+    status?: string;
 }

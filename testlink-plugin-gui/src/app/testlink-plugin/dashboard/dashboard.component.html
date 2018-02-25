@@ -21,7 +21,7 @@
     </md-nav-list>
     <md-toolbar>
         <div layout="row" layout-align="start center" flex>
-            <button md-icon-button tdLayoutManageListOpen [hideWhenOpened]="true">
+            <button md-icon-button mdTooltip="Open Menu" tdLayoutManageListOpen [hideWhenOpened]="true">
                 <md-icon>arrow_back</md-icon>
             </button>
             <span>Dashboard</span>
@@ -108,7 +108,7 @@
                                 <h3 mdLine class="push-left-sm md-title" [style.margin.px]="0">No Test Plans.</h3>
                                 <span flex="40" class="md-body-1 tc-grey-500">There are no test plans within
                                     <i>{{selectedProject?.name}}</i> (Project)</span>
-                                <button md-raised-button color="accent" class="text-upper tlp-correct-button" tdLayoutManageListOpen [hideWhenOpened]="true">Select other Test Project</button>
+                                <button md-raised-button color="accent" class="text-upper tlp-correct-button" mdTooltip="Open Menu" tdLayoutManageListOpen [hideWhenOpened]="true">Select other Test Project</button>
                             </div>
                         </ng-template>
                     </md-card-content>

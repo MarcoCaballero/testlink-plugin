@@ -1,7 +1,7 @@
 import { Component, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, OnInit } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-
+import { MdSnackBar } from '@angular/material';
 import { TdMediaService, TdDialogService, TdLoadingService, LoadingType, LoadingMode } from '@covalent/core';
 import { ITdDynamicElementConfig, TdDynamicElement, TdDynamicType } from '@covalent/dynamic-forms';
 import { TdHeadshakeAnimation } from '@covalent/core';
@@ -56,7 +56,8 @@ export class InstanceLoginComponent implements OnInit {
         private instanceService: InstancesService, private router: Router,
         private activatedRouter: ActivatedRoute, private loadingService: TdLoadingService,
         private localStorageManagerService: LocalStorageManagerService,
-        private testProjectService: TestProjectService, private authservice: AuthService) {
+        private testProjectService: TestProjectService, private authservice: AuthService,
+        private snackBarService: MdSnackBar, ) {
     }
 
     ngOnInit(): void {
@@ -95,6 +96,8 @@ export class InstanceLoginComponent implements OnInit {
                 } else {
                     this.showError = true;
                     this.headshakeState = !this.headshakeState;
+                    this.snackBarService
+                        .open('Provided TestLink User API Key is not valid', 'OK', { duration: 3000 });
                 }
             });
     }
