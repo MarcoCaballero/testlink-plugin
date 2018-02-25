@@ -66,7 +66,7 @@ public class HttpEnrichmentFilter implements Filter {
 					+ "on the request is required.");
 		} else {
 			plugin.connectToApi(server, key);
-			logger.info("Login in the url: {} with the following API KEY -> {}", server, key);
+			logger.info("New transaction, info: url->  {} with the following API KEY -> {}", server, key);
 		}
 	}
 

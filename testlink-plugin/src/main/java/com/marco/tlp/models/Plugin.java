@@ -29,7 +29,7 @@ public interface Plugin {
 
 	public List<TestCase> getTestCasesForTestSuite(Integer testSuiteId);
 
-	public TestCase getTestCaseByPlatform(Integer planId, Integer buildId, String platformName);
+	public TestCase getTestCaseByPlatform(Integer planId, Integer buildId, Integer testId, String platformName);
 
 	public TestCase getTestCase(Integer testCaseId);
 

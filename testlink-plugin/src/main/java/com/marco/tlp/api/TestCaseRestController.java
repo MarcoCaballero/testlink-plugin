@@ -54,10 +54,10 @@ public class TestCaseRestController {
 		return ResponseEntity.notFound().build();
 	}
 
-	@GetMapping("/testplan/{testPlanId}/build/{buildId}/testcase") // ?platformName=xx
-	public ResponseEntity<TestCase> get(@PathVariable Integer testPlanId, @PathVariable Integer buildId,
+	@GetMapping("/testplan/{testPlanId}/build/{buildId}/testcase/{testId}") // ?platformName=xx
+	public ResponseEntity<TestCase> get(@PathVariable Integer testPlanId, @PathVariable Integer buildId, @PathVariable Integer testId,
 			@RequestParam(value = "platform", required = true) String platformName) {
-		TestCase testCase = testCaseService.getTestCaseByPlatform(testPlanId, buildId, platformName);
+		TestCase testCase = testCaseService.getTestCaseByPlatform(testPlanId, buildId, testId, platformName);
 		if (testCase != null)
 			return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(testCase);
 		return ResponseEntity.notFound().build();

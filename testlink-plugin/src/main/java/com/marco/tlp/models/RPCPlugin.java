@@ -90,8 +90,8 @@ public class RPCPlugin implements Plugin {
 	}
 
 	@Override
-	public TestCase getTestCaseByPlatform(Integer planId, Integer buildId, String platformName) {
-		return new TestCaseController(api).getTestCaseByPlatform(planId, buildId, platformName);
+	public TestCase getTestCaseByPlatform(Integer planId, Integer buildId, Integer testId, String platformName) {
+		return new TestCaseController(api).getTestCaseByPlatform(planId, buildId,testId, platformName);
 	}
 	
 	@Override

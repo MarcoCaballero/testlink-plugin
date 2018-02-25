@@ -34,8 +34,8 @@ public class TestCaseService {
 		return plugin.getTestCasesForTestSuite(testSuiteId);
 	}
 
-	public TestCase getTestCaseByPlatform(Integer planId, Integer buildId, String platformName) {
-		return plugin.getTestCaseByPlatform(planId, buildId, platformName);
+	public TestCase getTestCaseByPlatform(Integer planId, Integer buildId, Integer testId, String platformName) {
+		return plugin.getTestCaseByPlatform(planId, buildId, testId, platformName);
 	}
 	
 	public TestCase getTestCase(Integer testCaseId) {

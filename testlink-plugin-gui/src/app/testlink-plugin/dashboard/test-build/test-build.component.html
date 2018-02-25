@@ -12,7 +12,7 @@
         </md-panel-description>
     </md-expansion-panel-header>
     <td-data-table #dataTable [data]="filteredTestCases" [columns]="columns" [selectable]="false" [clickable]="true" [multiple]="true"
-        [sortable]="true" [sortBy]="sortBy" [sortOrder]="sortOrder" (sortChange)="sort($event)" (rowClick)="goTest()" [style.height.px]="(filteredTestCases?.length==1)? 120: filteredTestCases?.length * 90">
+        [sortable]="true" [sortBy]="sortBy" [sortOrder]="sortOrder" (sortChange)="sort($event)" (rowClick)="goTest($event)" [style.height.px]="(filteredTestCases?.length==1)? 120: filteredTestCases?.length * 90">
         <ng-template tdDataTableTemplate="icon" let-value="value">
             <md-icon mdTooltip="Test Case" class="tc-grey-700 text-30" mdListAvatar>note</md-icon>
         </ng-template>

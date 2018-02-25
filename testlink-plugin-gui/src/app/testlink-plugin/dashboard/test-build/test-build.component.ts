@@ -4,7 +4,7 @@ import {
 } from '@angular/core';
 import {
     ITdDataTableColumn, TdDataTableSortingOrder, TdMediaService, TdDataTableService,
-    ITdDataTableSortChangeEvent, TdLoadingService, IPageChangeEvent
+    ITdDataTableSortChangeEvent, TdLoadingService, IPageChangeEvent,
 } from '@covalent/core';
 import { Router } from '@angular/router';
 
@@ -26,16 +26,16 @@ const BOOLEAN_FORMAT: (v: any) => any = (v: Date) => v.toDateString();
 })
 
 export class TestBuildComponent implements OnInit, AfterViewInit {
+    private _searchTerm: any = '';
     @Input('build') selectedBuild: IBuild;
     @Input('plan') selectedTestPlan: ITestPlan;
     @Input('opened') opened: boolean;
-    private _searchTerm = '';
     @Input()
     set searchTerm(searchTerm: string) {
         this._searchTerm = searchTerm;
         this.filter();
     }
-    @Output() onTestCaseChanges = new EventEmitter<number>();
+    @Output() onTestCaseChanges: any = new EventEmitter<number>();
 
     @HostBinding('@routeAnimation') routeAnimation: boolean = true;
     @HostBinding('class.td-route-animation') classAnimation: boolean = true;
@@ -55,7 +55,6 @@ export class TestBuildComponent implements OnInit, AfterViewInit {
     arePanelsOpen: boolean = true;
     filteredTestCases: ITestCase[];
     filteredTotal: number;
-    selectedTestcase: ITestCase;
     sortBy: string = 'executionStatus';
     sortOrder: TdDataTableSortingOrder = TdDataTableSortingOrder.Descending;
     fromRow: number = 1;
@@ -102,8 +101,16 @@ export class TestBuildComponent implements OnInit, AfterViewInit {
         this.filteredTestCases = newData;
     }
 
-    goTest(): void {
-        this.router.navigate(['testlink-plugin/run-test']);
+    goTest(value: any): void {
+        this.router.navigate(['testlink-plugin/run-test'], {
+            queryParams:
+            {
+                platform: value.row.platform.name,
+                testplan: this.selectedTestPlan.id,
+                testbuild: this.selectedBuild.id,
+                testcase: value.row.id,
+            },
+        });
     }
 
     ngAfterViewInit(): void {
@@ -127,9 +134,9 @@ export class TestBuildComponent implements OnInit, AfterViewInit {
             });
     }
 
-    private setUndefPlatforms() {
+    private setUndefPlatforms(): void {
         for (let testcase of this.testCases) {
-            testcase.platform.name = (testcase.platform.name == "") ? 'Any' : testcase.platform.name;
+            testcase.platform.name = (testcase.platform.name === '') ? 'Any' : testcase.platform.name;
             testcase.icon = '../assets/icons/ic_note_black_24dp_1x.png';
         }
         this.filteredTestCases = this.testCases;

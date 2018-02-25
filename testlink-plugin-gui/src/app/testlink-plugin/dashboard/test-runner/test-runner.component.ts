@@ -1,10 +1,15 @@
 import { Component, Inject, OnInit, HostListener, HostBinding, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { MdAccordionDisplayMode } from '@angular/material';
-import { StepState, TdStepComponent, TdMediaService } from '@covalent/core';
+import { Router, ActivatedRoute } from '@angular/router';
 
+import { StepState, TdStepComponent, TdMediaService, TdLoadingService, LoadingType, LoadingMode } from '@covalent/core';
 import { TdTextEditorComponent } from '@covalent/text-editor';
 
+import { Subscription } from 'rxjs/Subscription';
+
 import { slideInDownAnimation } from '../../../app.animations';
+import { ITestCase } from 'model/test-case';
+import { TestCaseService } from 'services/tlp-api/test-case.service';
 
 @Component({
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -105,20 +110,26 @@ export class TestRunnerComponent implements OnInit, AfterViewInit {
     };
 
     asyncModel: string[] = this.testedBy.slice(0, 3);
-    windowHeight: number;
     failedOrBlocked: number = 0;
+    selectedTestcase: ITestCase;
+    testId: number;
+    planId: number;
+    buildId: number;
+    platform: string;
 
-    constructor(private _changeDetectorRef: ChangeDetectorRef, public media: TdMediaService) { }
-
-    @HostListener('window:resize', ['$event'])
-    onResize(event: any): void {
-        this.windowHeight = event.target.innerWidth;
-    }
+    constructor(private _changeDetectorRef: ChangeDetectorRef, public media: TdMediaService,
+        private router: Router, private activatedRouter: ActivatedRoute,
+        private testCaseService: TestCaseService, ) { }
 
     ngOnInit(): void {
-        // this.windowHeight = this.dataService.height;
-        this.editorVal = `# Intro`;
-        this.windowHeight = window.innerWidth;
+        this.editorVal = `# Test result failures:`;
+        this.activatedRouter.queryParams.subscribe((params: { platform: string, testbuild: any, testplan: any, testcase: any }) => {
+            this.platform = params.platform;
+            this.testId = params.testcase;
+            this.planId = params.testplan;
+            this.buildId = params.testbuild;
+        });
+        console.log(`Received: plan: ${this.planId}, build: ${this.buildId}, platform: ${this.platform}`);
     }
 
     onSaveClick(): void {

@@ -27,7 +27,6 @@ export class InstanceLoginComponent implements OnInit {
     id: string;
     instances: IInstance[];
     instanceToLogin: IInstance;
-    loading: boolean = true;
     projects: IProject[];
     headshakeState: boolean = false;
     isAuthLogin: boolean = false;
@@ -74,26 +73,20 @@ export class InstanceLoginComponent implements OnInit {
     }
 
     async loadInstance(): Promise<void> {
-        try {
-            this.loadingService.register('loadingLoginSection');
-            this.loading = true;
-            await this.instanceService.getInstances()
-                .then((instances: IInstance[]) => {
-                    this.instances = instances.filter((instance: IInstance) => instance.id === this.id);
-                    this.instanceToLogin = this.instances[0];
-                });
-        } catch (error) {
-            console.log(error);
-        } finally {
-            this.loading = false;
-            this.loadingService.resolve('loadingLoginSection');
-        }
+        this.loadingService.register();
+        this.instanceService.getInstances()
+            .then((instances: IInstance[]) => {
+                this.instances = instances.filter((instance: IInstance) => instance.id === this.id);
+                this.instanceToLogin = this.instances[0];
+                this.loadingService.resolve();
+            }).catch(() =>
+                this.loadingService.resolve());
     }
 
     login(value: any): void {
         this.loadingService.register('loadingLoginSection');
         this.checkLogin(value.apiKeyElement)
-            .then((authinfo) => {
+            .then((authinfo: any): void => {
                 console.log(`Check login: ${JSON.stringify(authinfo.result)}`);
                 this.isAuthLogin = authinfo.result;
                 this.loadingService.resolve('loadingLoginSection');
@@ -106,7 +99,7 @@ export class InstanceLoginComponent implements OnInit {
             });
     }
 
-    goBack() {
+    goBack(): void {
         this.showError = false;
     }
 
@@ -130,19 +123,18 @@ export class InstanceLoginComponent implements OnInit {
             });
     }
 
-    private checkLogin(key: string) {
+    private checkLogin(key: string): any {
         let connectionHeader: IConnectionHeader = {
             instance: this.instanceToLogin.description,
             key: key,
         };
         this.loadingService.register('loadingLoginSection');
-        this.loading = true;
         this.setConnectionHeaderToLocalStorage(connectionHeader);
         this.loadingService.resolve('loadingLoginSection');
         return this.authservice.isAuth(key);
     }
 
-    private doLogin(value: any) {
+    private doLogin(value: any): void {
         let connectionHeader: IConnectionHeader = {
             instance: this.instanceToLogin.description,
             key: value.apiKeyElement,
@@ -150,7 +142,6 @@ export class InstanceLoginComponent implements OnInit {
         console.log(`Value to log in: ${JSON.stringify(connectionHeader)}`);
         try {
             this.loadingService.register('loadingLoginSection');
-            this.loading = true;
             this.setConnectionHeaderToLocalStorage(connectionHeader)
                 .then((): void => {
                     this.router.navigate(['/testlink-plugin/dashboard']);
@@ -161,7 +152,6 @@ export class InstanceLoginComponent implements OnInit {
         } catch (error) {
             console.log(error);
         } finally {
-            this.loading = false;
             this.loadingService.resolve('loadingLoginSection');
         }
     }

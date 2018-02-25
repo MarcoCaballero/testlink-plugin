@@ -34,7 +34,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     testplans: ITestPlan[] = [];
     selectedTestPlan: ITestPlan = undefined;
     builds: IBuild[] = undefined;
-    caseNumber = 0;
+    caseNumber: number = 0;
     opened: boolean = false;
     searchTerm: string = '';
     optionalText: string = (!this.opened) ? 'Open All' : 'Close all';
@@ -86,7 +86,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         this.setTestPlans(project.id);
     }
 
-    onTestCaseChanges(caseNumber: number) {
+    onTestCaseChanges(caseNumber: number): void {
         this.caseNumber += caseNumber;
     }
 

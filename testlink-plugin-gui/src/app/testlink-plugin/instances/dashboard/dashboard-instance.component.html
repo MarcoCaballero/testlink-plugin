@@ -1,52 +1,51 @@
 <!-- header -->
-  <md-toolbar>
-    <div layout="row" layout-align="start center" flex>
-      <span>TestLink New Instance</span>
-      <span flex></span>
-      <button mdTooltip="Settings" md-icon-button><md-icon>settings</md-icon></button>
-    </div>
-  </md-toolbar>
-  <!-- ./header -->
-  <!-- content  -->
-  <ng-template tdLoading="loadingDashboardInstance" tdLoadingMode="determinate" tdLoadingType="linear" tdLoadingStrategy="replace"
-    tdLoadingColor="accent">
-    <md-card class="push-bottom-xxl" tdMediaToggle="gt-xs" [mediaClasses]="['push']">
-      <!-- <td-search-box class="push-left push-right" placeholder="search here ..." [alwaysVisible]="true" (searchDebounce)="filterUsers($event)"></td-search-box> -->
-      <div layout="row" layout-align="start center" class="pad-left-sm pad-right-sm">
-        <span *ngIf="!searchBox.searchVisible" class="push-left-sm">
-                        <span class="md-title">Blogs by project</span>
-        </span>
-        <td-search-box #searchBox backIcon="arrow_back" class="push-right-sm tc-orange-700" placeholder="Search here the title...."
-          (searchDebounce)="filterBlogs($event)" (clear)="filterBlogs($event)" (click)="callme($event)" flex>
-        </td-search-box>
-      </div>
-      <md-divider></md-divider>
-      <md-card-content>
-        <md-list class="pull-top">
-          <md-list-item>
-            <md-icon mdListAvatar svgIcon="assets:testlink-alpha"></md-icon>
-            <h3 mdLine>TestLink Instances</h3>
-            <span flex></span>
-            <span flex="30" class="md-body-1 tc-grey-500">Created</span>
-            <span flex="30" class="md-body-1 tc-grey-500">Last access</span>
-            <span flex="30" class="pad-left md-body-1 tc-grey-500">Run tests</span>
-          </md-list-item>
-          <ng-template let-item let-i="index" let-last="last" ngFor [ngForOf]="filteredInstances">
-            <a md-list-item>
-              <md-icon mdListAvatar>dns</md-icon>
-              <h3 mdLine> {{item.title}} </h3>
-              <p mdLine> {{item.description}} </p>
-              <span flex></span>
-              <span flex="30" class="md-body-1 tc-grey-500">{{item.created | date}}</span>
-              <span flex="30" class="md-body-1 tc-grey-500">{{item.lastAccess | timeAgo}}</span>
-              <span flex="30" class="md-body-1 tc-grey-500">
+<md-toolbar>
+  <div layout="row" layout-align="start center" flex>
+    <span>TestLink New Instance</span>
+    <span flex></span>
+    <button mdTooltip="Settings" md-icon-button>
+      <md-icon>settings</md-icon>
+    </button>
+  </div>
+</md-toolbar>
+<!-- ./header -->
+<!-- content  -->
+<md-card class="push-bottom-xxl" tdMediaToggle="gt-xs" [mediaClasses]="['push']" *tdLoading="'loadingDashboardInstance'; mode:'indeterminate'; type:'circle'; strategy:'overlay'; color:'accent'">
+  <!-- <td-search-box class="push-left push-right" placeholder="search here ..." [alwaysVisible]="true" (searchDebounce)="filterUsers($event)"></td-search-box> -->
+  <div layout="row" layout-align="start center" class="pad-left-sm pad-right-sm">
+    <span *ngIf="!searchBox.searchVisible" class="push-left-sm">
+      <span class="md-title">Blogs by project</span>
+    </span>
+    <td-search-box #searchBox backIcon="arrow_back" class="push-right-sm tc-orange-700" placeholder="Search here the title...."
+      (searchDebounce)="filterBlogs($event)" (clear)="filterBlogs($event)" (click)="callme($event)" flex>
+    </td-search-box>
+  </div>
+  <md-divider></md-divider>
+  <md-card-content>
+    <md-list class="pull-top">
+      <md-list-item>
+        <md-icon mdListAvatar svgIcon="assets:testlink-alpha"></md-icon>
+        <h3 mdLine>TestLink Instances</h3>
+        <span flex></span>
+        <span flex="30" class="md-body-1 tc-grey-500">Created</span>
+        <span flex="30" class="md-body-1 tc-grey-500">Last access</span>
+        <span flex="30" class="pad-left md-body-1 tc-grey-500">Run tests</span>
+      </md-list-item>
+      <ng-template let-item let-i="index" let-last="last" ngFor [ngForOf]="filteredInstances">
+        <a md-list-item>
+          <md-icon mdListAvatar>dns</md-icon>
+          <h3 mdLine> {{item.title}} </h3>
+          <p mdLine> {{item.description}} </p>
+          <span flex></span>
+          <span flex="30" class="md-body-1 tc-grey-500">{{item.created | date}}</span>
+          <span flex="30" class="md-body-1 tc-grey-500">{{item.lastAccess | timeAgo}}</span>
+          <span flex="30" class="md-body-1 tc-grey-500">
             <button md-raised-button color="accent" [routerLink]="['/testlink-plugin/login-instance', item.id]">Login</button>
           </span>
-            </a>
-            <md-divider *ngIf="!last" md-inset></md-divider>
-          </ng-template>
-        </md-list>
-      </md-card-content>
-    </md-card>
-  </ng-template>
-  <!-- ./content  -->
+        </a>
+        <md-divider *ngIf="!last" md-inset></md-divider>
+      </ng-template>
+    </md-list>
+  </md-card-content>
+</md-card>
+<!-- ./content  -->

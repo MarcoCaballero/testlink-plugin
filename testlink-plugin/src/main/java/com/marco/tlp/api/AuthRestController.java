@@ -32,13 +32,13 @@ public class AuthRestController {
 
 	@GetMapping
 	public ResponseEntity<AuthResponse> get(HttpSession session, HttpServletRequest req) {
-		logger.info("AUTHORIZED: PROCEED TO LOGIN");
 		String url = req.getHeader(SERVER_HEADER);
 		String key = req.getHeader(KEY_HEADER);
 		if (url != null && key != null) {
-			logger.info("AUTHORIZED: PROCEED TO LOGIN");
+			logger.info("New user received through REST API, with the following info: ");
 			boolean result = authService.isAuthorized(url, key);
-			return (result) ? ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(new AuthResponse(url, true))
+			return (result)
+					? ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(new AuthResponse(url, true))
 					: ResponseEntity.status(HttpStatus.UNAUTHORIZED).contentType(MediaType.APPLICATION_JSON)
 							.body(new AuthResponse(url, false));
 		} else {
@@ -55,7 +55,7 @@ public class AuthRestController {
 			this.url = url;
 			this.result = status.toString();
 		}
-				
+
 		public String getUrl() {
 			return url;
 		}
@@ -66,7 +66,7 @@ public class AuthRestController {
 
 		@Override
 		public String toString() {
-			return "AuthResponse {url:" + getUrl() + ", result:" + getResult()  + "}";
-		}	
+			return "AuthResponse {url:" + getUrl() + ", result:" + getResult() + "}";
+		}
 	}
 }

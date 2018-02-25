@@ -33,10 +33,10 @@ public class TestCaseController extends Controller<TestCase> {
 		return api.getTestCase(testCaseId, null, null);
 	}
 
-	public TestCase getTestCaseByPlatform(Integer planId, Integer buildId, String platformName) {
+	public TestCase getTestCaseByPlatform(Integer planId, Integer buildId, Integer testId, String platformName) {
 		List<TestCase> testCases  = getTestCasesForTestPlanandBuild(planId, buildId);
 		for (TestCase testCase : testCases) {
-			if (testCase.getPlatform().getName().equals(platformName)){
+			if (testCase.getPlatform().getName().equals(platformName) && testCase.getId() == testId){
 				return testCase;
 			}
 		}
