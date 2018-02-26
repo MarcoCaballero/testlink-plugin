@@ -17,7 +17,7 @@ import {
     CovalentNotificationsModule, CovalentLayoutModule, CovalentMenuModule,
     CovalentPagingModule, CovalentSearchModule, CovalentStepsModule,
     CovalentCommonModule, CovalentDialogsModule, CovalentExpansionPanelModule,
-    CovalentChipsModule, CovalentVirtualScrollModule,
+    CovalentChipsModule, CovalentVirtualScrollModule, CovalentFileModule,
 } from '@covalent/core';
 import { CovalentHttpModule, IHttpInterceptor } from '@covalent/http';
 import { CovalentDynamicFormsModule } from '@covalent/dynamic-forms';
@@ -58,6 +58,7 @@ const COVALENT_MODULES: any[] = [
     CovalentNotificationsModule, CovalentLayoutModule, CovalentMenuModule, CovalentExpansionPanelModule,
     CovalentPagingModule, CovalentSearchModule, CovalentStepsModule, CovalentChipsModule, CovalentTextEditorModule,
     CovalentCommonModule, CovalentDialogsModule, CovalentHttpModule, CovalentDynamicFormsModule, CovalentMarkdownModule,
+    CovalentFileModule,
 ];
 
 const TESTLINK_PLUGIN_MODULES: any[] = [
@@ -67,7 +68,7 @@ const TESTLINK_PLUGIN_MODULES: any[] = [
 
 const TESTLINK_PLUGIN_SERVICES: any[] = [
     TlpApiService, InstancesService, LocalStorageManagerService, TestProjectService,
-    TestPlanService, PlatformService, BuildService, TestCaseService, AuthService
+    TestPlanService, PlatformService, BuildService, TestCaseService, AuthService,
 ];
 
 @NgModule({

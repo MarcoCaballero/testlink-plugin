@@ -125,7 +125,19 @@
                         {{status.title}}
                     </md-radio-button>
                 </md-radio-group>
-                <md-icon class="push-right" [ngClass]="getStatusIcon(reportResult)[1]" md-list-icon>{{getStatusIcon(reportResult)[0]}}</md-icon>
+                <md-icon class="push-right" style="margin-left: 2%;" [ngClass]="getStatusIcon(reportResult)[1]" md-list-icon>{{getStatusIcon(reportResult)[0]}}</md-icon>
+            </md-list-item>
+            <md-list-item>
+                <td-file-input #fileInput [(ngModel)]="file" color="primary" (cancel)="cancelEvent()" (select)="selectEvent($event)" accept=".jpg,.png"
+                    [disabled]="disabled" style="min-width: 280px; margin: auto;">
+                    <md-icon>attach_file</md-icon>
+                    <input mdInput placeholder="select file" [value]="file?.name ?  file?.name : ('Choose a file...')" [disabled]="disabled"
+                        readonly style="min-width: 280px;" />
+                </td-file-input>
+                <button md-icon-button style="position:absolute; left: 55%;min-width: 280px;" *ngIf="file" (click)="fileInput.clear()"
+                   >
+                    <md-icon>cancel</md-icon>
+                </button>
             </md-list-item>
         </md-list>
         <ng-template [ngIf]="existReport()">
@@ -135,7 +147,7 @@
     <md-divider></md-divider>
     <md-card-actions class="clearfix">
         <a md-raised-button color="primary" class="text-upper hoverable-action-button folat-right" color="accent" class="text-upper"
-           (click)="sendResult()">
+            (click)="sendResult()">
             <span>Guardar</span>
         </a>
     </md-card-actions>

@@ -15,11 +15,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.marco.tlp.models.rpccontrollers.TestExecution;
 import com.marco.tlp.services.TestCaseService;
 
+import br.eti.kinoshita.testlinkjavaapi.model.Attachment;
 import br.eti.kinoshita.testlinkjavaapi.model.ReportTCResultResponse;
 import br.eti.kinoshita.testlinkjavaapi.model.TestCase;
 
@@ -85,8 +87,16 @@ public class TestCaseRestController {
 		TestExecution exec = mapper.readValue(execution, TestExecution.class);
 		ReportTCResultResponse response = testCaseService.executeTest(exec);
 		if (logger.isInfoEnabled() || logger.isDebugEnabled()) {
-			logger.info("Execution information: {} ", response.toString());
+			logger.info("Execution information: {} ", response);
 		}
+		if (response != null)
+			return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(response);
+		return ResponseEntity.badRequest().build();
+	}
+	
+	@PostMapping("/testcase/execution/{executionId}/upload")
+	public ResponseEntity<Attachment> uploadAttachment(@RequestParam("file") MultipartFile file, @PathVariable Integer executionId) {
+		Attachment response = testCaseService.uploadExecutionAttachment(executionId, file);
 		if (response != null)
 			return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(response);
 		return ResponseEntity.badRequest().build();

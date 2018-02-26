@@ -9,6 +9,8 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { slideInDownAnimation } from '../../../app.animations';
 import { ITestCase } from 'model/test-case';
+import { IExecution } from 'model/execution';
+import { IExecutionResponse } from 'model/execution-response';
 import { ITestCaseStep } from 'model/step';
 import { TestCaseService } from 'services/tlp-api/test-case.service';
 
@@ -54,6 +56,11 @@ export class TestRunnerComponent implements OnInit, AfterViewInit {
     buildId: number;
     platform: string;
     reportResult: string = 'NOT_RUN';
+    execution: IExecution;
+    executionResponse: IExecutionResponse;
+    file: File = undefined;
+    disabled: boolean = false;
+    formdata: FormData;
 
     constructor(private _changeDetectorRef: ChangeDetectorRef, public media: TdMediaService,
         private router: Router, private activatedRouter: ActivatedRoute, private dialogService: TdDialogService,
@@ -64,12 +71,23 @@ export class TestRunnerComponent implements OnInit, AfterViewInit {
         this.activatedRouter.queryParams.subscribe((params: { platform: string, testbuild: any, testplan: any, testcase: any }) => {
             this.platform = (params.platform === 'Any') ? '' : params.platform;
             this.platforms = [`${params.platform}`];
-            this.testId = params.testcase;
-            this.planId = params.testplan;
-            this.buildId = params.testbuild;
+            this.testId = parseInt(params.testcase, 10);
+            this.planId = parseInt(params.testplan, 10);
+            this.buildId = parseInt(params.testbuild, 10);
         });
         this.loadingService.register();
         this.getTestCase();
+    }
+    cancelEvent(): void {
+        this.formdata = new FormData();
+        this.file = undefined;
+    }
+
+    selectEvent(file: File): void {
+        this.formdata = new FormData();
+        this.file = file;
+        this.formdata.append('file', file);
+        console.log(`Form: ${JSON.stringify(this.formdata, undefined, 4)}`);
     }
 
     onSaveClick(): void {
@@ -92,6 +110,10 @@ export class TestRunnerComponent implements OnInit, AfterViewInit {
         return title === 'BLOCKED';
     }
 
+    stayNotRun(title: string): boolean {
+        return title === 'NOT_RUN';
+    }
+
     checkStatus(value: any): void {
         let preEditoValue: string = '## Report result\n';
         this.steps.forEach((step: any): void => {
@@ -99,9 +121,7 @@ export class TestRunnerComponent implements OnInit, AfterViewInit {
                 preEditoValue += `* ### step id: ${step.number} - status: ${step.status} \n > Add bug info there ... \n\n\n`;
             }
         });
-        if (this.isError(this.reportResult) || this.isBlocked(this.reportResult)) {
-            preEditoValue += `## Final result to report: ${this.reportResult}\n Add some info about the bug.... \n\n`;
-        }
+        preEditoValue += `## Final result to report: ${this.reportResult}\n Add some info about the bug.... \n\n`;
         this.editorVal = preEditoValue;
         this.refreshView();
     }
@@ -113,7 +133,7 @@ export class TestRunnerComponent implements OnInit, AfterViewInit {
                 status = true;
             }
         });
-        if (this.isError(this.reportResult) || this.isBlocked(this.reportResult)) {
+        if (!this.stayNotRun(this.reportResult)) {
             status = true;
         }
         return status;
@@ -131,6 +151,18 @@ export class TestRunnerComponent implements OnInit, AfterViewInit {
             }).afterClosed().subscribe((accept: boolean) => {
                 if (accept) {
                     console.log('Result sending');
+                    this.execution = {
+                        id: this.testId,
+                        testPlanId: this.planId,
+                        buildId: this.buildId,
+                        platformName: this.platform,
+                        version: this.selectedTestcase.version,
+                        notes: this.editorVal,
+                        executionStatusChar: this.getExecutionStatusChar(this.reportResult),
+                    };
+                    this.sendExecutionResult(this.execution);
+                    this.loadingService.register();
+                    console.log(`Send Execution: ${JSON.stringify(this.execution, undefined, 4)}`);
                 } else {
                     console.log('Result NOT sending');
                 }
@@ -138,17 +170,21 @@ export class TestRunnerComponent implements OnInit, AfterViewInit {
         }
     }
 
-    async goBack(): Promise<void> {
-        this.dialogService.openConfirm({
-            message: 'All non saved data will be lost, continue ?',
-            title: 'Confirm',
-            cancelButton: 'No',
-            acceptButton: 'Yes',
-        }).afterClosed().subscribe((accept: boolean) => {
-            if (accept) {
-                this.router.navigate(['/testlink-plugin/dashboard']);
-            }
-        });
+    async goBack(willAsk: boolean = true): Promise<void> {
+        if (willAsk) {
+            this.dialogService.openConfirm({
+                message: 'All non saved data will be lost, continue ?',
+                title: 'Confirm',
+                cancelButton: 'No',
+                acceptButton: 'Yes',
+            }).afterClosed().subscribe((accept: boolean) => {
+                if (accept) {
+                    this.router.navigate(['/testlink-plugin/dashboard']);
+                }
+            });
+        } else {
+            this.router.navigate(['/testlink-plugin/dashboard']);
+        }
     }
 
     getBackground(i: number): string {
@@ -188,6 +224,11 @@ export class TestRunnerComponent implements OnInit, AfterViewInit {
             closeButton: 'Ok',
         });
     }
+
+    private getExecutionStatusChar(status: string): string {
+        return status.slice(0, 1).toLowerCase();
+    }
+
     private refreshView(): void {
         this.media.broadcast();
         this._changeDetectorRef.detectChanges();
@@ -211,5 +252,60 @@ export class TestRunnerComponent implements OnInit, AfterViewInit {
         this.steps.forEach((step: ITestCaseStep) => {
             step.status = 'NOT_RUN';
         });
+    }
+
+    private sendExecutionResult(execution: IExecution): void {
+        this.testCaseService.postExecutionResult(execution)
+            .then((response: IExecutionResponse) => {
+                this.executionResponse = response;
+                this.loadingService.resolve();
+                if (this.file !== undefined) {
+                    this.sendAttachment(this.formdata, this.executionResponse.executionId);
+                } else {
+                    this.openSentAlert();
+                }
+            })
+            .catch((error: any) => {
+                this.loadingService.resolve();
+                this.dialogService.openConfirm({
+                    message: 'Something went wrong when trying to send the result, try again?',
+                    title: 'Error',
+                    cancelButton: 'No',
+                    acceptButton: 'Yes',
+                }).afterClosed().subscribe((accept: boolean) => {
+                    if (accept) {
+                        this.sendExecutionResult(execution);
+                    }
+                });
+            });
+    }
+
+    private sendAttachment(formdata: FormData, executionId: number): void {
+        this.testCaseService.uploadAttachment(formdata, executionId)
+            .then((response: any) => {
+                this.openSentAlert();
+            })
+            .catch((error: any) => {
+                this.loadingService.resolve();
+                this.dialogService.openConfirm({
+                    message: 'Something went wrong when trying to send the attachment, try again?',
+                    title: 'Error',
+                    cancelButton: 'No',
+                    acceptButton: 'Yes',
+                }).afterClosed().subscribe((accept: boolean) => {
+                    if (accept) {
+                        this.sendAttachment(formdata, executionId);
+                    }
+                });
+            });
+    }
+
+    private openSentAlert(): void {
+        this.dialogService.openAlert({
+            message: `The test case was sent, with the following response: ${this.executionResponse.message}`,
+            title: 'Test Case Result',
+            closeButton: 'Ok',
+        });
+        this.goBack(false);
     }
 }

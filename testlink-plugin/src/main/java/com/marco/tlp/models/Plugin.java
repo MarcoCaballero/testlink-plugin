@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.marco.tlp.models.rpccontrollers.TestExecution;
 
+import br.eti.kinoshita.testlinkjavaapi.model.Attachment;
 import br.eti.kinoshita.testlinkjavaapi.model.Build;
 import br.eti.kinoshita.testlinkjavaapi.model.Platform;
 import br.eti.kinoshita.testlinkjavaapi.model.ReportTCResultResponse;
@@ -38,5 +39,7 @@ public interface Plugin {
 	public List<Platform> getPlansPlatforms(Integer testPlanId);
 	
 	public boolean isAuthKey(String url, String key);
+	
+	public Attachment uploadExecutionAttachment(Integer executionId, String fileContent);
 
 }

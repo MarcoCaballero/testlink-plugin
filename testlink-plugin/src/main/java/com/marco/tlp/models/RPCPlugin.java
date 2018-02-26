@@ -21,6 +21,7 @@ import com.marco.tlp.models.rpccontrollers.TestPlanController;
 import com.marco.tlp.models.rpccontrollers.TestProjectController;
 
 import br.eti.kinoshita.testlinkjavaapi.TestLinkAPI;
+import br.eti.kinoshita.testlinkjavaapi.model.Attachment;
 import br.eti.kinoshita.testlinkjavaapi.model.Build;
 import br.eti.kinoshita.testlinkjavaapi.model.Platform;
 import br.eti.kinoshita.testlinkjavaapi.model.ReportTCResultResponse;
@@ -112,6 +113,11 @@ public class RPCPlugin implements Plugin {
 	@Override
 	public boolean isAuthKey(String url, String key) {
 		return new AuthController(url).isAuthKey(key);
+	}
+
+	@Override
+	public Attachment uploadExecutionAttachment(Integer executionId, String fileContent) {
+		return new TestCaseController(api).uploadExecutionAttachment(executionId, fileContent);
 	}
 
 }

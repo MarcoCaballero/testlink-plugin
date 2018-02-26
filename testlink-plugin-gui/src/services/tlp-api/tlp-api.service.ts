@@ -25,7 +25,7 @@ export class TlpApiService {
         return this.http.get<T>(url, expandedHeaders);
     }
 
-    post<T>(url: string, body: string, headers?: HttpHeaders | null): Observable<T> {
+    post<T>(url: string, body: any, headers?: HttpHeaders | null): Observable<T> {
         const expandedHeaders: object = this.prepareHeader(headers);
         return this.http.post<T>(url, body, expandedHeaders);
     }

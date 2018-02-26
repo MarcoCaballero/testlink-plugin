@@ -1,14 +1,20 @@
 package com.marco.tlp.models.rpccontrollers;
 
+import java.time.LocalDateTime;
 import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import br.eti.kinoshita.testlinkjavaapi.TestLinkAPI;
 import br.eti.kinoshita.testlinkjavaapi.constants.ExecutionStatus;
+import br.eti.kinoshita.testlinkjavaapi.model.Attachment;
 import br.eti.kinoshita.testlinkjavaapi.model.ReportTCResultResponse;
 import br.eti.kinoshita.testlinkjavaapi.model.TestCase;
 
 public class TestCaseController extends Controller<TestCase> {
-	
+
+	private static final Logger logger = LoggerFactory.getLogger(TestCaseController.class);
 	private static final String EXECUTION_OK = "success!";
 
 	public TestCaseController(TestLinkAPI api) {
@@ -53,6 +59,20 @@ public class TestCaseController extends Controller<TestCase> {
 		} else {
 			return null;
 		}
+	}
+	
+	public Attachment uploadExecutionAttachment(Integer executionId, String fileContent) {
+		Attachment attachment =  api.uploadExecutionAttachment(
+                executionId, //executionId 
+                "Elastest-TLP Uploaded file at " + LocalDateTime.now(), //title 
+                "", //description  
+                "screenshot_elastest_tlp_api_"+System.currentTimeMillis()+".jpg", //fileName 
+                "image/jpeg", //fileType
+                fileContent); //content
+
+
+		logger.info("New File succesfully sent");
+        return attachment;
 	}
 	
 	private boolean checkExecution(ReportTCResultResponse response) {
