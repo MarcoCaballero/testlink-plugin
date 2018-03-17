@@ -3,6 +3,7 @@ package com.marco.tlp.services;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.List;
 
 import org.apache.commons.codec.binary.Base64;
@@ -57,11 +58,14 @@ public class TestCaseService {
 
 	public Attachment uploadExecutionAttachment(Integer executionId, MultipartFile multiPartfile) {
 		String fileContent = null;
+		File file;
 		try {
-			byte[] byteArray = FileUtils.readFileToByteArray(multipartToFile(multiPartfile));
+			file = multipartToFile(multiPartfile);
+			byte[] byteArray = FileUtils.readFileToByteArray(file);
 			fileContent = new String(Base64.encodeBase64(byteArray));
+			Files.deleteIfExists(file.toPath());
 		} catch (IOException e) {
-			e.printStackTrace(System.err);
+			logger.error(e.getMessage());
 			System.exit(-1);
 		}
 		logger.info("New File received");
@@ -70,10 +74,14 @@ public class TestCaseService {
 
 	private File multipartToFile(MultipartFile multipart) throws IllegalStateException, IOException {
 		File convFile = new File(multipart.getOriginalFilename());
-		convFile.createNewFile();
-		FileOutputStream fos = new FileOutputStream(convFile);
-		fos.write(multipart.getBytes());
-		fos.close();
+		if (convFile.createNewFile()) {
+			FileOutputStream fos = new FileOutputStream(convFile);
+			try {
+				fos.write(multipart.getBytes());
+			} finally {
+				fos.close();
+			}
+		}
 		return convFile;
 	}
 }
