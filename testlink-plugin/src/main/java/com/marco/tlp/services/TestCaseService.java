@@ -72,7 +72,7 @@ public class TestCaseService {
 		return plugin.uploadExecutionAttachment(executionId, fileContent);
 	}
 
-	private File multipartToFile(MultipartFile multipart) throws IllegalStateException, IOException {
+	private File multipartToFile(MultipartFile multipart) throws IOException {
 		File convFile = new File(multipart.getOriginalFilename());
 		if (convFile.createNewFile()) {
 			FileOutputStream fos = new FileOutputStream(convFile);

@@ -3,8 +3,8 @@
         "id": "0",
         "icon": "looks_one",
         "route": ".",
-        "title": "Instance 1",
-        "description": "http://localhost/testlink/0/xmlrpc.php",
+        "title": "Instance 1 - Host Instance",
+        "description": "http://testlink.miliziandevelopers.eu/testlink-instance/lib/api/xmlrpc/v1/xmlrpc.php",
         "created": "7/03/2017 11:05 AM",
         "lastAccess": "7/03/2017 11:05 AM"
     },
@@ -12,7 +12,7 @@
         "id": "1",
         "icon": "looks_two",
         "route": ".",
-        "title": "Instance 2",
+        "title": "Instance 2 - Apache Server Instance",
         "description": "http://localhost:80/testlink/lib/api/xmlrpc/v1/xmlrpc.php",
         "created": "7/03/2017 11:05 AM",
         "lastAccess": "7/03/2017 11:05 AM"

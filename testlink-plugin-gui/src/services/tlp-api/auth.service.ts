@@ -14,7 +14,7 @@ export class AuthService {
     }
 
     isAuth(devKey: string): Promise<any> {
-        let headers = new HttpHeaders();
+        let headers: HttpHeaders = new HttpHeaders();
         headers = headers.set('TLP-Api-Key', devKey);
         return this.tlpApiService.getAuth<any>(`${authUrl}`, headers)
             .toPromise()
