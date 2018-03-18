@@ -7,6 +7,8 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.marco.tlp.Application;
+
 public class LoginApiTest {
 	
 	private String TESTLINK_SERVER_URL = "http://localhost:80/testlink/lib/api/xmlrpc/v1/xmlrpc.php";
@@ -15,7 +17,8 @@ public class LoginApiTest {
 	
 	@BeforeClass
 	public static void setup() {
-		// RestApp.start();
+		String args[] = {};
+		Application.main(args);
 	}
 
 	@AfterClass
