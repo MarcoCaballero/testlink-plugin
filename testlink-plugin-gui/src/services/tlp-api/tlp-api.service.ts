@@ -2,11 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
-
-import { IConnectionHeader } from 'model/connection-header';
-import { LocalStorageManagerService } from 'services/local-storage-manager.service';
-
 import 'rxjs/add/operator/toPromise';
+
+import { LocalStorageManagerService } from 'services/local-storage-manager.service';
+import { IConnectionHeader } from 'model/connection-header';
 
 @Injectable()
 export class TlpApiService {
@@ -32,9 +31,10 @@ export class TlpApiService {
 
     private prepareHeader(headers: HttpHeaders | null, addKey: boolean = true): object {
         headers = headers || new HttpHeaders();
-        headers = headers.set('TLP-Server-Url', 'http://localhost:80/testlink/lib/api/xmlrpc/v1/xmlrpc.php');
+        let ch: IConnectionHeader =  this.localStorageManagerService.getConnectionHeader();
+        headers = headers.set('TLP-Server-Url', ch.instance);
         if (addKey) {
-            headers = headers.set('TLP-Api-Key', '65330eb0c5e8424b696dee2bb5d60fc1');
+            headers = headers.set('TLP-Api-Key', ch.key);
         }
         headers = headers.set('Accept', 'application/json');
         return { headers: headers };

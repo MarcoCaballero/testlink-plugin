@@ -6,29 +6,29 @@ export class LocalStorageManagerService {
 
     private key: string = 'connection-header';
 
-    getConnectionHeader(): Promise<IConnectionHeader> {
+    getConnectionHeader(): IConnectionHeader {
         if (localStorage.length > 0) {
-            return Promise.resolve(JSON.parse(localStorage.getItem(this.key)));
+            return JSON.parse(localStorage.getItem(this.key));
         }
-        return Promise.reject('Local Storage did not find the key');
+        return undefined;
     }
 
-    setConnectionHeader(connectionHeader: IConnectionHeader): Promise<void> {
+    setConnectionHeader(connectionHeader: IConnectionHeader): Boolean {
         if (this.isLocalStorageAvailable()) {
             localStorage.setItem(this.key, JSON.stringify(connectionHeader));
-            return Promise.resolve();
+            return true;
         }
-        return Promise.reject('Local Storage is not available on the browser');
+        return false;
     }
 
-    isLocalStorageAvailable(): Promise<Boolean> {
-        return Promise.resolve(window.localStorage ? true : false);
+    isLocalStorageAvailable(): Boolean {
+        return (window.localStorage ? true : false);
     }
 
-    hasConnectionItem(): Promise<Boolean> {
+    hasConnectionItem(): Boolean {
         if (this.isLocalStorageAvailable) {
-            return Promise.resolve((localStorage.getItem(this.key) !== undefined) ? true : false);
+            return ((localStorage.getItem(this.key) !== undefined) ? true : false);
         }
-        return Promise.resolve(false);
+        return false;
     }
 }

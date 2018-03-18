@@ -106,24 +106,13 @@ export class InstanceLoginComponent implements OnInit {
         this.showError = false;
     }
 
-    async setConnectionHeaderToLocalStorage(connectionHeader: IConnectionHeader): Promise<void> {
-        await this.localStorageManagerService.setConnectionHeader(connectionHeader)
-            .then(() => {
-                console.info(`connection header established to local storage with the following value: ${JSON.stringify(connectionHeader)}`);
-            })
-            .catch((error: any) => {
-                console.log(`Error when trying to establish connection: ${error}`);
-            });
+    setConnectionHeaderToLocalStorage(connectionHeader: IConnectionHeader): Boolean {
+       return this.localStorageManagerService.setConnectionHeader(connectionHeader);
     }
 
-    async getConnectionHeaderToLocalStorage(): Promise<void> {
-        await this.localStorageManagerService.getConnectionHeader()
-            .then((connectionHeader: IConnectionHeader) => {
-                console.log(`connection header returned from local storage with the following value: ${JSON.stringify(connectionHeader)}`);
-            })
-            .catch((error: any) => {
-                console.log(`Error when trying to get connection header: ${error}`);
-            });
+    getConnectionHeaderToLocalStorage(): IConnectionHeader {
+        let connectionHeader: IConnectionHeader = this.localStorageManagerService.getConnectionHeader();
+        return connectionHeader;
     }
 
     private checkLogin(key: string): any {
@@ -145,13 +134,11 @@ export class InstanceLoginComponent implements OnInit {
         console.log(`Value to log in: ${JSON.stringify(connectionHeader)}`);
         try {
             this.loadingService.register('loadingLoginSection');
-            this.setConnectionHeaderToLocalStorage(connectionHeader)
-                .then((): void => {
-                    this.router.navigate(['/testlink-plugin/dashboard']);
-                })
-                .catch((error: any) => {
-                    console.error(`error while login: ${error}`);
-                });
+            if (this.setConnectionHeaderToLocalStorage(connectionHeader)) {
+                this.router.navigate(['/testlink-plugin/dashboard']);
+            } else {
+                console.error(`error while login`);
+            }
         } catch (error) {
             console.log(error);
         } finally {
