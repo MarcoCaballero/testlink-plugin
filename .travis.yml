@@ -12,7 +12,7 @@ before_script:
   - cd testlink-plugin
 script:
   - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar
-  - mvn test
+  # - mvn test
 cache:
   directories:
     - '$HOME/.sonar/cache'
