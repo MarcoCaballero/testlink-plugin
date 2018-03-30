@@ -2,7 +2,7 @@
 
 [![Build Status](https://api.travis-ci.org/MarcoCaballero/testlink-plugin.svg?branch=master)](https://travis-ci.org/MarcoCaballero/testlink-plugin) [![Quality Gate](https://sonarcloud.io/api/badges/gate?key=com.marco.tlp%3Atestlink-plugin-rest)](https://sonarcloud.io/dashboard/index/com.marco.tlp%3Atestlink-plugin-rest)
 
-* [Introduction](https://github.com/MarcoCaballero/testlink-plugin#ontroduction) 
+* [Introduction](https://github.com/MarcoCaballero/testlink-plugin#introduction) 
 * [Requirements](https://github.com/MarcoCaballero/testlink-plugin#requirements) 
 * [Installation](https://github.com/MarcoCaballero/testlink-plugin#installation) 
 
