@@ -1,11 +1,11 @@
-package com.marco.tlp.test.api;
+package com.marco.tlp.test.it;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 
 import org.junit.Test;
 
-public class LoginApiTest {
+public class LoginApiIT {
 
 	private String TESTLINK_SERVER_URL = "http://172.18.0.1:80/lib/api/xmlrpc/v1/xmlrpc.php";
 	private String API_KEY_GOOD = "0c4eae230736ccd923409b3e144165a1";
