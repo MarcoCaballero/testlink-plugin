@@ -33,14 +33,13 @@ addons:
 
 before_script:
   - cd testlink-plugin
-  - mvn package -Dmaven.test.skip=true
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar
   - mvn dockerfile:build
   - cd .. 
   - cd testlink-plugin-gui
   - docker build -t marcocab/testlink-plugin-gui .
-  - cd ../docker && docker-compose up -d
 script:
-  - docker exec -it docker_tlp_1 /bin/bash "mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar"
+  - cd ../docker && docker-compose up -d
 after_script:
   - docker-compose down --volumes --remove-orphans  
 cache:
