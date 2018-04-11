@@ -27,7 +27,7 @@ public class BuildRestController {
 		this.buildservice = buildservice;
 	}
 
-	@GetMapping("/testplan/{testPlanId}/builds")
+	@GetMapping(value = "/testplan/{testPlanId}/builds", produces = "application/json")
 	public ResponseEntity<List<Build>> get(HttpSession session, @PathVariable("testPlanId") Integer testPlanId) {
 		List<Build> builds = buildservice.getBuildByPlan(testPlanId);
 		if (builds != null)

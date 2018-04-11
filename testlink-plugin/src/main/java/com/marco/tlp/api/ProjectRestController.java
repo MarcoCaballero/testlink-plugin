@@ -26,7 +26,8 @@ public class ProjectRestController {
 		this.projectService = projectService;
 	}
 
-	@GetMapping
+	
+	@GetMapping(produces = "application/json")
 	public ResponseEntity<List<TestProject>> get(HttpSession session) {
 		List<TestProject> testProject = projectService.getProjects();
 		if (testProject != null)

@@ -30,7 +30,7 @@ public class AuthRestController {
 		this.authService = authService;
 	}
 
-	@GetMapping
+	@GetMapping(produces = "application/json")
 	public ResponseEntity<AuthResponse> get(HttpSession session, HttpServletRequest req) {
 		String url = req.getHeader(SERVER_HEADER);
 		String key = req.getHeader(KEY_HEADER);

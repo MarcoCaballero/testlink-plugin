@@ -29,7 +29,7 @@ public class TestPlanRestController {
 		this.testPlanService = testPlanService;
 	}
 
-	@GetMapping("testproject/{projectID}/testplans")
+	@GetMapping(value="testproject/{projectID}/testplans", produces = "application/json")
 	public ResponseEntity<List<TestPlan>> get(HttpSession session, @PathVariable Integer projectID) {
 		List<TestPlan> testPlans = testPlanService.getProjectTestPlans(projectID);
 		if (testPlans != null)
@@ -37,7 +37,7 @@ public class TestPlanRestController {
 		return ResponseEntity.notFound().build();
 	}
 	
-	@GetMapping("/testplan/{testplanId}/platforms")
+	@GetMapping(value="/testplan/{testplanId}/platforms", produces = "application/json")
 	public ResponseEntity<List<Platform>> get(@PathVariable("testplanId") Integer testplanId) {
 		List<Platform> platforms = testPlanService.getTestPlanPlatforms(testplanId);
 		if (platforms != null)
@@ -45,7 +45,7 @@ public class TestPlanRestController {
 		return ResponseEntity.notFound().build();
 	}
 
-	@GetMapping("/plan")
+	@GetMapping(value="/plan", produces = "application/json")
 	public ResponseEntity<TestPlan> get(HttpSession session, @RequestParam("planName") String planName,
 			@RequestParam("projectName") String projectName) {
 		TestPlan testPlan = testPlanService.getProjectTestPlan(planName, projectName);

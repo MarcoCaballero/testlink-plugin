@@ -39,7 +39,7 @@ public class TestCaseRestController {
 		this.testCaseService = testCaseService;
 	}
 
-	@GetMapping("/testplan/{testPlanId}/testcases")
+	@GetMapping(value="/testplan/{testPlanId}/testcases", produces = "application/json")
 	public ResponseEntity<List<TestCase>> getTestCasesForTestPlan(@PathVariable Integer testPlanId) {
 		List<TestCase> testCases = testCaseService.getTestCasesForTestPlan(testPlanId);
 		if (testCases != null)
@@ -47,7 +47,7 @@ public class TestCaseRestController {
 		return ResponseEntity.notFound().build();
 	}
 
-	@GetMapping("/testplan/{testPlanId}/build/{buildId}/testcases")
+	@GetMapping(value="/testplan/{testPlanId}/build/{buildId}/testcases", produces = "application/json")
 	public ResponseEntity<List<TestCase>> getTestCasesForTestPlanAndBuild(@PathVariable Integer testPlanId,
 			@PathVariable Integer buildId) {
 		List<TestCase> testCases = testCaseService.getTestCasesForTestPlanAndName(testPlanId, buildId);
@@ -56,7 +56,7 @@ public class TestCaseRestController {
 		return ResponseEntity.notFound().build();
 	}
 
-	@GetMapping("/testplan/{testPlanId}/build/{buildId}/testcase/{testId}") // ?platformName=xx
+	@GetMapping(value="/testplan/{testPlanId}/build/{buildId}/testcase/{testId}") // ?platformName=x, produces = "application/json"x
 	public ResponseEntity<TestCase> get(@PathVariable Integer testPlanId, @PathVariable Integer buildId, @PathVariable Integer testId,
 			@RequestParam(value = "platform", required = true) String platformName) {
 		TestCase testCase = testCaseService.getTestCaseByPlatform(testPlanId, buildId, testId, platformName);
@@ -65,7 +65,7 @@ public class TestCaseRestController {
 		return ResponseEntity.notFound().build();
 	}
 
-	@GetMapping("/testsuite/{testSuiteId}/testcases")
+	@GetMapping(value="/testsuite/{testSuiteId}/testcases", produces = "application/json")
 	public ResponseEntity<List<TestCase>> getTestCasesForTestSuite(@PathVariable Integer testSuiteId) {
 		List<TestCase> testCases = testCaseService.getTestCasesForTestSuite(testSuiteId);
 		if (testCases != null)
@@ -73,7 +73,7 @@ public class TestCaseRestController {
 		return ResponseEntity.notFound().build();
 	}
 
-	@GetMapping("/testcase/{testCaseId}")
+	@GetMapping(value="/testcase/{testCaseId}", produces = "application/json")
 	public ResponseEntity<TestCase> get(@PathVariable Integer testCaseId) {
 		TestCase testCase = testCaseService.getTestCase(testCaseId);
 		if (testCase != null)
@@ -81,7 +81,7 @@ public class TestCaseRestController {
 		return ResponseEntity.notFound().build();
 	}
 
-	@PostMapping(value = "/testcase/reportResult", consumes = "application/json")
+	@PostMapping(value = "/testcase/reportResult", consumes = "application/json", produces = "application/json")
 	public ResponseEntity<ReportTCResultResponse> execute(@RequestBody String execution) throws IOException {
 		ObjectMapper mapper = new ObjectMapper();
 		TestExecution exec = mapper.readValue(execution, TestExecution.class);
@@ -94,7 +94,7 @@ public class TestCaseRestController {
 		return ResponseEntity.badRequest().build();
 	}
 	
-	@PostMapping("/testcase/execution/{executionId}/upload")
+	@PostMapping(value="/testcase/execution/{executionId}/upload", produces = "application/json")
 	public ResponseEntity<Attachment> uploadAttachment(@RequestParam("file") MultipartFile file, @PathVariable Integer executionId) {
 		Attachment response = testCaseService.uploadExecutionAttachment(executionId, file);
 		if (response != null)

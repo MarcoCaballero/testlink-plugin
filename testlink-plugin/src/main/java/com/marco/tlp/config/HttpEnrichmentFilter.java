@@ -72,7 +72,12 @@ public class HttpEnrichmentFilter implements Filter {
 
 	private boolean willApplyFilter(HttpServletRequest request) {
 		return !request.getMethod().equals(HttpMethod.OPTIONS.toString())
-				&& !request.getRequestURI().equalsIgnoreCase("/tlp-api/authorization");
+				&& !request.getRequestURI().equalsIgnoreCase("/tlp-api/authorization")
+				&& !request.getRequestURI().contains("swagger-ui.html")
+				&& !request.getRequestURI().contains("springfox-swagger-ui")
+				&& !request.getRequestURI().contains("swagger-resources")
+				&& !request.getRequestURI().contains("api-docs")
+				&& !request.getRequestURI().contains("favicon.ico");
 	}
 
 }
