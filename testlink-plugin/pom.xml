@@ -108,7 +108,7 @@
 						<configuration>
 							<append>true</append>
 							<excludes>
-								<exclude>**/FileUtil*</exclude>
+								<exclude>**/it*</exclude>
 							</excludes>
 						</configuration>
 						<executions>
