@@ -23,7 +23,7 @@ public class AuthRestController {
 
 	private static final String SERVER_HEADER = "TLP-Server-Url";
 	private static final String KEY_HEADER = "TLP-Api-Key";
-	AuthService authService;
+	private AuthService authService;
 
 	@Autowired
 	public AuthRestController(AuthService authService) {
