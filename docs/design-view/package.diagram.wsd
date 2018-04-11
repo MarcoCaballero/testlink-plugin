@@ -1,4 +1,4 @@
-@startuml Analysis View
+@startuml Package Diagram
 
 skinparam class {
 	BackgroundColor PaleGreen

@@ -1,0 +1,32 @@
+@startuml Class Diagram
+
+annotation "Component(SCOPE_REQUEST)" as comp
+
+package api #A5D6A7 {
+}
+package services #A5D6A7 {
+}
+package models #A5D6A7 {
+    interface Plugin
+    abstract class Controller
+    Plugin <|-left- RpcPLugin
+    comp <|-down--- RpcPLugin
+    RpcPLugin --> AuthController
+    RpcPLugin --> BuildController
+    RpcPLugin --> PlatformController
+    RpcPLugin --> TesCaseController
+    RpcPLugin --> TestPlanController
+    RpcPLugin --> TestProjectController
+
+    AuthController --|> Controller
+    BuildController --|> Controller
+    PlatformController --|> Controller
+    TesCaseController --|> Controller
+    TestPlanController --|> Controller
+    TestProjectController --|> Controller
+}
+
+api --down-> RpcPLugin
+services --down-> RpcPLugin
+
+@enduml

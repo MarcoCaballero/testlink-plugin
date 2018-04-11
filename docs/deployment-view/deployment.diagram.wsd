@@ -1,8 +1,9 @@
-@startuml Implementation View
+@startuml Deployment
 
 interface "HTTP" as tlp_http
 interface "HTTP" as apache_http
 interface "XML-RPC" as testlink_rpc
+
 
 
 package "Testlink-Plugin-Rest" {

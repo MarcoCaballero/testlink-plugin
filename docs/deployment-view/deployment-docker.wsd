@@ -1,0 +1,38 @@
+@startuml Deployment Docker
+node Testlink-Plugin-Rest <<Docker Container>> {
+  artifact "Tomcat" {
+    artifact "testlink-plugin-rest_v1.jar"
+    artifact "testlink-java-api.jar"
+  }
+}
+
+node Testlink-Plugin-GUI <<Docker Container>> {
+  frame  nginx {
+    frame "testlink-plugin-gui (Build)" {
+      artifact "bundle.js" as bundle
+      artifact "index.html" as index
+    }
+  }
+}
+
+node "bitnami/Testlink" <<Docker Container>> {
+  frame Apache {
+    artifact TestLink
+    folder conf {
+      artifact ".default.conf" as defconf
+      artifact ".vhosts.conf" as defconf
+      artifact ".testlink.conf" as defconf
+      artifact ".htaccess" as defconf
+    }
+  }
+}
+
+node "bitnami/MariaDb" <<Docker Container>> {
+  database "MariaDB" {
+    frame "Schema" {
+      artifact Testlink_Database
+      
+    }
+  }
+}
+@enduml
