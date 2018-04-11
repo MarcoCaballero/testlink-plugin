@@ -1,0 +1,34 @@
+@startuml Design View - Enrichment
+autonumber
+actor Tester
+
+Tester -> FilterManager : http
+FilterManager -> FilterChain : create
+FilterManager -> FilterChain : forward request
+FilterChain -> HttpEnrichmentFilter : do filter
+HttpEnrichmentFilter -> HttpEnrichmentFilter : get headers
+HttpEnrichmentFilter -> RpcPlugin : send data
+RpcPlugin -> RpcPlugin : process data
+RpcPlugin -> TestlinkJavaApi : create
+FilterChain -> HttpEnrichmentFilter : To control
+
+
+FilterManager -> RestController : forward request
+RestController -> Service : process request
+Service -> RpcPlugin : interacts with rpc controllers
+RpcPlugin -> TestlinkJavaApi : get server data
+
+alt GET
+    TestlinkJavaApi --> RpcPlugin : send data
+    RpcPlugin --> Service : send data
+    Service --> Service : process data
+    Service --> RestController : send data
+    FilterManager -> Tester : Send 200 OK + JSON Body
+else POST
+    TestlinkJavaApi --> RpcPlugin : ok
+    RpcPlugin --> RpcPServicelugin : ok
+    Service --> RestController : ok
+    FilterManager -> Tester : Send 200 Ok
+end
+
+@enduml

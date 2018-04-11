@@ -1,0 +1,17 @@
+@startuml Deployment View
+node Testlink-Plugin-Rest <<Docker Container>> {
+  artifact "Tomcat" {
+    artifact "testlink-plugin-rest_v1.jar"
+    artifact "testlink-java-api.jar"
+  }
+}
+
+node Testlink-Plugin-GUI <<Docker Container>> {
+  frame  nginx {
+    frame "testlink-plugin-gui (Build)" {
+      artifact "bundle.js" as bundle
+      artifact "index.html" as index
+    }
+  }
+}
+@enduml

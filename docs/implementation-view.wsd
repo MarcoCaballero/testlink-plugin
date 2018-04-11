@@ -1,0 +1,42 @@
+@startuml Implementation View
+
+interface "HTTP" as tlp_http
+interface "HTTP" as apache_http
+interface "XML-RPC" as testlink_rpc
+
+
+package "Testlink-Plugin-Rest" {
+    tlp_http - [Testlink-Plugin]
+    [TestLinkJavaApi] #FFCCBC
+}
+
+node "Testlink-Plugin-GUI" {
+    [Angular SPA] --> tlp_http
+}
+
+node "Testlink Instance" #C5CAE9{
+    [Apache]  -left- apache_http
+    [TestLink] -left- testlink_rpc
+    [Apache] #F5F5F5
+    [TestLink] #F5F5F5
+}
+
+database "MariaDB" #C5CAE9{
+    frame "Schema" #EEEEEE{
+        [Testlink_Database] #F5F5F5
+    }
+}
+
+[Apache] o-- [TestLink]
+[Apache] -left-> [Testlink_Database]
+apache_http .. testlink_rpc
+[Testlink-Plugin] .left.> [TestLinkJavaApi] :use
+[TestLinkJavaApi] --> apache_http
+
+legend
+    |= |= Type |
+    |<back:#FFCCBC>             </back>| 3rd Party Dependecy|
+    |<back:#C5CAE9>             </back>| Environment Example|
+endlegend
+
+@enduml

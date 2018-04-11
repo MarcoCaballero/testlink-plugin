@@ -1,0 +1,11 @@
+@startuml Use Case View
+left to right direction
+    Tester --> (login into TestLink)
+    Tester --> (open test case)
+    Tester --> (change project)
+    Tester --> (change test plan)
+    Tester --> (find test case)
+    Tester --> (find testlink instance)
+    Tester --> (execute test)
+    Tester --> (upload execution attachment)
+@enduml
