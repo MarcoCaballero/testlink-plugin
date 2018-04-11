@@ -33,6 +33,7 @@ addons:
 
 before_script:
   - cd testlink-plugin
+  - mvn package -Dmaven.test.skip=true
   - mvn dockerfile:build
   - cd .. 
   - cd testlink-plugin-gui
