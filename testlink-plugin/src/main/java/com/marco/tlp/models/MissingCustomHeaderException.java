@@ -1,4 +1,4 @@
-package com.marco.tlp.config;
+package com.marco.tlp.models;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

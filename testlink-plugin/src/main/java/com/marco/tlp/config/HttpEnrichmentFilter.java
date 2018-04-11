@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 
+import com.marco.tlp.models.MissingCustomHeaderException;
 import com.marco.tlp.models.Plugin;
 
 @Component

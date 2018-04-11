@@ -11,7 +11,6 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.marco.tlp.config.MissingCustomHeaderException;
 import com.marco.tlp.models.rpccontrollers.AuthController;
 import com.marco.tlp.models.rpccontrollers.BuildController;
 import com.marco.tlp.models.rpccontrollers.PlatformController;

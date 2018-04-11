@@ -1,4 +1,4 @@
-package com.marco.tlp.config;
+package com.marco.tlp.api;
 
 import java.io.IOException;
 
@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
+import com.marco.tlp.models.MissingCustomHeaderException;
 
 import br.eti.kinoshita.testlinkjavaapi.util.TestLinkAPIException;
 

@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.marco.tlp.config.MissingCustomHeaderException;
+import com.marco.tlp.models.MissingCustomHeaderException;
 
 @RestController
 public class ExceptionRestController {
