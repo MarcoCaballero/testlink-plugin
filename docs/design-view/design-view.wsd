@@ -26,7 +26,7 @@ alt GET
     FilterManager -> Tester : Send 200 OK + JSON Body
 else POST
     TestlinkJavaApi --> RpcPlugin : ok
-    RpcPlugin --> RpcPServicelugin : ok
+    RpcPlugin --> Service : ok
     Service --> RestController : ok
     FilterManager -> Tester : Send 200 Ok
 end

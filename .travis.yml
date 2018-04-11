@@ -1,17 +1,44 @@
-language: java
-sudo: false
+# language: java
+# sudo: false
+# install: true
+# addons:
+#   sonarcloud:
+#     organization: "marcocaballero-github"
+#     token:
+#       secure: "$SONAR_TOKEN"
+# jdk:
+#   - oraclejdk8
+# before_script:
+#   - cd testlink-plugin
+# script:
+#   - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package -DskipTests sonar:sonar
+# cache:
+#   directories:
+#     - '$HOME/.sonar/cache'
+
+sudo: required
 install: true
+
+services:
+  - docker
+
+language: bash
+
+branches:
+   only:
+      - master
+
 addons:
   sonarcloud:
     organization: "marcocaballero-github"
     token:
       secure: "$SONAR_TOKEN"
-jdk:
-  - oraclejdk8
+
 before_script:
-  - cd testlink-plugin
+  - bash docker/build.sh
+  - cd docker && docker-compose up -d
 script:
-  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package -DskipTests sonar:sonar
+  - docker -it exec docker_tlp_1 /bin/bash "mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package -DskipTests sonar:sonar"
 cache:
   directories:
     - '$HOME/.sonar/cache'
