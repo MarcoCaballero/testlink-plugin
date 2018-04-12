@@ -1,0 +1,30 @@
+@startuml StateChar Diagram Plugin BUilder
+state "Filter Request" as filter
+state "Check Headers" as extraction
+state "Plugin Creation" as plugin
+state "HTTP Request Control" as restController
+state "Request Processing" as service
+state "RPC Call" as rpc {
+    state "TestLink Java Api XML-RPC"
+}
+state "Check Enrichment Data" as enrichmentExtraction {
+    state "Check Api Key thourgth Server Url" as apiChecker
+}
+
+[*] -down-> idle
+idle -> restController
+idle -> filter: [will apply filter]
+
+filter -down-> extraction
+extraction -left-> MissingCustomHeaderException: [No Custom Headers]
+extraction -down-> enrichmentExtraction
+apiChecker -down-> BAD_REQUEST: [bad key or Url]
+apiChecker -down-> plugin
+plugin --> restController
+BAD_REQUEST -left-> [*]: return Bad Request
+MissingCustomHeaderException -down-> [*]: return Bad Request
+restController -right-> service
+service -down-> rpc
+rpc -up-> [*]: return response
+
+@enduml

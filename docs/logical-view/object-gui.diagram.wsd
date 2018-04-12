@@ -1,0 +1,93 @@
+@startuml Object Diagram (Angular)
+' Split into 4 pages
+page 2x2
+skinparam  ArrowColor blue
+
+
+package "Testlink-plugin-rest" #ef9a9a{
+
+    artifact "index.html" as index
+
+    package "assets" #ef5350{
+        artifact "instances.json" as instancesData
+        artifact "*.svg" as svgIcons
+    }
+
+    package "model" #ef5350{
+        [Build]
+        [ConnectionHeader]
+        [ExecutionResponse]
+        [Execution]
+        [Instance]
+        [Interfaces]
+        [Platform]
+        [Project]
+        [Step]
+        [TestCase]
+        [TestPlan]
+    }
+
+    package "services" #ef5350{
+        [instancesService]
+        [localStorageManager]
+        package "tlp-api" as tlpapiPack #ef5350{
+            [authService]
+            [...]
+            note right:  More Services ..
+            [buildService]
+            [testcaseService]
+            [tlpapiService]
+        }
+    }
+
+    package "app" as angular_app #ef5350{
+        [app] as appComponent
+
+        package "elastest-home" #ef5350{
+            [elastestHome]
+        }
+
+        package "testlink-plugin" as tlpcomponents #ef5350{
+            [main] as testlinkMain
+            artifact "app-routing.module.ts"
+            artifact "app.module.ts"
+            folder "dashboard" {
+                [dashboard] as instanceDashboardComponent
+            }
+            folder "instances" {
+                [login]
+                [testBuild]
+                [testRunner]
+                [dashboard] as dashboardComponent
+            }
+        }
+    }
+}
+
+
+
+index --> appComponent
+appComponent *--> elastestHome
+elastestHome *--> testlinkMain
+testlinkMain *--> login
+testlinkMain *--> instanceDashboardComponent
+testlinkMain *--> dashboardComponent
+dashboardComponent *--> testBuild
+dashboardComponent *--> testRunner
+testBuild ..> testRunner :<<flow>>
+testlinkMain .down.> svgIcons :<<use>>
+
+
+authService ..> tlpapiService
+buildService ..> tlpapiService
+testcaseService ..> tlpapiService
+
+services <.. model
+tlpcomponents ..> model
+services <.. tlpcomponents
+
+
+
+
+
+@enduml

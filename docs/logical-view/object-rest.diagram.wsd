@@ -1,0 +1,58 @@
+@startuml Object Diagram (Rest)
+
+
+package "Testlink-plugin-rest" #DCEDC8{
+    package "api" #A5D6A7{
+        [AuthRestController]
+        [BuildRestController]
+        [ExceptionHandlingController]
+        [ExceptionRestController]
+        [ProjectRestController]
+        [TestPlanRestController]
+        [TestCaseRestController]
+    }
+    package "models" #A5D6A7{
+        [MissingCustomHeaderException]
+        [Plugin]
+        [RpcPlugin]
+        Plugin <|.. RpcPlugin
+        MissingCustomHeaderException <.. RpcPlugin :throws
+        package "rpccontrollers" #A5D6A7{
+            [AuthController]
+            [BuildController]
+            [PlatformController]
+            [TestCaseController]
+            [TestExecution]
+            [TestPlanController]
+            [TestProjectController]
+            RpcPlugin ..> AuthController :use
+            RpcPlugin ..> BuildController :use
+            RpcPlugin ..> PlatformController :use
+            RpcPlugin ..> TestCaseController :use
+            RpcPlugin ..> TestPlanController :use
+            RpcPlugin ..> TestProjectController :use
+        }
+    }
+    package "services" #A5D6A7{
+        [AuthService] ..> Plugin
+        [BuildService] ..> Plugin
+        [ProjectService] ..> Plugin
+        [TestCaseService] ..> Plugin
+        [TestPlanService] ..> Plugin
+    }
+    package "config" #A5D6A7{
+        [HttpEnrichmentFilter] ..> Plugin
+        [SwaggerConfig] 
+    }
+
+
+    AuthRestController ..> AuthService
+    BuildRestController ..> BuildService
+    ExceptionHandlingController ..> MissingCustomHeaderException
+    ExceptionRestController ..> MissingCustomHeaderException
+    ProjectRestController ..> ProjectService
+    TestPlanRestController ..> TestCaseService
+    TestCaseRestController ..> TestPlanService
+}
+
+@enduml

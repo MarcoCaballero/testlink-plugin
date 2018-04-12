@@ -1,0 +1,44 @@
+@startuml Package Diagram
+
+skinparam class {
+    BackgroundColor PaleGreen
+    ArrowColor blue
+}
+package testlink-plugin-rest <<SpringBoot>> #DCEDC8 {
+    package api #A5D6A7 {}
+    package config #A5D6A7 {}
+    package models #A5D6A7 {
+        package rpccontrollers #A5D6A7 {}
+    }
+    package services #A5D6A7 {}
+    package testlink_java_api #BCAAA4 {}
+}
+
+
+package testlink-plugin-gui <<Angular>> #ef9a9a {
+   package src {
+    package app #ef5350{}
+    package "models" as angular_models #ef5350{}
+    package "services" as angular_services #ef5350{}
+    package assets #ef5350{}
+    package environments #ef5350{}
+   }
+}
+
+rpccontrollers <-- api
+services <-- api
+models <-left- api
+models <-- services
+rpccontrollers <-- services
+models <-- config
+rpccontrollers -right-> testlink_java_api
+api <-right-..  angular_services : http
+
+
+angular_models <-- app
+angular_services <-- app
+assets <-- angular_services
+
+
+
+@enduml
