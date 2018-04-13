@@ -1,0 +1,48 @@
+version: '3'
+
+services:
+  mariadb:
+    image: 'bitnami/mariadb:latest'
+    environment:
+      - MARIADB_USER=bn_testlink
+      - MARIADB_DATABASE=bitnami_testlink
+      - ALLOW_EMPTY_PASSWORD=yes
+    volumes:
+      - '/opt/tlp-persistance/mariadb_data:/bitnami'
+
+
+  testlink:
+    image: 'bitnami/testlink:latest'
+    environment:
+      - TESTLINK_USERNAME=admin
+      - TESTLINK_PASSWORD=tlp
+      - MARIADB_HOST=mariadb
+      - MARIADB_PORT_NUMBER=3306
+      - TESTLINK_DATABASE_USER=bn_testlink
+      - TESTLINK_DATABASE_NAME=bitnami_testlink
+      - ALLOW_EMPTY_PASSWORD=yes
+    labels:
+      kompose.service.type: nodeport
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      - '/opt/tlp-persistance/testlink_data:/bitnami'
+    depends_on:
+      - mariadb
+
+  tlp:
+    image: 'marcocab/testlink-plugin-rest:stable'
+    ports: 
+      - '8080:8080'
+
+  tlp-gui:
+    image: 'marcocab/testlink-plugin-gui:stable'
+    ports: 
+      -  '4200:4200'
+
+volumes:
+  mariadb_data:
+    driver: local
+  testlink_data:
+    driver: local

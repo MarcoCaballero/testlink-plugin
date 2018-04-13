@@ -28,7 +28,7 @@ after_success:
 after_script:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin 
   - chmod u+x docker/deploy_stable.sh
-  - chmod u+x dockerdeploy_dev.sh
+  - chmod u+x docker/deploy_dev.sh
   - if [[ $TRAVIS_COMMIT_MESSAGE == *"[--deploy-DockerHub]"* ]]; 
     then ./docker/deploy_stable.sh;
     else ./docker/deploy_dev.sh;
