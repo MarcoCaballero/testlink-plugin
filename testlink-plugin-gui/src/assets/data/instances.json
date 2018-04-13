@@ -22,7 +22,7 @@
         "icon": "looks_three",
         "route": ".",
         "title": "Instance 3 - Docker",
-        "description": "http://localhost:80/lib/api/xmlrpc/v1/xmlrpc.php",
+        "description": "http://172.18.0.1:80/lib/api/xmlrpc/v1/xmlrpc.php",
         "created": "7/03/2017 11:05 AM",
         "lastAccess": "7/03/2017 11:05 AM"
     }

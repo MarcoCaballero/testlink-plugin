@@ -30,7 +30,6 @@ import br.eti.kinoshita.testlinkjavaapi.model.TestProject;
 import br.eti.kinoshita.testlinkjavaapi.util.TestLinkAPIException;
 
 @Component
-@Scope(value = WebApplicationContext.SCOPE_REQUEST, proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class RPCPlugin implements Plugin {
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());

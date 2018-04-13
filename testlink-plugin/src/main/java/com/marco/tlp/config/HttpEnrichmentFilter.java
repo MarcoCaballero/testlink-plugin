@@ -9,15 +9,16 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.marco.tlp.models.MissingCustomHeaderException;
+import com.marco.tlp.models.Plugin;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
-
-import com.marco.tlp.models.MissingCustomHeaderException;
-import com.marco.tlp.models.Plugin;
 
 @Component
 public class HttpEnrichmentFilter implements Filter {
@@ -39,7 +40,7 @@ public class HttpEnrichmentFilter implements Filter {
 			String server = request.getHeader(SERVER_HEADER);
 			String key = request.getHeader(KEY_HEADER);
 			this.prepareTLPContext(server, key);
-		}
+		} 
 		chain.doFilter(req, res);
 	}
 
@@ -77,8 +78,7 @@ public class HttpEnrichmentFilter implements Filter {
 				&& !request.getRequestURI().contains("swagger-ui.html")
 				&& !request.getRequestURI().contains("springfox-swagger-ui")
 				&& !request.getRequestURI().contains("swagger-resources")
-				&& !request.getRequestURI().contains("api-docs")
-				&& !request.getRequestURI().contains("favicon.ico");
+				&& !request.getRequestURI().contains("api-docs") && !request.getRequestURI().contains("favicon.ico");
 	}
 
 }

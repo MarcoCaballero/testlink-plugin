@@ -73,7 +73,7 @@
                         <div *tdLoading="'testPlanLoader'; mode:'indeterminate'; type:'circle'; strategy:'overlay'; color:'accent'">
                             <div layout="column" *ngIf="testplans?.length > 0; else noPlanTemplate">
                                 <form>
-                                    <md-select style="text-align: left;" color="accent" class="testlink-select testlink-center push-bottom border-bottom" placeholder="Select test plan"
+                                    <md-select style="text-align: left;" color="accent" class="testlink-center testlink-select push-bottom" placeholder="Select test plan"
                                         [(ngModel)]="selectedTestPlan" name="food" (change)="change($event.value)" required>
                                         <md-option *ngFor="let plan of testplans" [value]="plan" flex>
                                             {{plan.id}}: {{plan.name}}
