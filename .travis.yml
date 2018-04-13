@@ -27,11 +27,11 @@ after_success:
   - docker-compose down --volumes --remove-orphans
 after_script:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin 
-  - chmod u+x deploy_stable.sh
-  - chmod u+x deploy_dev.sh
+  - chmod u+x docker/deploy_stable.sh
+  - chmod u+x dockerdeploy_dev.sh
   - if [[ $TRAVIS_COMMIT_MESSAGE == *"[--deploy-DockerHub]"* ]]; 
-    then ./deploy_stable.sh;
-    else ./deploy_dev.sh;
+    then ./docker/deploy_stable.sh;
+    else ./docker/deploy_dev.sh;
     fi;
 cache:
   directories:

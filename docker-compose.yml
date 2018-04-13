@@ -32,12 +32,12 @@ services:
       - mariadb
 
   tlp:
-    image: 'marcocab/testlink-plugin-rest'
+    image: 'marcocab/testlink-plugin-rest:stable'
     ports: 
       - '8080:8080'
 
   tlp-gui:
-    image: 'marcocab/testlink-plugin-gui'
+    image: 'marcocab/testlink-plugin-gui:stable'
     ports: 
       -  '4200:4200'
 

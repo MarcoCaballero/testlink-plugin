@@ -6,7 +6,8 @@
 
 * [Introduction](https://github.com/MarcoCaballero/testlink-plugin#introduction)
 * [Requirements](https://github.com/MarcoCaballero/testlink-plugin#requirements)
-* [Installation](https://github.com/MarcoCaballero/testlink-plugin#installation)
+* [Install & Run](https://github.com/MarcoCaballero/testlink-plugin#install--run)
+* [Build your own images](https://github.com/MarcoCaballero/testlink-plugin#build-your-own-images)
 
 ## Introduction
 
@@ -16,6 +17,9 @@ Testlink-plugin provides an API Rest as well as an Angular Material SPA interfac
 
 There are different requirements if you want to run it in containerized or native way.
 For the first one is quite easy, containerized way, all you need is **DOCKER**.
+
+* Docker CE (or EE).
+* Docker-Compose
 
 For the second one, native way, we need the following requirements:
 
@@ -29,43 +33,45 @@ For the second one, native way, we need the following requirements:
 Again we have different ways to install and test the software, personally, I recommend Docker Way.
 With Docker, is possible to create the whole system without installing all the dependencies and system environment, for that, in this repository `Apache + Testlink + MariaDB` environment is provided (Thanks to bitnami) as well as the needed to deploy the software with Docker.
 
-Steps:
+### Docker Steps
 
 * Clone the repository (if is not cloned yet)
 
-`git clone https://github.com/MarcoCaballero/testlink-plugin.git`
+    `git clone https://github.com/MarcoCaballero/testlink-plugin.git`
 
-* Accessing to root folder
+* Accessing to docker folder
 
-`cd testlink-plugin`
+    `cd testlink-plugin/Docker`
 
-* Start the whole system
+* Start the whole system with the `:stable` versions
 
-`docker-compose up -d`
+    `docker-compose up -d`
 
-Other useful commands:
+#### Other useful commands
 
 * Accessing to live logging
 
-`docker-compose logs -f`
+    `docker-compose logs -f`
 
 * Accessing to containers
 
-`docker-compose exec [tlp/tlp-gui] sh`
+    `docker-compose exec [tlp/tlp-gui] sh`
 
 * Start/Stop services
 
-`docker-compose [start/stop] [tlp/tlp-gui]`
+    `docker-compose [start/stop] [tlp/tlp-gui]`
 
-docker-compose down --volumes --remove-orphans  # Stops all services removing intermediates and volumes
+* Stops all services removing intermediates and volumes
 
-### front-end
+    `docker-compose down --volumes --remove-orphans`
+
+### frontend
 
 front-end available at <localhost:4200/>
 
-### back-end
+### backend
 
-API Rest available at <localhost:8080/>
+API Rest available at <localhost:8080/tlp-api>
 API Docs available at <localhost:8080/v2/api>
 API Docs GUI available at <localhost:8080/swagger-ui.html>
 
