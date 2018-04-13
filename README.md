@@ -31,19 +31,31 @@ With Docker, is possible to create the whole system without installing all the d
 
 Steps:
 
+* Clone the repository (if is not cloned yet)
+
 `git clone https://github.com/MarcoCaballero/testlink-plugin.git`
 
-`cd testlink-plugin/docker`
+* Accessing to root folder
 
-`docker-compose up -d # Starts all services`
+`cd testlink-plugin`
 
-Useful commands:
+* Start the whole system
 
-`docker-compose logs -f # if want to see live logging`
+`docker-compose up -d`
 
-`docker exec docker_tlp-gui_1 bash # Access into frontend container`
+Other useful commands:
 
-`docker exec docker_tlp_1 sh # Access into backend container`
+* Accessing to live logging
+
+`docker-compose logs -f`
+
+* Accessing to containers
+
+`docker-compose exec [tlp/tlp-gui] sh`
+
+* Start/Stop services
+
+`docker-compose [start/stop] [tlp/tlp-gui]`
 
 docker-compose down --volumes --remove-orphans  # Stops all services removing intermediates and volumes
 
@@ -63,7 +75,7 @@ TestLink available at <localhost:80/>
 
 ## Build your own images
 
-from the root frolder (testlin-plugin)
+From the root folder (testlink-plugin) execute the following command:
 
 ```text
 Usage:  bash build.sh [OPTIONS]
@@ -73,9 +85,8 @@ Build your own images for docker
 Options:
     -f  --frontend              Adds tlp-api-gui build phase
     -b  --backend               Adds tlp-api-rest build phase
-    -gc  --git-clone               Adds tlp-api-rest build phase
+    -gc  --git-clone            Adds tlp-api-rest build phase
 ```
-
 
 ## Author
 
