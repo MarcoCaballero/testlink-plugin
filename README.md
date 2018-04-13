@@ -67,17 +67,19 @@ With Docker, is possible to create the whole system without installing all the d
 
 ### frontend
 
-front-end available at <localhost:4200/>
+front-end available at <http:/>/localhost:4200/>
 
 ### backend
 
-API Rest available at <localhost:8080/tlp-api>
-API Docs available at <localhost:8080/v2/api>
-API Docs GUI available at <localhost:8080/swagger-ui.html>
+API Rest available at <http://localhost:8080/tlp-api>
+
+API Docs available at <http://localhost:8080/v2/api>
+
+API Docs GUI available at <http://localhost:8080/swagger-ui.html>
 
 ### TestLink
 
-TestLink available at <localhost:80/>
+TestLink available at <http://localhost:80/>
 
 ## Build your own images
 
