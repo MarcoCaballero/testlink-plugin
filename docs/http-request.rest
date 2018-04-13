@@ -1,0 +1,4 @@
+GET http://localhost:8080/tlp-api/authorization HTTP/1.1
+TLP-Server-Url: http://172.18.0.1:80/lib/api/xmlrpc/v1/xmlrpc.php
+TLP-Api-Key: 4c1d4281c4328004f40e792f71afb7ba
+

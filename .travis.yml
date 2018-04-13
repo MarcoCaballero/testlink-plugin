@@ -20,8 +20,9 @@ before_script:
   - cd .. 
   - cd testlink-plugin-gui
   - docker build -t marcocab/testlink-plugin-gui:dev .
+  - cd ..
 script:
-  - cd .. && docker-compose up -d
+  - docker-compose up -d
 after_success:
   - docker-compose down --volumes --remove-orphans
 after_script:
