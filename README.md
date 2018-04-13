@@ -24,28 +24,28 @@ For the second one, native way, we need the following requirements:
 * Node 8 (or higher) and npm (recommended `nvm install --lts`, node v8.11.1 & npm v5.6.0).
 * angular-cli (recommended globally, but provided locally).
 
-## Installation
+## Install & Run
 
 Again we have different ways to install and test the software, personally, I recommend Docker Way.
 With Docker, is possible to create the whole system without installing all the dependencies and system environment, for that, in this repository `Apache + Testlink + MariaDB` environment is provided (Thanks to bitnami) as well as the needed to deploy the software with Docker.
 
 Steps:
 
-```bash
-git clone https://github.com/MarcoCaballero/testlink-plugin.git
+`git clone https://github.com/MarcoCaballero/testlink-plugin.git`
 
-cd testlink-plugin/docker
+`cd testlink-plugin/docker`
 
-docker-compose up -d # Starts all services
+`docker-compose up -d # Starts all services`
 
-[docker-compose logs -f] # if want to see live logging
+Useful commands:
 
-[docker exec docker_tlp-gui_1 bash] # Access into frontend container
+`docker-compose logs -f # if want to see live logging`
 
-[docker exec docker_tlp_1 sh] # Access into backend container
+`docker exec docker_tlp-gui_1 bash # Access into frontend container`
+
+`docker exec docker_tlp_1 sh # Access into backend container`
 
 docker-compose down --volumes --remove-orphans  # Stops all services removing intermediates and volumes
-```
 
 ### front-end
 
@@ -60,6 +60,22 @@ API Docs GUI available at <localhost:8080/swagger-ui.html>
 ### TestLink
 
 TestLink available at <localhost:80/>
+
+## Build your own images
+
+from the root frolder (testlin-plugin)
+
+```text
+Usage:  bash build.sh [OPTIONS]
+
+Build your own images for docker
+
+Options:
+    -f  --frontend              Adds tlp-api-gui build phase
+    -b  --backend               Adds tlp-api-rest build phase
+    -gc  --git-clone               Adds tlp-api-rest build phase
+```
+
 
 ## Author
 
