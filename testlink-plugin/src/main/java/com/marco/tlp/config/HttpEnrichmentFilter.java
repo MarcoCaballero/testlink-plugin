@@ -25,9 +25,12 @@ public class HttpEnrichmentFilter implements Filter {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	private static final String SERVER_HEADER = "TLP-Server-Url";
 	private static final String KEY_HEADER = "TLP-Api-Key";
+	private Plugin plugin;
 
 	@Autowired
-	private Plugin plugin;
+	public HttpEnrichmentFilter(Plugin plugin) {
+		this.plugin = plugin;
+	}
 
 	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
 			throws IOException, ServletException {

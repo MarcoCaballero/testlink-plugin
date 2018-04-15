@@ -1,7 +1,6 @@
 package com.marco.tlp.test.unit;
 
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -45,7 +44,6 @@ public class LoginApiUTest {
 
     @Test
     public void unauthorized_login() throws Exception {
-        // List<User> users = Arrays.asList(new User("John"), new User("Peter"));
         when(authservice.isAuthorized(TESTLINK_SERVER_URL, API_KEY_BAD)).thenReturn(false);
         mvc.perform(get("/tlp-api/authorization").header("TLP-Server-Url", TESTLINK_SERVER_URL)
                 .header("TLP-Api-Key", API_KEY_GOOD).contentType(MediaType.APPLICATION_JSON))
