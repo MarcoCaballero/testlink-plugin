@@ -8,6 +8,9 @@
 * [Requirements](https://github.com/MarcoCaballero/testlink-plugin#requirements)
 * [Install & Run](https://github.com/MarcoCaballero/testlink-plugin#install--run)
 * [Build your own images](https://github.com/MarcoCaballero/testlink-plugin#build-your-own-images)
+* [Languages](https://github.com/MarcoCaballero/testlink-plugin#languages)
+* [Tech Stack](https://github.com/MarcoCaballero/testlink-plugin#tech-stack)
+* [Author](https://github.com/MarcoCaballero/testlink-plugin#author)
 
 ## Introduction
 

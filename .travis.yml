@@ -37,8 +37,8 @@ after_script:
   - chmod u+x docker/deploy_dev.py
   - cd docker
   - if [[ $TRAVIS_COMMIT_MESSAGE == *"[--deploy-DockerHub]"* ]]; 
-    then python docker/deploy_stable.py;
-    else python docker/deploy_dev.py;
+    then python deploy_stable.py;
+    else python deploy_dev.py;
     fi;
 cache:
   directories:
