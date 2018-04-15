@@ -68,7 +68,7 @@ With Docker, is possible to create the whole system without installing all the d
 
 ### frontend
 
-front-end available at <http:/>/localhost:4200/>
+front-end available at <http:///localhost:4200/>
 
 ### backend
 
@@ -96,6 +96,62 @@ Options:
   -b, --backend   Builds the backend with the Dockerfile in the root of
                   `testlink-plugin/testlink-plugin`directory, using maven
 ```
+
+## Languages
+
+* Java
+
+* TypeScript
+
+* Python
+
+* HTML5
+
+* Sass
+
+* JavaScript
+
+## Tech Stack
+
+### Dev Dependencies
+
+* SpringBoot
+
+* Maven
+
+* Jacoco
+
+* Swagger
+
+* testlinkjavaapi
+
+* Angular
+
+* Teradata Covalent
+
+* Docker, Docker-Compose
+
+* Sonar (sonarcloud)
+
+* Travis
+
+### Test Dependencies
+
+* Hamcrest, Mockito, jUnit, RestAssured, ... (springboot-test dependencies)
+
+* Karma, Protactor.
+
+* TestLink.
+
+* HTTP requests with VSCode plugin - **humao.rest-client** , (.http || .rest)
+
+### 3rd parties (E2E Environment)
+
+* TestLink
+
+* MariaDB
+
+* Bitnami
 
 ## Author
 
