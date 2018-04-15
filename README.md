@@ -20,6 +20,7 @@ For the first one is quite easy, containerized way, all you need is **DOCKER**.
 
 * Docker CE (or EE).
 * Docker-Compose
+* Python (should modify dockerfiles to [Build your own images](https://github.com/MarcoCaballero/testlink-plugin#build-your-own-images))
 
 For the second one, native way, we need the following requirements:
 
@@ -83,17 +84,17 @@ TestLink available at <http://localhost:80/>
 
 ## Build your own images
 
-From the root folder (testlink-plugin) execute the following command:
+From the testlink-plugin/docker folder  execute the following command:
 
 ```text
-Usage:  bash build.sh [OPTIONS]
-
-Build your own images for docker
+Usage: build.py [options]
 
 Options:
-    -f  --frontend              Adds tlp-api-gui build phase
-    -b  --backend               Adds tlp-api-rest build phase
-    -gc  --git-clone            Adds tlp-api-rest build phase
+  -h, --help      show this help message and exit
+  -f, --frontend  Builds the frontend with the Dockerfile in the root of
+                  `testlink-plugin/testlink-plugin-gui`directory
+  -b, --backend   Builds the backend with the Dockerfile in the root of
+                  `testlink-plugin/testlink-plugin`directory, using maven
 ```
 
 ## Author
