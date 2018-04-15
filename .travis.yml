@@ -1,5 +1,4 @@
 sudo: required
-install: true
 
 language: java
 jdk:
@@ -9,7 +8,7 @@ language: python
 python:
   - "2.7"
 install:
-  - pip install -r termcolor
+  - pip install termcolor
 
 services:
   - docker
@@ -38,8 +37,8 @@ after_script:
   - chmod u+x docker/deploy_dev.py
   - cd docker
   - if [[ $TRAVIS_COMMIT_MESSAGE == *"[--deploy-DockerHub]"* ]]; 
-    then python /docker/deploy_stable.py;
-    else python /docker/deploy_dev.py;
+    then python /docker/deploy_stable..py;
+    else python /docker/deploy_dev..py;
     fi;
 cache:
   directories:
