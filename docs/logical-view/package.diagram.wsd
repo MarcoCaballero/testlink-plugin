@@ -7,7 +7,7 @@ skinparam class {
 package testlink-plugin-rest <<SpringBoot>> #DCEDC8 {
     package api #A5D6A7 {}
     package config #A5D6A7 {}
-    package models #A5D6A7 {
+    package "models" as spring_models #A5D6A7 {
         package rpccontrollers #A5D6A7 {}
     }
     package services #A5D6A7 {}
@@ -27,10 +27,10 @@ package testlink-plugin-gui <<Angular>> #ef9a9a {
 
 rpccontrollers <-- api
 services <-- api
-models <-left- api
-models <-- services
+spring_models <-left- api
+spring_models <-- services
 rpccontrollers <-- services
-models <-- config
+spring_models <-- config
 rpccontrollers -right-> testlink_java_api
 api <-right-..  angular_services : http
 

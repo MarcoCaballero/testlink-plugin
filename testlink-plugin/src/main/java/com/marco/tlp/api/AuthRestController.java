@@ -47,7 +47,7 @@ public class AuthRestController {
 		}
 	}
 
-	private class AuthResponse {
+	public class AuthResponse {
 		private String url;
 		private String result;
 
