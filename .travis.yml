@@ -40,9 +40,11 @@ install:
 jobs:
   include:
     - stage: backend&frontend testing
-      script: cd testlink-plugin && mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar
-      - # stage name not required, parallel
-      script: cd testlink-plugin-gui && karma start karma.conf.js --single-run 
+      before_script: cd testlink-plugin
+      script: mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar
+    - # stage name not required, parallel
+      before_script: cd testlink-plugin-gui
+      script: karma start karma.conf.js --single-run
     - stage: build & release
       script:
         - cd docker
