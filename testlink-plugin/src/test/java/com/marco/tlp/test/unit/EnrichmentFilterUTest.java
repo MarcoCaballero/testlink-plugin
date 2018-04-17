@@ -9,15 +9,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.marco.tlp.config.HttpEnrichmentFilter;
 import com.marco.tlp.models.MissingCustomHeaderException;
-import com.marco.tlp.models.Plugin;
 import com.marco.tlp.models.RPCPlugin;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mockito;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.boot.test.mock.mockito.SpyBean;
-import org.springframework.test.context.junit4.SpringRunner;
 
 public class EnrichmentFilterUTest {
     private static final String TESTLINK_SERVER_URL = "http://172.18.0.1:80/lib/api/xmlrpc/v1/xmlrpc.php";
@@ -34,7 +29,6 @@ public class EnrichmentFilterUTest {
 
     @Test
     public void testDoFilterSuccess() throws Exception {
-        // mock the getRequestURI() response
         Mockito.when(mockReq.getScheme()).thenReturn("http");
         Mockito.when(mockReq.getRemoteHost()).thenReturn("testing/localhost");
         Mockito.when(mockReq.getMethod()).thenReturn("GET");
