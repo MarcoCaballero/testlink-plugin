@@ -10,8 +10,6 @@ jdk:
 language: python
 python:
   - "2.7"
-install:
-  - pip install termcolor
 
 services:
   - docker
@@ -21,21 +19,27 @@ addons:
     organization: "marcocaballero-github"
     token:
       secure: "$SONAR_TOKEN"
+  apt:
+    sources:
+      - google-chrome
+    packages:
+      - google-chrome-stable
+      - google-chrome-beta
+      
+before_install:
+  - export CHROME_BIN=chromium-browser
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+
+install:
+  - pip install termcolor
 
 jobs:
   include:
     - stage: backend&frontend testing
-      script:
-        -  cd testlink-plugin
-        -  mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar
+      script: cd testlink-plugin&& mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar
       - # stage name not required, parallel
-      script:
-        - export CHROME_BIN=chromium-browser
-        - export DISPLAY=:99.0
-        - sh -e /etc/init.d/xvfb start
-        - npm install -g karma
-        -  cd testlink-plugin-gui
-        -  karma start karma.conf.js --single-run     
+      script: cd testlink-plugin-gui && karma start karma.conf.js --single-run 
     - stage: build & release
       script:
         - cd docker
