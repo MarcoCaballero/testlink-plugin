@@ -2,6 +2,9 @@ sudo: true
 dist: trusty
 
 
+language: node_js
+node_js:
+  - "8.11.1"
 
 language: java
 jdk:
@@ -37,7 +40,7 @@ install:
 jobs:
   include:
     - stage: backend&frontend testing
-      script: cd testlink-plugin&& mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar
+      script: cd testlink-plugin && mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar
       - # stage name not required, parallel
       script: cd testlink-plugin-gui && karma start karma.conf.js --single-run 
     - stage: build & release
