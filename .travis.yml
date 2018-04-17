@@ -27,15 +27,15 @@ jobs:
         -  cd testlink-plugin
         -  mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar
     - stage: build
+      env:
+        - FLAG=--frontend
+        - FLAG=--backend
       script:
         - cd docker
-        - python build.py --frontend
-      script:
-        - cd docker
-        - python build.py --backend
+        - "python build.py $FLAG"
     - stage: release
       script:
-        - cd testlink-plugin/docker
+        - cd docker
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin 
         - chmod u+x deploy_stable.py
         - chmod u+x deploy_version.py
