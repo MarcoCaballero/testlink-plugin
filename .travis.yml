@@ -45,7 +45,6 @@ jobs:
           else python deploy_version.py;
           fi;
 
-
 cache:
   directories:
     - '$HOME/.sonar/cache'          
