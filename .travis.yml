@@ -1,12 +1,8 @@
 sudo: true
 dist: trusty
 
-language: python
-python:
-- "2.7"
 install:
 - pip install termcolor
-
 
 jobs:
   include:
