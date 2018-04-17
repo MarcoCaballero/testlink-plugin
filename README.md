@@ -1,6 +1,6 @@
 ﻿# Testlink-plugin
 
-[![License badge](https://img.shields.io/hexpm/l/plug.svg)](http://www.apache.org/licenses/LICENSE-2.0)
+[![License badge](https://raw.githubusercontent.com/MarcoCaballero/testlink-plugin/master/apache.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 [![Build Status](https://api.travis-ci.org/MarcoCaballero/testlink-plugin.svg?branch=master)](https://travis-ci.org/MarcoCaballero/testlink-plugin)
 [![Quality Gate](https://sonarcloud.io/api/badges/gate?key=com.marco.tlp%3Atestlink-plugin-rest)](https://sonarcloud.io/dashboard/index/com.marco.tlp%3Atestlink-plugin-rest)
 
