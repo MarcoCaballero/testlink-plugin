@@ -44,7 +44,9 @@ jobs:
       before_script: cd testlink-plugin
       script: mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar
     - # stage name not required, parallel jobs 
-      before_script: cd testlink-plugin-gui
+      before_script: 
+        - cd testlink-plugin-gui
+        - npm i
       script: karma start karma.conf.js --single-run
     - stage: build & release
       script:
