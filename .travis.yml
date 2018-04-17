@@ -24,14 +24,14 @@ jobs:
   include:
     - stage: test
       script:
-        -  cd testlink-plugin/testlink-plugin
+        -  cd testlink-plugin
         -  mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar
     - stage: build
       script:
-        - cd testlink-plugin/docker
+        - cd docker
         - python build.py --frontend
       script:
-        - cd testlink-plugin/docker
+        - cd docker
         - python build.py --backend
     - stage: release
       script:
