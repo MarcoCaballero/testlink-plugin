@@ -29,12 +29,11 @@ jobs:
         -  cd testlink-plugin
         -  mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar
       - # stage name not required, parallel
-      before_script:
+      script:
         - export CHROME_BIN=chromium-browser
         - export DISPLAY=:99.0
         - sh -e /etc/init.d/xvfb start
         - npm install -g karma
-      script:
         -  cd testlink-plugin-gui
         -  karma start karma.conf.js --single-run     
     - stage: build & release
