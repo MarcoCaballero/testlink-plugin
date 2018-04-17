@@ -17,6 +17,7 @@ import 'rxjs/add/operator/toPromise';
 
 export class DashboardInstanceComponent implements OnInit, OnDestroy, AfterViewInit {
 
+    pepes: number = 0;
     subscription: Subscription;
     instances: IInstance[] = [];
     filteredInstances: IInstance[] = [];
@@ -66,11 +67,14 @@ export class DashboardInstanceComponent implements OnInit, OnDestroy, AfterViewI
     async loadInstances(): Promise<void> {
         try {
             this.loadingService.register('loadingDashboardInstance');
-            this.instances = await this.instanceService.getAll().toPromise();
+            this.instanceService.getInstances()
+                .then((obj: IInstance[]) => {
+                    this.instances = obj;
+                    this.filteredInstances = Object.assign([], this.instances);
+                });
         } catch (error) {
             console.log(error);
         } finally {
-            this.filteredInstances = Object.assign([], this.instances);
             this.loadingService.resolve('loadingDashboardInstance');
         }
 
