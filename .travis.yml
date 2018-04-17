@@ -21,12 +21,12 @@ addons:
 
 jobs:
   include:
-    -stage: run backend test & build
+    -stage: test
       script:
         - "cd $TRAVIS_BUILD_DIR/testlink-plugin/testlink-plugin"
         -  mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar
 
-    -stage: build images parallel
+    -stage: build
       script:
         - "cd $TRAVIS_BUILD_DIR/testlink-plugin/docker"
         - python build.py --frontend
@@ -34,7 +34,7 @@ jobs:
         - "cd $TRAVIS_BUILD_DIR/testlink-plugin/docker"
         - python build.py --backend
 
-    -stage: release images
+    -stage: release
       script:
         - "cd $TRAVIS_BUILD_DIR/testlink-plugin/docker"
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin 
