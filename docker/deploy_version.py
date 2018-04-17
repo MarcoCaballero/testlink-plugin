@@ -39,10 +39,10 @@ def release_backend():
 
 print "Phase 1: " + colored("tag_images", "blue")
 tag_images()
-print colored("Done", "green")
-print "Phase 2: " + colored("tag_images", "blue")
+print colored("Done successfully", "green")
+print "Phase 2: " + colored("release_frontend ", "blue")
 print colored("Done", "green")
 release_frontend()
-print "Phase 3: " + colored("tag_images", "blue")
+print "Phase 3: " + colored("release_backend", "blue")
 release_backend()
 print colored("Done", "green")
