@@ -26,7 +26,8 @@ jobs:
       script:
         -  cd testlink-plugin
         -  mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar
-    - stage: build and release
+    - stage: build & release
+      script:
         - cd docker
         - python build.py --frontend --backend
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin 
