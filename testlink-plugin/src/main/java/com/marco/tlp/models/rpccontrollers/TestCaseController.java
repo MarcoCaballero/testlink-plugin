@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import br.eti.kinoshita.testlinkjavaapi.TestLinkAPI;
 import br.eti.kinoshita.testlinkjavaapi.constants.ExecutionStatus;
+import br.eti.kinoshita.testlinkjavaapi.constants.TestCaseDetails;
 import br.eti.kinoshita.testlinkjavaapi.model.Attachment;
 import br.eti.kinoshita.testlinkjavaapi.model.ReportTCResultResponse;
 import br.eti.kinoshita.testlinkjavaapi.model.TestCase;
@@ -23,12 +24,12 @@ public class TestCaseController extends Controller<TestCase> {
 
 	public List<TestCase> getTestCasesForTestPlanandBuild(Integer testPlanId, Integer buildId) {
 		return this.toList(
-				api.getTestCasesForTestPlan(testPlanId, null, buildId, null, null, null, null, null, null, true, null));
+				api.getTestCasesForTestPlan(testPlanId, null, buildId, null, null, null, null, null, null, true, TestCaseDetails.FULL));
 	}
 
 	public List<TestCase> getTestCasesForTestPlan(Integer testPlanId) {
 		return this.toList(
-				api.getTestCasesForTestPlan(testPlanId, null, null, null, null, null, null, null, null, true, null));
+				api.getTestCasesForTestPlan(testPlanId, null, null, null, null, null, null, null, null, true, TestCaseDetails.FULL));
 	}
 
 	public List<TestCase> getTestCasesForTestSuite(Integer testSuiteId) {
@@ -43,6 +44,7 @@ public class TestCaseController extends Controller<TestCase> {
 		List<TestCase> testCases  = getTestCasesForTestPlanandBuild(planId, buildId);
 		for (TestCase testCase : testCases) {
 			if (testCase.getPlatform().getName().equals(platformName) && testCase.getId() == testId){
+				logger.info("summary" + testCase.getSummary());
 				return testCase;
 			}
 		}

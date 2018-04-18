@@ -1,0 +1,26 @@
+<md-card class="push-bottom-xxl" tdMediaToggle="gt-xs" [mediaClasses]="['push']">
+    <div flex-gt-sm="100">
+        <md-card-title>
+            <md-icon style="margin-right: -39px;margin-top: -44px;float: right;width: 150px;height: 150px;" svgIcon="assets:testlink-alpha"></md-icon>
+            Testlink-Plugin
+        </md-card-title>
+        <md-card-content>
+            <md-divider></md-divider>
+            <!-- card content -->
+            <div layout="column" layout-align="center center" class="tc-grey-500 md-typography pad-lg">
+                <h3 mdLine class="push-left-sm md-title" [style.margin.px]="0">Welcome to TestLink Plugin!</h3>
+                <span flex="40" class="md-body-1">
+                    <i>Click to start.</i>
+                </span>
+            </div>
+            <!-- ./card content -->
+            <md-divider></md-divider>
+        </md-card-content>
+        <md-card-actions>
+            <button md-raised-button color="primary" class="text-upper hoverable-action-button testlink-center" (click)="navigateHome()">
+                <span>GO</span>
+            </button>
+        </md-card-actions>
+        <!-- </ng-template> -->
+    </div>
+</md-card>

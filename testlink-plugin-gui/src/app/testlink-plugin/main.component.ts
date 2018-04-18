@@ -1,5 +1,6 @@
 import { Component, HostBinding, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { TdMediaService } from '@covalent/core';
+import { Router } from '@angular/router';
 
 import { InstancesService } from 'services/instances.service';
 import { IInstance } from 'model/instance';
@@ -18,7 +19,11 @@ export class MainComponent implements AfterViewInit {
     @HostBinding('@routeAnimation') routeAnimation: boolean = true;
     @HostBinding('class.td-route-animation') classAnimation: boolean = true;
 
-    constructor(private _changeDetectorRef: ChangeDetectorRef, public media: TdMediaService) {
+    constructor(private _changeDetectorRef: ChangeDetectorRef, public media: TdMediaService, private router: Router) {
+    }
+
+    navigateHome(): void {
+        this.router.navigate(['/teslink-plugin']);
     }
 
     ngAfterViewInit(): void {

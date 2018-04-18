@@ -26,6 +26,7 @@ import { CovalentMarkdownModule } from '@covalent/markdown';
 
 import { mainRoutes } from './main.routes';
 import { MainComponent } from './main.component';
+import { WelcomeComponent } from './welcome.component';
 import { InstanceLoginComponent } from './instances/login/instance-login.component';
 import { DashboardInstanceComponent } from './instances/dashboard/dashboard-instance.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -63,7 +64,7 @@ const COVALENT_MODULES: any[] = [
 
 const TESTLINK_PLUGIN_MODULES: any[] = [
     MainComponent, InstanceLoginComponent, DashboardInstanceComponent, DashboardComponent,
-    TestBuildComponent, TestRunnerComponent,
+    TestBuildComponent, TestRunnerComponent, WelcomeComponent,
 ];
 
 const TESTLINK_PLUGIN_SERVICES: any[] = [
