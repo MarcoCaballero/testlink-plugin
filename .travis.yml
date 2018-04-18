@@ -48,6 +48,11 @@ jobs:
         - cd testlink-plugin-gui
         - npm i
       script: karma start karma.conf.js --single-run
+    - # stage name not required, parallel jobs
+      before_script: 
+        - cd testlink-plugin-gui
+        - npm i
+      script: npm run e2e   
     - stage: Build & Release Docker images
       script:
         - cd docker
