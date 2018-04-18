@@ -2,6 +2,14 @@
 autonumber
 actor Tester
 
+participant FilterManager 
+participant FilterChain 
+participant HttpEnrichmentFilter 
+participant RestController 
+participant Service 
+participant RpcPlugin 
+participant TestlinkJavaApi 
+
 Tester -> FilterManager : http
 FilterManager -> FilterChain : create
 FilterManager -> FilterChain : forward request
@@ -10,7 +18,6 @@ HttpEnrichmentFilter -> HttpEnrichmentFilter : get headers
 HttpEnrichmentFilter -> RpcPlugin : send data
 RpcPlugin -> RpcPlugin : process data
 RpcPlugin -> TestlinkJavaApi : create
-FilterChain -> HttpEnrichmentFilter : To control
 
 
 FilterManager -> RestController : forward request
