@@ -13,7 +13,6 @@ import { IProject } from 'model/project';
 import { IConnectionHeader } from 'model/connection-header';
 import { InstancesService } from 'services/instances.service';
 import { LocalStorageManagerService } from 'services/local-storage-manager.service';
-import { TestProjectService } from 'services/tlp-api/test-projects.service';
 import { AuthService } from 'services/tlp-api/auth.service';
 
 @Component({
@@ -55,15 +54,14 @@ export class InstanceLoginComponent implements OnInit {
     constructor(private _changeDetectorRef: ChangeDetectorRef, public media: TdMediaService,
         private instanceService: InstancesService, private router: Router,
         private activatedRouter: ActivatedRoute, private loadingService: TdLoadingService,
-        private localStorageManagerService: LocalStorageManagerService,
-        private testProjectService: TestProjectService, private authservice: AuthService,
+        private localStorageManagerService: LocalStorageManagerService, private authservice: AuthService,
         private snackBarService: MdSnackBar, ) {
-    }
-
-    ngOnInit(): void {
         this.activatedRouter.params.subscribe((params: { id: string }) => {
             this.id = params.id;
         });
+    }
+
+    ngOnInit(): void {
         this.loadingService.create({
             name: 'loadingLogin',
             mode: LoadingMode.Indeterminate,
@@ -107,7 +105,7 @@ export class InstanceLoginComponent implements OnInit {
     }
 
     setConnectionHeaderToLocalStorage(connectionHeader: IConnectionHeader): Boolean {
-       return this.localStorageManagerService.setConnectionHeader(connectionHeader);
+        return this.localStorageManagerService.setConnectionHeader(connectionHeader);
     }
 
     getConnectionHeaderToLocalStorage(): IConnectionHeader {

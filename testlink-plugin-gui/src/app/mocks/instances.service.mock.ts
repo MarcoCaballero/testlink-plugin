@@ -37,8 +37,6 @@ export class InstancesServiceMock {
         },
     ];
 
-    constructor() { }
-
     getInstances(): Promise<IInstance[]> {
         return new Promise<IInstance[]>((resolve: any, reject: any) => {
             resolve(this.staticData);
