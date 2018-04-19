@@ -2,7 +2,8 @@
 
 [![Apache License](https://img.shields.io/hexpm/l/plug.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 [![Build Status](https://api.travis-ci.org/MarcoCaballero/testlink-plugin.svg?branch=master)](https://travis-ci.org/MarcoCaballero/testlink-plugin)
-[![Quality Gate](https://sonarcloud.io/api/badges/gate?key=com.marco.tlp%3Atestlink-plugin-rest)](https://sonarcloud.io/dashboard/index/com.marco.tlp%3Atestlink-plugin-rest)
+[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=com.marco.tlp%3Atestlink-plugin-rest&metric=alert_status)](https://sonarcloud.io/dashboard/index/com.marco.tlp%3Atestlink-plugin-rest)
+[![API Coverage](https://sonarcloud.io/api/project_badges/measure?project=com.marco.tlp%3Atestlink-plugin-rest&metric=coverage)](https://sonarcloud.io/dashboard/index/com.marco.tlp%3Atestlink-plugin-rest)
 
 * [Introduction](https://github.com/MarcoCaballero/testlink-plugin#introduction)
 * [Requirements](https://github.com/MarcoCaballero/testlink-plugin#requirements)
