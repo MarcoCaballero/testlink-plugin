@@ -32,7 +32,6 @@ public class TestPlanRestUTest {
 
     private String TESTLINK_SERVER_URL = "http://172.18.0.1:80/lib/api/xmlrpc/v1/xmlrpc.php";
     private String API_KEY_GOOD = "0c4eae230736ccd923409b3e144165a1";
-    private String API_KEY_BAD = "BAD_BAD_bad";
 
     @Autowired
     private MockMvc mvc;
@@ -42,7 +41,7 @@ public class TestPlanRestUTest {
     private Plugin plugin;
 
     @Test
-    public void get_testplans_from_rest() throws Exception {
+    public void get_testplans_ok() throws Exception {
         TestPlan t1 = new TestPlan(2, "Backend TestPlan", null,
                 "<p>Test Plan about TestLink-Plugin-Rest deployment on Docker.</p>", true, true);
         TestPlan t2 = new TestPlan(3, "FrontEnd TestPlan", null,
@@ -52,8 +51,11 @@ public class TestPlanRestUTest {
         when(testPlanService.getProjectTestPlans(anyInt())).thenReturn(users);
 
         mvc.perform(get("/tlp-api/testproject/1/testplans").header("TLP-Server-Url", TESTLINK_SERVER_URL)
-                .header("TLP-Api-Key", API_KEY_GOOD).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON)).andExpect(jsonPath("$[0].id").value(2))
+                .header("TLP-Api-Key", API_KEY_GOOD)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$[0].id").value(2))
                 .andExpect(jsonPath("$[0].name").value("Backend TestPlan"))
                 .andExpect(jsonPath("$[0].public").value(true)).andExpect(jsonPath("$[1].id").value(3))
                 .andExpect(jsonPath("$[1].name").value("FrontEnd TestPlan"))
@@ -61,7 +63,19 @@ public class TestPlanRestUTest {
     }
 
     @Test
-    public void get_testplatforms_from_rest() throws Exception {
+    public void get_testplans_notFound() throws Exception {
+
+        when(testPlanService.getProjectTestPlans(anyInt())).thenReturn(null);
+
+        mvc.perform(get("/tlp-api/testproject/1/testplans")
+                .header("TLP-Server-Url", TESTLINK_SERVER_URL)
+                .header("TLP-Api-Key", API_KEY_GOOD)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void get_testplatforms_ok() throws Exception {
         Platform p1 = new Platform(4, "Ubuntu 16.04", "<p>Ubuntu version 16.04 Xenial LTS</p>");
         Platform p2 = new Platform(5, "Ubuntu 17.10", "<p>Ubuntu 17.10 ArtFul (Non-LTS)</p>");
 
@@ -76,6 +90,19 @@ public class TestPlanRestUTest {
                 .andExpect(jsonPath("$[0].notes").value("<p>Ubuntu version 16.04 Xenial LTS</p>"))
                 .andExpect(jsonPath("$[1].id").value(5)).andExpect(jsonPath("$[1].name").value("Ubuntu 17.10"))
                 .andExpect(jsonPath("$[1].notes").value("<p>Ubuntu 17.10 ArtFul (Non-LTS)</p>"));
+
+    }
+
+    @Test
+    public void get_testplatforms_notFound() throws Exception {
+
+        when(testPlanService.getTestPlanPlatforms(anyInt())).thenReturn(null);
+
+        mvc.perform(get("/tlp-api/testplan/1/platforms")
+                .header("TLP-Server-Url", TESTLINK_SERVER_URL)
+                .header("TLP-Api-Key", API_KEY_GOOD)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
 
     }
 }

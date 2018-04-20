@@ -49,13 +49,28 @@ public class EnrichmentFilterUTest {
     }
 
     @Test(expected = MissingCustomHeaderException.class)
-    public void testDoFilterFailure() throws Exception {
+    public void testDoFilterFailure_no_server() throws Exception {
         // mock the getRequestURI() response
         Mockito.when(mockReq.getScheme()).thenReturn("http");
         Mockito.when(mockReq.getRemoteHost()).thenReturn("testing/localhost");
         Mockito.when(mockReq.getMethod()).thenReturn("GET");
         Mockito.when(mockReq.getRequestURI()).thenReturn("/tlp-api/testprojects");
         Mockito.when(mockReq.getHeader(SERVER_HEADER)).thenReturn(null);
+        Mockito.when(mockReq.getHeader(KEY_HEADER)).thenReturn(API_KEY_GOOD);
+
+        filter.init(mockFilterConfig);
+        filter.doFilter(mockReq, mockResp, mockFilterChain);
+        filter.destroy();
+    }
+
+    @Test(expected = MissingCustomHeaderException.class)
+    public void testDoFilterFailure_no_key() throws Exception {
+        // mock the getRequestURI() response
+        Mockito.when(mockReq.getScheme()).thenReturn("http");
+        Mockito.when(mockReq.getRemoteHost()).thenReturn("testing/localhost");
+        Mockito.when(mockReq.getMethod()).thenReturn("GET");
+        Mockito.when(mockReq.getRequestURI()).thenReturn("/tlp-api/testprojects");
+        Mockito.when(mockReq.getHeader(SERVER_HEADER)).thenReturn(TESTLINK_SERVER_URL);
         Mockito.when(mockReq.getHeader(KEY_HEADER)).thenReturn(null);
 
         filter.init(mockFilterConfig);

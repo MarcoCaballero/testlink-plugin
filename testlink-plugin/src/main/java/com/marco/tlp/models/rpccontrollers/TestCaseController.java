@@ -44,7 +44,6 @@ public class TestCaseController extends Controller<TestCase> {
 		List<TestCase> testCases  = getTestCasesForTestPlanandBuild(planId, buildId);
 		for (TestCase testCase : testCases) {
 			if (testCase.getPlatform().getName().equals(platformName) && testCase.getId() == testId){
-				logger.info("summary" + testCase.getSummary());
 				return testCase;
 			}
 		}
