@@ -17,36 +17,22 @@ module.exports = function (config) {
     client: {
       clearContext: false // leave Jasmine Spec Runner output visible in browser
     },
-    coverageIstanbulReporter: {
- 
-      // reports can be any that are listed here: https://github.com/istanbuljs/istanbuljs/tree/aae256fb8b9a3d19414dcf069c592e88712c32c6/packages/istanbul-reports/lib
-      reports: ['html', 'lcovonly', 'text-summary'],
- 
-      // base output directory. If you include %browser% in the path it will be replaced with the karma browser name
-      dir: path.join(__dirname, 'coverage'),
- 
-      // Combines coverage information from multiple browsers into one report rather than outputting a report
-      // for each browser.
-      combineBrowserReports: true,
- 
-      // if using webpack and pre-loaders, work around webpack breaking the source path
-      fixWebpackSourcePaths: true,
- 
-      // stop istanbul outputting messages like `File [${filename}] ignored, nothing could be mapped`
-      skipFilesWithNoCoverage: true,
- 
-       // Most reporters accept additional config options. You can pass these through the `report-config` option
-      'report-config': {
-        // all options available at: https://github.com/istanbuljs/istanbuljs/blob/aae256fb8b9a3d19414dcf069c592e88712c32c6/packages/istanbul-reports/lib/html/index.js#L135-L137
-        html: {
-          // outputs the report in ./coverage/html
-          subdir: 'html'
-        }
- 
-      },
-    },
     angularCli: {
       environment: 'dev'
+    },
+    coverageIstanbulReporter: {
+      reports: ['html', 'lcovonly', 'text-summary'],
+      dir: './reports/coverage', // base output directory
+      'report-config': {
+        html: { // any options here are valid: https://github.com/istanbuljs/istanbul-reports/blob/master/lib/html/index.js#L134-L139
+          subdir: 'html'
+        },
+        lcovonly: {
+          // options from here are valid: https://github.com/istanbuljs/istanbul-reports/blob/master/lib/lcovonly/index.js#L7-L10
+          file: 'coverage.lcov'
+        }
+      },
+      fixWebpackSourcePaths: true
     },
     reporters: ['progress', 'kjhtml', 'coverage-istanbul'],
     port: 9876,
