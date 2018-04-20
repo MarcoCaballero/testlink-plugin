@@ -75,7 +75,7 @@ public class TestPlanRestUTest {
                 .andExpect(jsonPath("$[0].name").value("Ubuntu 16.04"))
                 .andExpect(jsonPath("$[0].notes").value("<p>Ubuntu version 16.04 Xenial LTS</p>"))
                 .andExpect(jsonPath("$[1].id").value(5)).andExpect(jsonPath("$[1].name").value("Ubuntu 17.10"))
-                .andExpect(jsonPath("$[1].notes").value("p>Ubuntu 17.10 ArtFul (Non-LTS)</p>"));
+                .andExpect(jsonPath("$[1].notes").value("<p>Ubuntu 17.10 ArtFul (Non-LTS)</p>"));
 
     }
 }
