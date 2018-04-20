@@ -1,4 +1,4 @@
-GET http://localhost:8080/tlp-api/testplan/22/build/4/testcase/25?platform=Heroku HTTP/1.1
+GET http://localhost:8080/tlp-api/testplan/2/platforms HTTP/1.1
 TLP-Server-Url: http://172.18.0.1:80/lib/api/xmlrpc/v1/xmlrpc.php
 TLP-Api-Key: 4c1d4281c4328004f40e792f71afb7ba
 
@@ -13,3 +13,5 @@ http://localhost:8080/tlp-api/testplan/2/builds
 http://localhost:8080/tlp-api/testplan/2/build/1
 
 GET http://localhost:8080/tlp-api/plan?planName=Backend%20TestPlan&projectName=Docker-Project
+
+http://localhost:8080/tlp-api/testplan/22/build/4/testcase/25?platform=Heroku
