@@ -1,6 +1,8 @@
 package com.marco.tlp.test.unit;
 
 import static org.junit.Assert.fail;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
 
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -50,7 +52,6 @@ public class EnrichmentFilterUTest {
 
     @Test(expected = MissingCustomHeaderException.class)
     public void testDoFilterFailure_no_server() throws Exception {
-        // mock the getRequestURI() response
         Mockito.when(mockReq.getScheme()).thenReturn("http");
         Mockito.when(mockReq.getRemoteHost()).thenReturn("testing/localhost");
         Mockito.when(mockReq.getMethod()).thenReturn("GET");
@@ -65,7 +66,6 @@ public class EnrichmentFilterUTest {
 
     @Test(expected = MissingCustomHeaderException.class)
     public void testDoFilterFailure_no_key() throws Exception {
-        // mock the getRequestURI() response
         Mockito.when(mockReq.getScheme()).thenReturn("http");
         Mockito.when(mockReq.getRemoteHost()).thenReturn("testing/localhost");
         Mockito.when(mockReq.getMethod()).thenReturn("GET");
@@ -75,6 +75,53 @@ public class EnrichmentFilterUTest {
 
         filter.init(mockFilterConfig);
         filter.doFilter(mockReq, mockResp, mockFilterChain);
+        filter.destroy();
+    }
+
+    @Test
+    public void test_no_apply_filter_cors() throws Exception {
+        Mockito.when(mockReq.getScheme()).thenReturn("http");
+        Mockito.when(mockReq.getRemoteHost()).thenReturn("testing/localhost");
+        Mockito.when(mockReq.getMethod()).thenReturn("OPTIONS");
+        Mockito.when(mockReq.getRequestURI()).thenReturn("/tlp-api/testprojects");
+        Mockito.when(mockReq.getHeader(SERVER_HEADER)).thenReturn(TESTLINK_SERVER_URL);
+        Mockito.when(mockReq.getHeader(KEY_HEADER)).thenReturn(API_KEY_GOOD);
+
+        filter.init(mockFilterConfig);
+        filter.doFilter(mockReq, mockResp, mockFilterChain);
+
+        verify(plugin, never()).connectToApi(TESTLINK_SERVER_URL, API_KEY_GOOD);
+
+        filter.destroy();
+    }
+
+    @Test
+    public void test_no_apply_filter_swagger_docs() throws Exception {
+        Mockito.when(mockReq.getScheme()).thenReturn("http");
+        Mockito.when(mockReq.getRemoteHost()).thenReturn("testing/localhost");
+        Mockito.when(mockReq.getMethod()).thenReturn("GET");
+        Mockito.when(mockReq.getRequestURI()).thenReturn("/swagger-ui.html");
+
+        filter.init(mockFilterConfig);
+        filter.doFilter(mockReq, mockResp, mockFilterChain);
+
+        verify(plugin, never()).connectToApi(TESTLINK_SERVER_URL, API_KEY_GOOD);
+
+        filter.destroy();
+    }
+
+    @Test
+    public void test_no_apply_filter_swagger_deps() throws Exception {
+        Mockito.when(mockReq.getScheme()).thenReturn("http");
+        Mockito.when(mockReq.getRemoteHost()).thenReturn("testing/localhost");
+        Mockito.when(mockReq.getMethod()).thenReturn("GET");
+        Mockito.when(mockReq.getRequestURI()).thenReturn("springfox-swagger-ui");
+
+        filter.init(mockFilterConfig);
+        filter.doFilter(mockReq, mockResp, mockFilterChain);
+
+        verify(plugin, never()).connectToApi(TESTLINK_SERVER_URL, API_KEY_GOOD);
+
         filter.destroy();
     }
 }
