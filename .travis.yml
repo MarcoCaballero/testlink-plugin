@@ -1,6 +1,7 @@
 sudo: true
 dist: trusty
 
+
 services:
   - docker
 
@@ -20,37 +21,27 @@ before_install:
   - export CHROME_BIN=chromium-browser
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
+  - npm i -g karma
+
+install:
   - pip install termcolor
 
 jobs:
   include:
     - stage: Frontend & Backend Unit Testing Phase
-      language: java
-      jdk:
-        - oraclejdk8
       before_script: cd testlink-plugin
       script: mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar
     - # stage name not required, parallel jobs 
-      language: node_js
-      node_js:
-        - "8.11.1"
       before_script: 
         - cd testlink-plugin-gui
-        - npm i -g karma
         - npm i
       script: karma start karma.conf.js --single-run
     - # stage name not required, parallel jobs
-      language: node_js
-      node_js:
-        - "8.11.1"
       before_script: 
         - cd testlink-plugin-gui
         - npm i
       script: npm run e2e   
     - stage: Build & Release Docker images
-      language: python
-      python:
-        - "2.7"
       script:
         - cd docker
         - python build.py --frontend --backend
