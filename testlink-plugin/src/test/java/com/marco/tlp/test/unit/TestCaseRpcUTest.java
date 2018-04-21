@@ -35,12 +35,29 @@ public class TestCaseRpcUTest {
     }
 
     @Test
+    public void get_testcase_by_platform_depth() throws Exception {
+        Mockito.when(mockApi.getTestCasesForTestPlan(new Integer(2), null, new Integer(4), null, null, null, null, null, null, true,
+                TestCaseDetails.FULL)).thenReturn(getTestCases());
+
+        Assert.assertEquals("name2", sut.getTestCaseByPlatform(2, 4, 101, "platform").getName());
+    }
+
+    @Test
+    public void get_testcase_by_platform_null() throws Exception {
+        Mockito.when(mockApi.getTestCasesForTestPlan(new Integer(2), null, new Integer(4), null, null, null, null, null, null, true,
+                TestCaseDetails.FULL)).thenReturn(getTestCases());
+
+        Assert.assertNull(sut.getTestCaseByPlatform(2, 4, 105, "platform"));
+    }
+
+    @Test
     public void get_testcase_for_testplan_and_build() throws Exception {
         Mockito.when(mockApi.getTestCasesForTestPlan(new Integer(2), null, new Integer(4), null, null, null, null, null, null, true,
                 TestCaseDetails.FULL)).thenReturn(getTestCases());
 
         Assert.assertEquals(Arrays.asList(getTestCases()).get(0).getName(), sut.getTestCasesForTestPlanandBuild(2, 4).get(0).getName());
     }
+    
 
     private TestCase[] getTestCases() {
         List<TestCaseStep> steps = new ArrayList<TestCaseStep>();
