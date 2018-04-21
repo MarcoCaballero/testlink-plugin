@@ -28,14 +28,14 @@ public class LoginApiUTest {
     @Autowired
     private MockMvc mvc;
     @MockBean
-    private AuthService authservice;
+    private AuthService mockAuthservice;
     @MockBean
-    private Plugin plugin;
+    private Plugin mockPlugin;
 
     @Test
     public void successful_login() throws Exception {
         // List<User> users = Arrays.asList(new User("John"), new User("Peter"));
-        when(authservice.isAuthorized(TESTLINK_SERVER_URL, API_KEY_GOOD)).thenReturn(true);
+        when(mockAuthservice.isAuthorized(TESTLINK_SERVER_URL, API_KEY_GOOD)).thenReturn(true);
         mvc.perform(get("/tlp-api/authorization").header("TLP-Server-Url", TESTLINK_SERVER_URL)
                 .header("TLP-Api-Key", API_KEY_GOOD).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
@@ -43,7 +43,7 @@ public class LoginApiUTest {
 
     @Test
     public void unauthorized_login_no_key() throws Exception {
-        when(authservice.isAuthorized(TESTLINK_SERVER_URL, API_KEY_BAD)).thenReturn(false);
+        when(mockAuthservice.isAuthorized(TESTLINK_SERVER_URL, API_KEY_BAD)).thenReturn(false);
         mvc.perform(get("/tlp-api/authorization").header("TLP-Server-Url", TESTLINK_SERVER_URL)
                 .header("TLP-Api-Key", API_KEY_GOOD).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isUnauthorized());

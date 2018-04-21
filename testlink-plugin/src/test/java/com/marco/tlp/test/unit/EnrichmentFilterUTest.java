@@ -23,11 +23,12 @@ public class EnrichmentFilterUTest {
     private String API_KEY_GOOD = "0c4eae230736ccd923409b3e144165a1";
 
     RPCPlugin plugin = Mockito.mock(RPCPlugin.class);
-    HttpEnrichmentFilter filter = new HttpEnrichmentFilter(plugin);
     HttpServletRequest mockReq = Mockito.mock(HttpServletRequest.class);
     HttpServletResponse mockResp = Mockito.mock(HttpServletResponse.class);
     FilterChain mockFilterChain = Mockito.mock(FilterChain.class);
     FilterConfig mockFilterConfig = Mockito.mock(FilterConfig.class);
+    
+    HttpEnrichmentFilter sut = new HttpEnrichmentFilter(plugin);
 
     @Test
     public void testDoFilterSuccess() throws Exception {
@@ -39,15 +40,15 @@ public class EnrichmentFilterUTest {
         Mockito.when(mockReq.getHeader(KEY_HEADER)).thenReturn(API_KEY_GOOD);
         Mockito.doNothing().when(plugin).connectToApi(SERVER_HEADER, KEY_HEADER);
 
-        filter.init(mockFilterConfig);
+        sut.init(mockFilterConfig);
 
         try {
-            filter.doFilter(mockReq, mockResp, mockFilterChain);
+            sut.doFilter(mockReq, mockResp, mockFilterChain);
         } catch (MissingCustomHeaderException expected) {
             fail("MissingCustomHeaderException not expected");
         }
 
-        filter.destroy();
+        sut.destroy();
     }
 
     @Test(expected = MissingCustomHeaderException.class)
@@ -59,9 +60,9 @@ public class EnrichmentFilterUTest {
         Mockito.when(mockReq.getHeader(SERVER_HEADER)).thenReturn(null);
         Mockito.when(mockReq.getHeader(KEY_HEADER)).thenReturn(API_KEY_GOOD);
 
-        filter.init(mockFilterConfig);
-        filter.doFilter(mockReq, mockResp, mockFilterChain);
-        filter.destroy();
+        sut.init(mockFilterConfig);
+        sut.doFilter(mockReq, mockResp, mockFilterChain);
+        sut.destroy();
     }
 
     @Test(expected = MissingCustomHeaderException.class)
@@ -73,9 +74,9 @@ public class EnrichmentFilterUTest {
         Mockito.when(mockReq.getHeader(SERVER_HEADER)).thenReturn(TESTLINK_SERVER_URL);
         Mockito.when(mockReq.getHeader(KEY_HEADER)).thenReturn(null);
 
-        filter.init(mockFilterConfig);
-        filter.doFilter(mockReq, mockResp, mockFilterChain);
-        filter.destroy();
+        sut.init(mockFilterConfig);
+        sut.doFilter(mockReq, mockResp, mockFilterChain);
+        sut.destroy();
     }
 
     @Test
@@ -87,12 +88,12 @@ public class EnrichmentFilterUTest {
         Mockito.when(mockReq.getHeader(SERVER_HEADER)).thenReturn(TESTLINK_SERVER_URL);
         Mockito.when(mockReq.getHeader(KEY_HEADER)).thenReturn(API_KEY_GOOD);
 
-        filter.init(mockFilterConfig);
-        filter.doFilter(mockReq, mockResp, mockFilterChain);
+        sut.init(mockFilterConfig);
+        sut.doFilter(mockReq, mockResp, mockFilterChain);
 
         verify(plugin, never()).connectToApi(TESTLINK_SERVER_URL, API_KEY_GOOD);
 
-        filter.destroy();
+        sut.destroy();
     }
 
     @Test
@@ -102,12 +103,12 @@ public class EnrichmentFilterUTest {
         Mockito.when(mockReq.getMethod()).thenReturn("GET");
         Mockito.when(mockReq.getRequestURI()).thenReturn("/swagger-ui.html");
 
-        filter.init(mockFilterConfig);
-        filter.doFilter(mockReq, mockResp, mockFilterChain);
+        sut.init(mockFilterConfig);
+        sut.doFilter(mockReq, mockResp, mockFilterChain);
 
         verify(plugin, never()).connectToApi(TESTLINK_SERVER_URL, API_KEY_GOOD);
 
-        filter.destroy();
+        sut.destroy();
     }
 
     @Test
@@ -117,11 +118,11 @@ public class EnrichmentFilterUTest {
         Mockito.when(mockReq.getMethod()).thenReturn("GET");
         Mockito.when(mockReq.getRequestURI()).thenReturn("springfox-swagger-ui");
 
-        filter.init(mockFilterConfig);
-        filter.doFilter(mockReq, mockResp, mockFilterChain);
+        sut.init(mockFilterConfig);
+        sut.doFilter(mockReq, mockResp, mockFilterChain);
 
         verify(plugin, never()).connectToApi(TESTLINK_SERVER_URL, API_KEY_GOOD);
 
-        filter.destroy();
+        sut.destroy();
     }
 }

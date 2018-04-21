@@ -25,7 +25,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import br.eti.kinoshita.testlinkjavaapi.constants.ExecutionType;
-import br.eti.kinoshita.testlinkjavaapi.constants.TestImportance;
 import br.eti.kinoshita.testlinkjavaapi.model.TestCase;
 import br.eti.kinoshita.testlinkjavaapi.model.TestCaseStep;
 
@@ -39,9 +38,9 @@ public class TestCaseRestUTest {
     @Autowired
     private MockMvc mvc;
     @MockBean
-    private TestCaseService testCaseService;
+    private TestCaseService mockTestCaseService;
     @MockBean
-    private Plugin plugin;
+    private Plugin mockPlugin;
 
     private List<TestCase> getTestCases() {
         List<TestCaseStep> steps = new ArrayList<TestCaseStep>();
@@ -68,7 +67,7 @@ public class TestCaseRestUTest {
 
     @Test
     public void get_testcases_for_testplan() throws Exception {
-        when(testCaseService.getTestCasesForTestPlan(anyInt())).thenReturn(getTestCases());
+        when(mockTestCaseService.getTestCasesForTestPlan(anyInt())).thenReturn(getTestCases());
         mvc.perform(get("/tlp-api/testplan/1/testcases")
                 .header("TLP-Server-Url", TESTLINK_SERVER_URL)
                 .header("TLP-Api-Key", API_KEY_GOOD)
@@ -81,7 +80,7 @@ public class TestCaseRestUTest {
 
     @Test
     public void get_testcases_for_testplan_notfound() throws Exception {
-        when(testCaseService.getTestCasesForTestPlan(anyInt())).thenReturn(null);
+        when(mockTestCaseService.getTestCasesForTestPlan(anyInt())).thenReturn(null);
         mvc.perform(get("/tlp-api/testplan/1/testcases")
                 .header("TLP-Server-Url", TESTLINK_SERVER_URL)
                 .header("TLP-Api-Key", API_KEY_GOOD)
@@ -91,7 +90,7 @@ public class TestCaseRestUTest {
 
     @Test
     public void gget_testcases_for_testplan_and_build() throws Exception {
-        when(testCaseService.getTestCasesForTestPlanAndName(anyInt(), anyInt())).thenReturn(getTestCases());
+        when(mockTestCaseService.getTestCasesForTestPlanAndName(anyInt(), anyInt())).thenReturn(getTestCases());
         mvc.perform(get("/tlp-api/testplan/12/build/24/testcases")
                 .header("TLP-Server-Url", TESTLINK_SERVER_URL)
                 .header("TLP-Api-Key", API_KEY_GOOD)
@@ -104,7 +103,7 @@ public class TestCaseRestUTest {
 
     @Test
     public void gget_testcases_for_testplan_and_build_notFound() throws Exception {
-        when(testCaseService.getTestCasesForTestPlanAndName(anyInt(), anyInt())).thenReturn(null);
+        when(mockTestCaseService.getTestCasesForTestPlanAndName(anyInt(), anyInt())).thenReturn(null);
         mvc.perform(get("/tlp-api/testplan/12/build/24/testcases")
                 .header("TLP-Server-Url", TESTLINK_SERVER_URL)
                 .header("TLP-Api-Key", API_KEY_GOOD)

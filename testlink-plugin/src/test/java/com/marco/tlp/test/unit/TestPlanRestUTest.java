@@ -36,9 +36,9 @@ public class TestPlanRestUTest {
     @Autowired
     private MockMvc mvc;
     @MockBean
-    private TestPlanService testPlanService;
+    private TestPlanService mockTestPlanService;
     @MockBean
-    private Plugin plugin;
+    private Plugin mockPlugin;
 
     @Test
     public void get_testplans_ok() throws Exception {
@@ -48,7 +48,7 @@ public class TestPlanRestUTest {
                 "<p>Test Plan for tlp-api-gui frontend deployment with multi-stage Dockerfile.</p>", true, true);
         List<TestPlan> users = Arrays.asList(t1, t2);
 
-        when(testPlanService.getProjectTestPlans(anyInt())).thenReturn(users);
+        when(mockTestPlanService.getProjectTestPlans(anyInt())).thenReturn(users);
 
         mvc.perform(get("/tlp-api/testproject/1/testplans").header("TLP-Server-Url", TESTLINK_SERVER_URL)
                 .header("TLP-Api-Key", API_KEY_GOOD)
@@ -65,7 +65,7 @@ public class TestPlanRestUTest {
     @Test
     public void get_testplans_notFound() throws Exception {
 
-        when(testPlanService.getProjectTestPlans(anyInt())).thenReturn(null);
+        when(mockTestPlanService.getProjectTestPlans(anyInt())).thenReturn(null);
 
         mvc.perform(get("/tlp-api/testproject/1/testplans")
                 .header("TLP-Server-Url", TESTLINK_SERVER_URL)
@@ -81,7 +81,7 @@ public class TestPlanRestUTest {
 
         List<Platform> platforms = Arrays.asList(p1, p2);
 
-        when(testPlanService.getTestPlanPlatforms(anyInt())).thenReturn(platforms);
+        when(mockTestPlanService.getTestPlanPlatforms(anyInt())).thenReturn(platforms);
 
         mvc.perform(get("/tlp-api/testplan/1/platforms").header("TLP-Server-Url", TESTLINK_SERVER_URL)
                 .header("TLP-Api-Key", API_KEY_GOOD).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
@@ -96,7 +96,7 @@ public class TestPlanRestUTest {
     @Test
     public void get_testplatforms_notFound() throws Exception {
 
-        when(testPlanService.getTestPlanPlatforms(anyInt())).thenReturn(null);
+        when(mockTestPlanService.getTestPlanPlatforms(anyInt())).thenReturn(null);
 
         mvc.perform(get("/tlp-api/testplan/1/platforms")
                 .header("TLP-Server-Url", TESTLINK_SERVER_URL)
