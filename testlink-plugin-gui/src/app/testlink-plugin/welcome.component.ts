@@ -9,6 +9,17 @@ import { Router } from '@angular/router';
 })
 
 export class WelcomeComponent {
+    logos: any[] = [
+        { name: 'angular', logo: 'assets:angular' },
+        { name: 'spring', logo: 'assets:spring' },
+        { name: 'travis', logo: 'assets:travis' },
+    ];
+    logosBottom: any[] = [
+        { name: 'docker', logo: 'assets:docker' },
+        { name: 'covalent', logo: 'assets:covalent-mark' },
+        { name: 'elastest-rep', logo: 'assets:elastest-rep' },
+    ];
+
     constructor(private router: Router) { }
 
     navigateHome(): void {

@@ -1,26 +1,53 @@
-<md-card class="push-bottom-xxl" tdMediaToggle="gt-xs" [mediaClasses]="['push']">
-    <div flex-gt-sm="100">
-        <md-card-title>
-            <md-icon style="margin-right: -39px;margin-top: -44px;float: right;width: 150px;height: 150px;" svgIcon="assets:testlink-alpha"></md-icon>
-            Testlink-Plugin
-        </md-card-title>
-        <md-card-content>
-            <md-divider></md-divider>
-            <!-- card content -->
-            <div layout="column" layout-align="center center" class="tc-grey-500 md-typography pad-lg">
-                <h3 mdLine class="push-left-sm md-title" [style.margin.px]="0">Welcome to TestLink Plugin!</h3>
-                <span flex="40" class="md-body-1">
-                    <i>Click to start.</i>
-                </span>
-            </div>
-            <!-- ./card content -->
-            <md-divider></md-divider>
-        </md-card-content>
-        <md-card-actions>
+<section #navi class="bgc-blue-grey-50">
+    <div layout-gt-xs="row">
+      <div flex class="pad" tdMediaToggle="gt-xs" [mediaClasses]="['pad-xl']">
+        <div class="push-top-xl" hide-xs></div>
+        <div tdMediaToggle="gt-sm" [mediaClasses]="['push-lg']">
+          <h1 id="id_top" class="md-display-1 tc-blue-A400 push-top-xs push-bottom-sm">Welcome to TestLink Plugin</h1>
+          <h2 class="md-headline tc-grey-800 push-top-xs push-bottom-sm">TestManagement</h2>
+          <p class="md-subhead tc-grey-600">This little blog is dedicated to my final project, in which it will be possible to follow the evolution and the
+            development of the tasks required for the elaboration of the same one. For this you will have several blogs where
+            you can see and read the tasks we talked about previously.</p>
             <button md-raised-button color="primary" class="text-upper hoverable-action-button testlink-center" (click)="navigateHome()">
-                <span>GO</span>
-            </button>
-        </md-card-actions>
-        <!-- </ng-template> -->
+                <span>GO APP</span>
+            </button> </div>
+        <div class="push-bottom-xl" hide-xs></div>
+      </div>
+      <div flex="50" layout="row" layout-align="center center">
+        <md-icon class="push" style="height:auto;width:auto;" svgIcon="assets:testlink-alpha"></md-icon>
+      </div>
     </div>
-</md-card>
+  </section>
+
+  <section id="prueba" class="bgc-grey-800 tc-white" tdMediaToggle="gt-xs" [mediaClasses]="['pad-top-md', 'pad-bottom-xl']">
+    <h2 class="md-display-1 text-upper text-center push-bottom">Working with the following technology stack.</h2>
+    <div layout="row" class="pull-on-xs" layout-align-gt-xs="center center">
+      <div flex-gt-xs="80" layout="row" layout-wrap>
+        <ng-template let-item let-last="last" ngFor [ngForOf]="logos">
+          <div class="text-center logos push-xs" flex-xs="40" flex-gt-xs="25">
+            <md-icon class="push" style="height:auto;width:auto;" mdTooltip={{item.name}} mdTooltipPosition="above" svgIcon="{{item.logo}}"></md-icon>
+          </div>
+        </ng-template>
+        <ng-template let-item let-last="last" ngFor [ngForOf]="logosBottom">
+          <div class="text-center logos push-xs" flex-xs="40" flex-gt-xs="25">
+            <md-icon class="push" style="height:auto;width:auto;" mdTooltip={{item.name}} mdTooltipPosition="above" svgIcon="{{item.logo}}"></md-icon>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </section>
+
+  <section class="bgc-blue-grey-50">
+    <div layout-gt-xs="row">
+      <div flex="40" layout="row" layout-align="center center">
+        <md-icon class="push" style="height:auto;width:auto;" svgIcon="assets:elastest-rep"></md-icon>
+      </div>
+      <div flex class="pad" tdMediaToggle="gt-xs" [mediaClasses]="['pad-xxl']">
+        <div class="push-top-xxl" hide-xs></div>
+        <h3 class="md-display-1 tc-grey-900 push-top-xs push-bottom-sm">Recommended to follow</h3>
+        <p class="md-title tc-orange-A700">Elastest</p>
+        <a href="http://elastest.eu/" color="accent" md-raised-button class="push-bottom-md text-upper">View More</a>
+        <div class="push-top-xxl" hide-xs></div>
+      </div>
+    </div>
+  </section> 

@@ -111,4 +111,23 @@ md-nav-list {
     }
 }
 
+/*Welcome*/
 
+.md-icon-ux {
+    width: 100px;
+}
+.icon {
+  font-size: 48px;
+}
+.logos {
+   @media screen and (min-width : 752px) {
+      max-width: 15%;
+   }
+    max-width: 25%;
+}
+
+.pull-on-xs {
+  @media screen and (max-width : 752px) {
+      margin-left: 13%;
+   }
+}
