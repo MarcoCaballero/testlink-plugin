@@ -1,0 +1,8 @@
+@startuml Use Case View (1st priority)
+left to right direction
+    Tester --> (Conexión entre el servidor y la instancia de TestLink):  (R.F. 1)
+    Tester --> (Login en una instancia concreta de TestLink):  (R.F. 1)
+    Tester --> (Consulta de proyectos desde una instancia de TestLink):  (R.F. 3)
+    Tester --> (Ejecución de casos de pruebas a través de cliente Rest):  (R.F. 4)
+    Tester --> (Selección y filtrado de elementos mediante interfaz web):  (R.F. 7)
+@enduml

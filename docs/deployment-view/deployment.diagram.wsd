@@ -5,39 +5,53 @@ interface "HTTP" as apache_http
 interface "XML-RPC" as testlink_rpc
 
 
+node "Tomcat 8" {
+    node "Spring IoC Container" {
+        artifact "testlink-plugin-rest.jar" as tlp_rest_jar
+        component "Testlink-Plugin-Rest" as tlp_rest
+        tlp_http - tlp_rest
+        [TestLinkJavaApi] #FFCCBC
 
-package "Testlink-Plugin-Rest" {
-    tlp_http - [Testlink-Plugin]
-    [TestLinkJavaApi] #FFCCBC
-}
-
-node "Testlink-Plugin-GUI" {
-    [Angular SPA] --> tlp_http
-}
-
-node "Testlink Instance" #C5CAE9{
-    [Apache]  -left- apache_http
-    [TestLink] -left- testlink_rpc
-    [Apache] #F5F5F5
-    [TestLink] #F5F5F5
-}
-
-database "MariaDB" #C5CAE9{
-    frame "Schema" #EEEEEE{
-        [Testlink_Database] #F5F5F5
+        tlp_rest *--> [Testlink-Plugin]
+        tlp_rest *--> [TestLinkJavaApi]
+        tlp_rest_jar .right.> [tlp_rest]: <<manifests>
     }
 }
 
-[Apache] o-- [TestLink]
-[Apache] -left-> [Testlink_Database]
+node "NGINX" {
+    package "Testlink-Plugin-GUI" {
+        artifact "<<folder>> dist" as dist
+        [Angular SPA] -left-> tlp_http
+        dist .left.> [Angular SPA]: manifests
+    }
+}
+
+node "<<simulated-device>> XAMPP" {
+    database "MariaDB" #C5CAE9{
+        frame "Schema" #EEEEEE{
+            [Testlink_Database] #F5F5F5
+        }
+    }
+    node "Apache Server" #C5CAE9{
+        [HTTPD]  -left- apache_http
+        [TestLink] -left- testlink_rpc
+        [HTTPD] #F5F5F5
+        [TestLink] #F5F5F5
+    }
+}
+
+
+
+[HTTPD] o-- [TestLink]
+[HTTPD] -left-> [Testlink_Database]
 apache_http .. testlink_rpc
 [Testlink-Plugin] .left.> [TestLinkJavaApi] :use
 [TestLinkJavaApi] --> apache_http
 
 legend
     |= |= Type |
-    |<back:#FFCCBC>             </back>| 3rd Party Dependecy|
-    |<back:#C5CAE9>             </back>| Environment Example|
+    |<back:#FFCCBC>'            '</back>| 3rd Party Dependecy|
+    |<back:#C5CAE9>'            '</back>| Environment Example|
 endlegend
 
 @enduml

@@ -1,0 +1,8 @@
+@startuml Use Case View (3rd priority)
+left to right direction
+    Tester --> (Consulta de proyectos):  (R.F. 3.1)
+    Tester --> (Consulta de planes):  (R.F. 3.2)
+    Tester --> (Consulta de casos de prueba):  (R.F. 3.)
+    Tester --> (Filtrado por categorías):  (R.F. 7.1)
+    Tester --> (Filtrado por elementos):  (R.F. 7.2)
+@enduml

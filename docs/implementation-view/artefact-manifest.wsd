@@ -1,0 +1,36 @@
+@startuml Artifact Manifest
+
+skinparam class {
+    ArrowColor blue
+}
+
+interface "Plugin" as IPlugin
+
+
+package "<<artifact>> testlink-plugin-rest.jar" <<artifact>> #DCEDC8 {
+
+    package "<<folder>> BOOT-INF" #A5D6A7 {
+        package "<<folder>> META-INF" #A5D6A7 {
+            artifact "<<file>>  MANIFEST.MF"
+        }
+        package "<<folder>> org.springframework.boot.loader" #A5D6A7 {
+            artifact SpringBootLoader.class
+        }
+
+        package "<<folder>> classes" #A5D6A7 {
+            artifact "<<project>> com.marco.tlp" as tlp_rest
+        }
+        package "<<folder>> lib" #A5D6A7 {
+            artifact "<<library>> testlink-java-api.jar" as api_testlink
+            artifact "<<library>> apache-commons.jar"
+            artifact "<<library>> io-springfox-swagger.jar"
+        }
+    }
+}
+
+tlp_rest  .down.> [TestLinkPlugin]: <<manifest>>
+[TestLinkPlugin] -right-> IPlugin: XML-RPC
+api_testlink  .down.> [TestlinkJavaApi]: <<manifest>>
+[TestlinkJavaApi] -left- IPlugin
+[TestLinkPlugin] -down- API: API REST
+@enduml

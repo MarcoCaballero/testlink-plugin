@@ -1,0 +1,14 @@
+@startuml Package Diagram
+
+package testlink-plugin-gui <<Angular>> #ef9a9a {
+    package src {
+        package app #ef5350 {
+           class AppAnimations
+           class AppComponent
+           class AppModule
+           class AppRoutingModule
+           class ModuleTestBuilder
+        }
+    }
+}
+@enduml

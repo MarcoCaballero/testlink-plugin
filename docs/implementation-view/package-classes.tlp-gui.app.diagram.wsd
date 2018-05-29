@@ -1,0 +1,31 @@
+@startuml Package Diagram
+
+skinparam class {
+    ArrowColor blue
+}
+
+package testlink-plugin-gui <<Angular>> #ef9a9a {
+    package src {
+        package app #ef5350 {
+          
+            package elastest-home #ef9a9a {
+            }
+
+            package testlink-plugin #ef9a9a {
+                package "dashboard" as dashboard_1 #ef9a9a {
+                }
+                package instances #ef9a9a {
+                    package "dashboard" as dashboard2 #ef9a9a {
+                    }
+                    package login #ef9a9a {
+                    }
+
+                }
+            }
+
+        }
+    }
+
+
+
+    @enduml

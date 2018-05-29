@@ -1,0 +1,32 @@
+@startuml Package Diagram - Classes (Services)
+
+package testlink-plugin-gui <<Angular>> #ef9a9a {
+    package src {
+        package services #ef5350 {
+            class InstancesService
+            class LocalStorageManagerService
+            package "tlp-api" as tlpApi #ef5350 {
+                class TlpApiService
+                class AuthService
+                class BuildService
+                class PlatformService
+                class TestPlanService
+                class TestProjectService
+                class TestCaseService
+            }
+        }
+    }
+}
+
+
+ 
+TlpApiService <-right-o AuthService
+TlpApiService <-right-o BuildService
+TlpApiService <-right-o PlatformService
+TlpApiService <-left-o TestPlanService
+TlpApiService <-left-o TestProjectService
+TlpApiService <-left-o TestCaseService
+
+TlpApiService .left.> InstancesService
+TlpApiService .left.> LocalStorageManagerService
+@enduml

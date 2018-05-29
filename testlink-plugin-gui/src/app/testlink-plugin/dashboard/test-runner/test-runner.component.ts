@@ -188,7 +188,7 @@ export class TestRunnerComponent implements OnInit, AfterViewInit {
     }
 
     getBackground(i: number): string {
-        return (i % 2 === 0) ? '#dedede40' : '#ffac2f45';
+        return (i % 2 === 0) ? 'white' : '#ffac2f1a';
     }
 
     getStatusIcon(value: any): string[] {

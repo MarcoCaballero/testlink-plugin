@@ -1,0 +1,19 @@
+@startuml StateChar Diagram Plugin BUilder
+state "Login Try" as login
+state "waiting login" as waitLogin
+state "Logged in" as logedIn {
+    state "headers saved" as headersSaved
+}
+state "waiting operation" as waitOp
+state "waiting response" as waitResponse
+
+[*] -down-> idle
+idle -right-> waitLogin
+waitLogin --> login: login event triggered
+login -up-> idle: [failed]
+login --> logedIn: [success]
+logedIn -right-> waitOp
+waitOp -right-> waitResponse: operation triggered
+waitResponse --> [*]: update content
+
+@enduml

@@ -1,7 +1,6 @@
 @startuml Package Diagram
 
 skinparam class {
-    BackgroundColor PaleGreen
     ArrowColor blue
 }
 package testlink-plugin-rest <<SpringBoot>> #DCEDC8 {

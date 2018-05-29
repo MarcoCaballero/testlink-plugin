@@ -1,0 +1,5 @@
+@startuml Use Case View (3rd priority)
+left to right direction
+    Tester --> (Despliegue Docker y Docker Compose):  (R.F. 8.2)
+    Tester --> (Consulta de estado de ejecuciones previas):  (R.F. 3.5)
+@enduml

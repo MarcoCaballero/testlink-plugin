@@ -1,0 +1,20 @@
+@startuml Package Diagram - Classes (Model)
+
+package testlink-plugin-gui <<Angular>> #ef9a9a {
+    package src {
+        package model #ef5350 {
+            interface Build
+            interface ConnectionHeader
+            interface ExecutionResponse
+            interface Execution
+            interface Instance
+            interface Platform
+            interface Project
+            interface Step
+            interface TestCase
+            interface TestPlan
+            interface Interface
+        }
+    }
+}
+@enduml

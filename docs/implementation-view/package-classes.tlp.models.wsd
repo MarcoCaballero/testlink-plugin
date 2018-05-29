@@ -1,0 +1,27 @@
+@startuml Package Classes Diagram (server api)
+
+skinparam class {
+    ArrowColor blue
+}
+package testlink-plugin-rest <<SpringBoot>> #DCEDC8 {
+    package models #A5D6A7 {
+        package rpccontrollers #A5D6A7 {
+            abstract Controller
+            class AuthController
+            class BuildController
+            class PlatformController
+            class TestCaseController
+            class TestProjectController
+            class TestPlanController
+            class TestExecution
+        }
+        interface Plugin
+        class RPCPlugin
+        class MissingCustomHeaderException
+    }
+}
+
+
+
+
+@enduml

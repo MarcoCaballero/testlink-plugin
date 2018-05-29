@@ -1,0 +1,49 @@
+@startuml Object Diagram (Angular)
+' Split into 4 pages
+page 2x2
+skinparam  ArrowColor blue
+
+
+package "Testlink-plugin-rest" #ef9a9a{
+
+    component index
+
+    package "app" as angular_app #ef5350{
+        [app] as appComponent
+
+        package "elastest-home" #ef5350{
+            [elastestHome]
+        }
+
+        package "testlink-plugin" as tlpcomponents #ef5350{
+            [main] as testlinkMain
+            folder "dashboard" {
+                [dashboard] as instanceDashboardComponent
+            }
+            folder "instances" {
+                [login]
+                [testBuild]
+                [testRunner]
+                [dashboard] as dashboardComponent
+            }
+        }
+    }
+}
+
+
+
+index --> appComponent
+appComponent *--> elastestHome
+elastestHome *-left-> testlinkMain
+testlinkMain *--> login
+testlinkMain *--> instanceDashboardComponent
+testlinkMain *--> dashboardComponent
+dashboardComponent *--> testBuild
+dashboardComponent *--> testRunner
+testBuild ..> testRunner :<<flow>>
+
+
+
+
+
+@enduml

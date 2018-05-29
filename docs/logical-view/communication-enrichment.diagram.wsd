@@ -1,0 +1,48 @@
+@startuml Communication Diagram
+
+skinparam class {
+    ArrowColor blue
+    FontSize 13
+}
+
+package testlink-plugin #DCEDC8{
+    package api #A5D6A7 {
+        class X_RestController
+    }
+    package services #A5D6A7 {
+        class X_Service
+    }
+    package models #A5D6A7 {
+        interface Plugin
+        abstract class Controller
+        Plugin <|-down- RpcPLugin
+        RpcPLugin *-down-> X_Controller
+        X_Controller -up-|> Controller
+    }
+
+    X_RestController --right-> X_Service
+    X_Service --down-> RpcPLugin
+}
+
+
+package testlink-plugin-gui <<Angular>> #ef9a9a {
+    package src {
+        package app #ef5350{
+            class X_Component
+        }
+        package "models" as angular_models #ef5350{
+            class X_Model
+        }
+        package "services" as angular_services #ef5350{
+            class "X_Service" as X_ServiceInjectable
+            class TlpApiService
+        }
+    }
+    X_Component *--> X_ServiceInjectable
+    X_ServiceInjectable *-up-> TlpApiService
+    X_ServiceInjectable ..> X_Model
+}
+
+TlpApiService --right--> X_RestController: Http Rest (Header Enriched)
+
+@enduml

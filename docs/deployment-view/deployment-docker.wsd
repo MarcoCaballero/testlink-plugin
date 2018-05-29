@@ -1,28 +1,43 @@
 @startuml Deployment Docker
-node Testlink-Plugin-Rest <<Docker Container>> {
-  artifact "Tomcat" {
-    artifact "testlink-plugin-rest_v1.jar"
-    artifact "testlink-java-api.jar"
+
+
+node "marcocab/testlink-plugin-rest" <<Docker Container>> {
+  interface "HTTP" as tlp_http
+  node "Tomcat 8" {
+    node "Spring IoC Container" {
+      artifact "testlink-plugin-rest.jar" as tlp_rest_jar
+      component "Testlink-Plugin-Rest" as tlp_rest
+
+      [TestLinkJavaApi] #FFCCBC
+      tlp_http -up- tlp_rest
+      tlp_rest *--> [TestlinkPlugin]
+      tlp_rest *--> [TestLinkJavaApi]
+      tlp_rest_jar ..> [tlp_rest]: <<manifests>
+      [TestlinkPlugin] .right.> [TestLinkJavaApi]: use
+    }
   }
 }
-
-node Testlink-Plugin-GUI <<Docker Container>> {
-  frame  nginx {
-    frame "testlink-plugin-gui (Build)" {
-      artifact "bundle.js" as bundle
-      artifact "index.html" as index
-    }
+node "marcocab/testlink-plugin-gui" <<Docker Container>> {
+  node "NGINX" {
+    artifact "<<folder>> dist" as dist
+    [Angular SPA] -left-> tlp_http
+    dist .left.> [Angular SPA]: manifests
   }
 }
 
 node "bitnami/Testlink" <<Docker Container>> {
-  frame Apache {
-    artifact TestLink
+  interface "HTTP" as apache_http
+  interface "XML-RPC" as testlink_rpc
+  node "Apache Server" {
+    [HTTPD]  -left- apache_http
+    [TestLink] -left- testlink_rpc
+    [HTTPD] #F5F5F5
+    [TestLink] #F5F5F5
     folder conf {
       artifact ".default.conf" as defconf
-      artifact ".vhosts.conf" as defconf
-      artifact ".testlink.conf" as defconf
-      artifact ".htaccess" as defconf
+      artifact ".vhosts.conf" as defconf2
+      artifact ".testlink.conf" as defconf3
+      artifact ".htaccess" as defconf4
     }
   }
 }
@@ -31,8 +46,14 @@ node "bitnami/MariaDb" <<Docker Container>> {
   database "MariaDB" {
     frame "Schema" {
       artifact Testlink_Database
-      
+
     }
   }
 }
+
+
+[HTTPD] o-- [TestLink]
+[HTTPD] -left-> [Testlink_Database]
+apache_http .. testlink_rpc
+[TestLinkJavaApi] -down-> apache_http
 @enduml

@@ -1,0 +1,16 @@
+@startuml Package Classes Diagram (server services)
+
+skinparam class {
+    ArrowColor blue
+}
+package testlink-plugin-rest <<SpringBoot>> #DCEDC8 {
+    package services #A5D6A7 {
+        class AuthService
+        class BuildService
+        class ProjectService
+        class TestCaseService
+        class TestPlanService
+    }
+}
+
+@enduml

@@ -1,0 +1,8 @@
+@startuml Use Case View (2nd priority)
+left to right direction
+    Tester --> (Edición de reportes en formato markdown):  (R.F. 5.1, R.F. 5.3)
+    Tester --> (Envío de archivos):  (R.F. 6)
+    Tester --> (Selección de archivos locales):  (R.F. 6)
+    Tester --> (Despliegue nativo):  (R.F. 8.1)
+    Tester --> (Alertas de verificación de resultados):  (R.F. 4.5)
+@enduml

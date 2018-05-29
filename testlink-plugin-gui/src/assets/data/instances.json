@@ -6,7 +6,7 @@
         "title": "Instance 1 - Host Instance",
         "description": "http://testlink.miliziandevelopers.eu/testlink-instance/lib/api/xmlrpc/v1/xmlrpc.php",
         "created": "7/03/2017 11:05 AM",
-        "lastAccess": "7/03/2017 11:05 AM"
+        "lastAccess": "27/05/2018 15:45 AM"
     },
     {
         "id": "1",
@@ -15,7 +15,7 @@
         "title": "Instance 2 - Apache Server Instance",
         "description": "http://localhost:80/testlink/lib/api/xmlrpc/v1/xmlrpc.php",
         "created": "7/03/2017 11:05 AM",
-        "lastAccess": "7/03/2017 11:05 AM"
+        "lastAccess": "28/05/2018 19:05 AM"
     },
     {
         "id": "2",
@@ -24,6 +24,6 @@
         "title": "Instance 3 - Docker",
         "description": "http://172.18.0.1:80/lib/api/xmlrpc/v1/xmlrpc.php",
         "created": "7/03/2017 11:05 AM",
-        "lastAccess": "7/03/2017 11:05 AM"
+        "lastAccess": "28/05/2018 20:05 AM"
     }
 ]

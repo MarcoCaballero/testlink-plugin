@@ -1,0 +1,16 @@
+@startuml Package Classes Diagram (server config)
+
+skinparam class {
+    ArrowColor blue
+}
+package testlink-plugin-rest <<SpringBoot>> #DCEDC8 {
+    package config #A5D6A7 {
+        class HttpEnrichmentFilter
+        class SwaggerConfig
+    }
+}
+
+
+
+
+@enduml
